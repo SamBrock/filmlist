@@ -1,0 +1,22 @@
+@font-face {
+    font-family: 'Soin Sans Neue';
+    src: url("../../fonts/SoinSansNeue-Roman.otf") format("opentype");
+}
+@font-face {
+    font-family: 'Soin Sans Neue Medium';
+    src: url("../../fonts/SoinSansNeue-Medium.otf") format("opentype");
+}
+
+$regular: 'Soin Sans Neue';
+$medium: 'Soin Sans Neue Medium';
+
+@mixin filter($radius) {
+    filter: brightness(60%) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='a' x='0' y='0' width='1' height='1'%3E%3CfeGaussianBlur stdDeviation='#{$radius}' result='b'/%3E%3CfeMorphology operator='dilate' radius='#{$radius}'/%3E %3CfeMerge%3E%3CfeMergeNode/%3E%3CfeMergeNode in='b'/%3E%3C/feMerge%3E%3C/filter%3E%3C/svg%3E#a");
+}
+
+@mixin infoTxt() {
+    font-family: $medium;
+    font-size: 14px;
+    letter-spacing: -.3px;
+    color: rgba(255, 255, 255, 0.7);
+}

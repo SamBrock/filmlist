@@ -1,0 +1,24 @@
+header {
+    display: grid;
+    grid-template-rows: 166px 83px 83px;
+    position: fixed;
+    top: 0;
+    margin: 24px;
+    background-color: #000;
+
+    .logo,
+    .search-btn,
+    .watchlist-btn {
+        cursor: pointer;
+    }
+
+    .logo {
+        height: 35px;
+    }
+
+    .search-btn,
+    .watchlist-btn {
+        height: 24px;
+        display: flex;
+    }
+}
