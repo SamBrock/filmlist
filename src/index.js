@@ -7,7 +7,7 @@ import Fade from './transitions/transitions'
 
 
 ReactDOM.render(<App />, document.getElementById('root'));
-const H = new Highway.Core({
+new Highway.Core({
   transitions: {
     default: Fade
   }

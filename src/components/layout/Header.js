@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import Logo from '../../images/f-logo.png'
 import Search from '../../images/search.png'
-import Watchlist from '../../images/watchlist.png'
 
 export default class Header extends Component {
     render() {
