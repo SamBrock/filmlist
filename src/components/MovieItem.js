@@ -58,22 +58,9 @@ export default function MovieItem(props) {
           </div>
           <div className="movie-info-text" ref={element => movieInfo = element}>
             <div className="movie-title" >{props.movie.title}</div>
-            {/* <div className="movie-year-genre">
-                            <span className="movie-year">{releaseYear}</span><span className="movie-info-divider">|</span>
-                            {props.movie.genre_ids.map((id, index) => {
-                                const item = props.genres.filter(genre => genre.id === id);
-                                if (item.length)
-                                    return (
-                                        <span className="movie-genre" key={id}>{item.shift().name}{index + 1 !== props.movie.genre_ids.length && ','} </span>
-                                    )
-                            })}
-                        </div> */}
-
           </div>
         </div>
       </div>
     </Link>
   )
 }
-
-

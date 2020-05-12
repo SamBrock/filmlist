@@ -24,8 +24,9 @@ const slice = createSlice({
   }
 })
 
-export const { moviesRequested, moviesRecieved, moviesRequestFailed } = slice.actions;
 export default slice.reducer;
+
+const { moviesRequested, moviesRecieved, moviesRequestFailed } = slice.actions;
 
 // Action Creators
 export const loadMovies = () => (dispatch, getState) => {

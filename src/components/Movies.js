@@ -1,11 +1,10 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { loadMovies } from '../store/movies';
+import { loadMovies } from '../store/moviesList';
 import MovieItem from '../components/MovieItem'
 
 export default function Movies() {
   const dispatch = useDispatch();
-
   const movies = useSelector(state => state.entities.movies.list)
 
   useEffect(() => {
@@ -13,25 +12,8 @@ export default function Movies() {
   })
 
   return (
-    <div>
-      {movies.map((movie) => (
-        <MovieItem movie={movie} key={movie.id} />
-      ))}
-    </div>
+    movies.map((movie) => (
+      <MovieItem key={movie.id} movie={movie} />
+    ))
   )
 }
-
-
-// import React, { Component } from 'react'
-// import MovieItem from './MovieItem'
-
-// class Movies extends Component {
-//   render() {
-//     return this.props.movies.map((movie) => (
-//       <MovieItem movie={movie} key={movie.id} genres={this.props.genres} />
-//     ))
-//   }
-// }
-
-// export default Movies;
-
