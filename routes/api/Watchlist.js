@@ -18,7 +18,10 @@ router.post('/', (req, res) => {
   });
 
   movie.save()
-    .then(movie => res.json(movie));
+    .then(movie => {
+      res.json(movie);
+      console.log(movie);
+    })
 })
 
 module.exports = router;

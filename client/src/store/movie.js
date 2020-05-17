@@ -25,18 +25,24 @@ export default slice.reducer;
 
 const { movieRequested, movieRecieved, movieRequestFailed } = slice.actions;
 
-export const loadMovie = (id) => (dispatch, getState) => {
+export const loadMovie = (id) => dispatch => {
   dispatch(apiRequest({
-    url: `/movie/${id}?api_key=f232b12b7f9ade28ae71866f4777033a&language=en-US`,
+    url: `/api/movies/${id}`,
     onStart: movieRequested.type,
     onSuccess: movieRecieved.type,
     onError: movieRequestFailed.type
   }))
 }
 
-export const addMovieToWatchlist = (id) => apiRequest({
-  
-})
+export const addMovieToWatchlist = (id) => dispatch => {
+  dispatch(apiRequest({
+    url: '/api/watchlist',
+    method : 'post',
+    data: {
+      filmId: id
+    }
+  }))
+}
 
 // Selector
 export const getMovieDetails = state => state.entities.movie.data;

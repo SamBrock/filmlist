@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const config = require('config');
 const cors = require('cors');
 
 const movies = require('./routes/api/movies');
@@ -11,7 +12,7 @@ app.use(express.json());
 app.use(cors());
 
 // DB Config
-const db = require('./config/keys').mongoURI;
+const db = config.get('DB.mongoURI');
 
 // Connect to MongoDB
 mongoose.connect(db)

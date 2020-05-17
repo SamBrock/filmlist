@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { loadMovie, getMovieDetails } from '../store/movie';
+import { loadMovie, getMovieDetails, addMovieToWatchlist } from '../store/movie';
 
 export default function MovieDetailPage({ match }) {
   const dispatch = useDispatch();
-  
+
   const movieId = match.params.id;
   useEffect(() => {
     dispatch(loadMovie(movieId));
@@ -12,15 +12,15 @@ export default function MovieDetailPage({ match }) {
 
   const movie = useSelector(getMovieDetails);
   console.log(movie);
-
   const handleClick = () => {
-    console.log('clicked');
+    dispatch(addMovieToWatchlist(movieId));
   }
 
   return (
     <div data-router-view="movie-page">
-      <h1>{movie.title}</h1>
-      <button onClick={() => handleClick()}>Add to watchlist</button>
+      <div class="backdrop-container">
+        <img src={"https://image.tmdb.org/t/p/original/"+movie.backdrop_path}></img>
+      </div>
     </div>
   )
 }
