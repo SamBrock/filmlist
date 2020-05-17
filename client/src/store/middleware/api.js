@@ -13,9 +13,9 @@ const api = ({ dispatch }) => next => async action => {
     const response = await axios.request({ baseURL: 'https://api.themoviedb.org/3/', url, method, data });
 
     // General
-    dispatch(actions.apiRequest(response.data))
+    dispatch(actions.apiRequestSuccess(response.data))
     // Specific
-    if (onSuccess) dispatch({ type: onSuccess, payload: response.data.results })
+    if (onSuccess) dispatch({ type: onSuccess, payload: response.data })
   } catch (error) {
     dispatch(actions.apiRequestFailed(error.message));
     if (onError) dispatch({ type: onError, payload: error.message })

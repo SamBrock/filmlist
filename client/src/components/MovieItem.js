@@ -12,22 +12,16 @@ export default function MovieItem(props) {
   const [infoAnimate, setInfoAnimate] = useState(null);
 
   useEffect(() => {
-    TweenMax.staggerFromTo('.movie', .5, { opacity: 0, y: 15 }, { opacity: 1, y: 0 }, 0.1);
+    TweenMax.staggerFromTo('.movie', .5, { opacity: 0, y: 15 }, { opacity: 1, y: 0 }, 0.1, console.log('done'));
 
-    setPosterAnimate(
-      TweenMax.to(moviePoster, .5, { opacity: 0, scaleX: 1.1, scaleY: 1.1, paused: true })
-    );
+    setPosterAnimate(TweenMax.to(moviePoster, .5, { opacity: 0, scaleX: 1.1, scaleY: 1.1, paused: true }));
 
-    setBackdropAnimate(
-      TweenMax.to(movieBackdrop, .5, { opacity: 1, scaleX: 1, scaleY: 1, rotation: 0.01, paused: true })
-    );
+    setBackdropAnimate(TweenMax.to(movieBackdrop, .5, { opacity: 1, scaleX: 1, scaleY: 1, rotation: 0.01, paused: true }));
 
-    setInfoAnimate(
-      TweenMax.fromTo(movieInfo, .5, { opacity: 0, y: 10 }, { opacity: 1, y: 0 }).pause()
-    );
+    setInfoAnimate(TweenMax.fromTo(movieInfo, .5, { opacity: 0, y: 10 }, { opacity: 1, y: 0 }).pause());
 
   }, []);
-
+  
   function overOn() {
     posterAnimate.play();
     backdropAnimate.play();

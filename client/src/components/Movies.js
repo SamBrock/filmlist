@@ -1,15 +1,16 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { loadMovies } from '../store/moviesList';
+import { loadMovies, getMovies } from '../store/movies';
 import MovieItem from '../components/MovieItem'
 
 export default function Movies() {
   const dispatch = useDispatch();
-  const movies = useSelector(state => state.entities.movies.list)
 
   useEffect(() => {
     dispatch(loadMovies());
   })
+
+  const movies = useSelector(getMovies);
 
   return (
     movies.map((movie) => (

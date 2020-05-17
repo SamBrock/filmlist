@@ -14,7 +14,7 @@ const slice = createSlice({
       movies.loading = true;
     },
     moviesRecieved: (movies, action) => {
-      movies.list = action.payload;
+      movies.list = action.payload.results;
       movies.loading = false;
       movies.lastFetch = Date.now();
     },
@@ -36,9 +36,12 @@ export const loadMovies = () => (dispatch, getState) => {
   if (diffInMinutes < 10) return;
 
   dispatch(apiRequest({
-    url: '/movie/531428/recommendations?api_key=f232b12b7f9ade28ae71866f4777033a&language=en-US&page=1',
+    url: '/movie/503919/recommendations?api_key=f232b12b7f9ade28ae71866f4777033a&language=en-US&page=1',
     onStart: moviesRequested.type,
     onSuccess: moviesRecieved.type,
     onError: moviesRequestFailed.type
   }))
 };
+
+// Selectors
+export const getMovies = state => state.entities.movies.list;
