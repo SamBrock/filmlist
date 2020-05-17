@@ -36,7 +36,7 @@ export const loadMovies = () => (dispatch, getState) => {
   if (diffInMinutes < 10) return;
 
   dispatch(apiRequest({
-    url: '/movie/531428/recommendations?api_key=f232b12b7f9ade28ae71866f4777033a&language=en-US&page=1',
+    url: '/api/movies/',
     onStart: moviesRequested.type,
     onSuccess: moviesRecieved.type,
     onError: moviesRequestFailed.type
