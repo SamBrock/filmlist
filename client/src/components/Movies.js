@@ -13,8 +13,10 @@ export default function Movies() {
   const movies = useSelector(getMovies);
 
   return (
-    movies.map((movie) => (
-      <MovieItem key={movie.id} movie={movie} />
-    ))
+    <div className="movies-container" data-router-view="movie">
+      {movies.map((movie) => (
+        <MovieItem key={movie.id} movie={movie} />
+      ))}
+    </div>
   )
 }
