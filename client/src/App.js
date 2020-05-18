@@ -10,10 +10,9 @@ import MovieDetailPage from '../src/pages/MovieDetailPage';
 
 const store = configureStore();
 
-export default class App extends Component {
-  render() {
-    return (
-      <Provider store={store}>
+export default function App() {
+  return (
+    <Provider store={store}>
         <Router>
           <div className="container">
             <Header />
@@ -32,6 +31,5 @@ export default class App extends Component {
           </div>
         </Router>
       </Provider>
-    )
-  }
+  )
 }
