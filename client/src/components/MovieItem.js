@@ -12,7 +12,7 @@ export default function MovieItem(props) {
   const [infoAnimate, setInfoAnimate] = useState(null);
 
   useEffect(() => {
-    TweenMax.staggerFromTo('.movie', .5, { opacity: 0, y: 15 }, { opacity: 1, y: 0 }, 0.1, console.log('done'));
+    TweenMax.staggerFromTo('.movie', .5, { opacity: 0, y: 15 }, { opacity: 1, y: 0 }, 0.1);
 
     setPosterAnimate(TweenMax.to(moviePoster, .5, { opacity: 0, scaleX: 1.1, scaleY: 1.1, paused: true }));
 

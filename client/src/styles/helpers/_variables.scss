@@ -1,22 +1,61 @@
 @font-face {
-    font-family: 'Soin Sans Neue';
-    src: url("../../fonts/SoinSansNeue-Roman.otf") format("opentype");
+  font-family: 'Soin Sans Neue';
+  src: url("../../fonts/SoinSansNeue-Roman.otf") format("opentype");
 }
+
 @font-face {
-    font-family: 'Soin Sans Neue Medium';
-    src: url("../../fonts/SoinSansNeue-Medium.otf") format("opentype");
+  font-family: 'Soin Sans Neue Medium';
+  src: url("../../fonts/SoinSansNeue-Medium.otf") format("opentype");
+}
+
+@font-face {
+  font-family: 'Soin Sans Neue Bold';
+  src: url("../../fonts/SoinSansNeue-Bold.otf") format("opentype");
+}
+
+@font-face {
+  font-family: 'Soin Sans Neue Bold';
+  src: url("../../fonts/SoinSansNeue-Bold.otf") format("opentype");
 }
 
 $regular: 'Soin Sans Neue';
 $medium: 'Soin Sans Neue Medium';
+$bold: 'Soin Sans Neue Bold';
 
-@mixin filter($radius) {
-    filter: brightness(60%) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='a' x='0' y='0' width='1' height='1'%3E%3CfeGaussianBlur stdDeviation='#{$radius}' result='b'/%3E%3CfeMorphology operator='dilate' radius='#{$radius}'/%3E %3CfeMerge%3E%3CfeMergeNode/%3E%3CfeMergeNode in='b'/%3E%3C/feMerge%3E%3C/filter%3E%3C/svg%3E#a");
+
+@mixin headerTxt() {
+  font-family: $bold;
+  font-size: 3em;
+  letter-spacing: -.3px;
+  line-height: 1em;
+  margin: 0;
+}
+
+@mixin subHeadingTxt() {
+  font-family: $medium;
+  // text-transform: uppercase;
+  font-size: 1em;
+  letter-spacing: -.3px;
+  font-weight: normal;
 }
 
 @mixin infoTxt() {
-    font-family: $medium;
-    font-size: 14px;
-    letter-spacing: -.3px;
-    color: rgba(255, 255, 255, 0.7);
+  font-family: $medium;
+  font-size: .9em;
+  letter-spacing: -.3px;
+}
+
+@mixin bodyTxt() {
+  font-family: $regular;
+  font-size: 1em;
+  // letter-spacing: -.3px;
+  line-height: 1.5em;
+}
+
+@mixin filter($radius) {
+  filter: brightness(60%) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='a' x='0' y='0' width='1' height='1'%3E%3CfeGaussianBlur stdDeviation='#{$radius}' result='b'/%3E%3CfeMorphology operator='dilate' radius='#{$radius}'/%3E %3CfeMerge%3E%3CfeMergeNode/%3E%3CfeMergeNode in='b'/%3E%3C/feMerge%3E%3C/filter%3E%3C/svg%3E#a");
+}
+
+@mixin brightness($brightness) {
+  filter: brightness($brightness);
 }
