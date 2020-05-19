@@ -7,7 +7,7 @@ const slice = createSlice({
   },
   reducers: {
     start: (state, action) => {
-      state.loadingBarProgress = action.payload.progress;
+      state.loadingBarProgress = Math.floor(Math.random() * 40) + 10;
     },
     complete: (state, action) => {
       state.loadingBarProgress = 100;

@@ -6,12 +6,13 @@ import { start, complete } from '../store/loadingBar';
 export default function MovieDetailPage({ match }) {
   const dispatch = useDispatch();
 
-  const movieId = match.params.id;
+  const movieId = parseInt(match.params.id);
   useEffect(() => {
     dispatch(loadMovie(movieId));
   }, [movieId])
 
   const movie = useSelector(getMovieDetails);
+  console.log(movie);
 
   const handleClick = () => {
     dispatch(addMovieToWatchlist(movieId)); //
@@ -19,8 +20,8 @@ export default function MovieDetailPage({ match }) {
 
   const isLoading = useSelector(state => state.entities.movie.loading);
 
-  if (isLoading) {
-    dispatch(start({progress: 10}));
+  if (movieId !== movie.id) {
+    dispatch(start());
     return null;
   } else {
     dispatch(complete());
@@ -41,9 +42,13 @@ export default function MovieDetailPage({ match }) {
           <div className="movie-overview">
             {movie.overview}
           </div>
+          <div className="movie-genres">
+            {movie.genres.map(genre => <span className="movie-genre">{genre.name}</span>)}
+          </div>
           <div className="movie-crew">
             <div className="movie-sub-heading">
               <h3>Crew</h3>
+              {movie.credits.crew.map(member => member.job === 'Director' ? <div>{member.name}</div> : null)}
             </div>
           </div>
         </div>

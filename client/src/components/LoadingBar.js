@@ -6,12 +6,7 @@ export default function LoadingBar() {
   const dispatch = useDispatch();
   
   const loadingBarProgress = useSelector(state => state.entities.loadingbar.loadingBarProgress);
-  console.log(loadingBarProgress);
 
-  const onLoaderFinished = () => {
-    // console.log('finished');
-  }
-  
   return (
       <LoadingBarTop progress={loadingBarProgress} height={2} color='white' />
   )
