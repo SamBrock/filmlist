@@ -48,7 +48,6 @@ export default function MovieDetailPage({ match }) {
           <div className="movie-crew">
             <div className="movie-sub-heading">
               <h3>Crew</h3>
-              {movie.credits.crew.map(member => member.job === 'Director' ? <div>{member.name}</div> : null)}
             </div>
           </div>
         </div>
