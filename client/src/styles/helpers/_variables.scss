@@ -1,42 +1,49 @@
 @font-face {
-  font-family: 'Soin Sans Neue';
-  src: url("../../fonts/SoinSansNeue-Roman.otf") format("opentype");
+  font-family: 'Gotham';
+  src: url("../../fonts/gotham/GothamBook.woff") format("woff");
 }
 
 @font-face {
-  font-family: 'Soin Sans Neue Medium';
-  src: url("../../fonts/SoinSansNeue-Medium.otf") format("opentype");
+  font-family: 'Gotham Medium';
+  src: url("../../fonts/gotham/GothamMedium.woff") format("woff");
 }
 
 @font-face {
-  font-family: 'Soin Sans Neue Bold';
-  src: url("../../fonts/SoinSansNeue-Bold.otf") format("opentype");
+  font-family: 'Gotham Bold';
+  src: url("../../fonts/gotham/Gotham-Bold.woff") format("woff");
 }
 
 @font-face {
-  font-family: 'Soin Sans Neue Bold';
-  src: url("../../fonts/SoinSansNeue-Bold.otf") format("opentype");
+  font-family: 'Gotham Black';
+  src: url("../../fonts/gotham/Gotham-Black.woff") format("woff");
 }
 
-$regular: 'Soin Sans Neue';
-$medium: 'Soin Sans Neue Medium';
-$bold: 'Soin Sans Neue Bold';
+@font-face {
+  font-family: 'Gotham Narrow Black';
+  src: url("../../fonts/gotham/GothamNarrow-Black.woff") format("woff");
+}
+
+$regular: 'Gotham';
+$medium: 'Gotham Medium';
+$bold: 'Gotham Bold';
+$black: 'Gotham Black';
+$narrowBlack: 'Gotham Narrow Black';
 
 
 @mixin headerTxt() {
-  font-family: $bold;
+  font-family: $black;
   font-size: 3em;
   letter-spacing: -.3px;
-  line-height: 1em;
+  line-height: .95em;
   margin: 0;
 }
 
 @mixin subHeadingTxt() {
-  font-family: $medium;
-  // text-transform: uppercase;
-  font-size: 1em;
-  letter-spacing: -.3px;
-  font-weight: normal;
+  font-family: $narrowBlack;
+  font-size: .85em;
+  line-height: 1.15;
+  letter-spacing: 1px;
+  text-transform: uppercase;
 }
 
 @mixin infoTxt() {
@@ -49,6 +56,12 @@ $bold: 'Soin Sans Neue Bold';
   font-family: $regular;
   font-size: 1em;
   // letter-spacing: -.3px;
+  line-height: 1.5em;
+}
+
+@mixin bodyTxtMedium() {
+  font-family: $bold;
+  font-size: 1em;
   line-height: 1.5em;
 }
 
