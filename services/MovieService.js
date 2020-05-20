@@ -18,7 +18,7 @@ function getMovieDetails(movie) {
   movie.credits.cast = movie.credits.cast
     .filter(member => member.order <= 10)
     .map(member => {
-      return { id: member.id, name: member.name, character: member.character };
+      return { id: member.id, name: member.name, character: member.character, profile_path: member.profile_path };
     })
 
   // Get Writer & Director
