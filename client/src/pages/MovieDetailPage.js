@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { loadMovie, getMovieDetails, addMovieToWatchlist } from '../store/movie';
 import { start, complete } from '../store/loadingBar';
+import Rating from '@material-ui/lab/Rating';
 
 export default function MovieDetailPage({ match }) {
   const dispatch = useDispatch();
@@ -39,6 +40,9 @@ export default function MovieDetailPage({ match }) {
             <span>{movie.runtime}</span><span>|</span>
             <span>R</span>
           </div>
+          <div className="movie-rate">
+            <Rating name="hover-feedback" value={5} precision={0.5} size="large" />
+          </div>
           <div className="movie-overview">
             {movie.overview}
           </div>
@@ -47,7 +51,15 @@ export default function MovieDetailPage({ match }) {
           </div>
           <div className="movie-crew">
             <div className="movie-sub-heading">
-              <h3>Crew</h3>
+              <h3>CREW</h3>
+              <div className="movie-crew-list">
+                {movie.credits.crew.map(member => (
+                  <div className="movie-crew-member">
+                    <div className="movie-crew-member-name">{member.name}</div>
+                    <div className="movie-crew-member-job">{member.job}</div>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>

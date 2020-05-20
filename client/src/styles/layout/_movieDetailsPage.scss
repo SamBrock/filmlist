@@ -18,34 +18,51 @@
     background: #fff;
     padding: 5em 3em;
 
-    .movie-title{
+    .movie-title {
       margin: 0 0 12px 0;
     }
 
     .movie-info {
       @include infoTxt();
-      color: rbg(0,0,0);
-      display: flex;
-      width: 100px;
-      justify-content: space-between;
-      vertical-align: middle;
-      margin: 0 0 48px 0;
-      color: rgba(0, 0, 0, 0.3);
+      color: rbg(0, 0, 0);
+      margin: 0 0 24px 0;
+      color: rgba(0, 0, 0, 0.4);
+
+      span {
+        margin: 0 6px 0 0;
+      }
     }
 
-    .movie-genres {
+    .movie-rate {
       margin: 0 0 48px 0;
-      .movie-genre {
-        margin: 0 12px 0 0;
-      }
     }
 
     .movie-overview {
       @include bodyTxt();
+      margin: 0 0 24px 0;
+    }
+
+    .movie-genres {
       margin: 0 0 48px 0;
+
+      .movie-genre {
+        margin: 0 12px 0 0;
+        @include bodyTxtMedium();
+      }
     }
 
     .movie-crew {
+      .movie-crew-list {
+        display: flex;
+
+        .movie-crew-member {
+          margin: 0 24px 0 0;
+
+          .movie-crew-member-name {
+            @include bodyTxtMedium();
+          }
+        }
+      }
 
     }
   }
