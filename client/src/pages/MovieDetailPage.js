@@ -3,6 +3,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { loadMovie, getMovieDetails, addMovieToWatchlist } from '../store/movie';
 import { start, complete } from '../store/loadingBar';
 import Rating from '@material-ui/lab/Rating';
+import IconButton from '@material-ui/core/IconButton';
+import AddCircleIcon from '@material-ui/icons/AddCircle';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import OwlCarousel from 'react-owl-carousel';
+import 'owl.carousel/dist/assets/owl.carousel.css';
+import 'owl.carousel/dist/assets/owl.theme.default.css';
 
 export default function MovieDetailPage({ match }) {
   const dispatch = useDispatch();
@@ -13,7 +19,6 @@ export default function MovieDetailPage({ match }) {
   }, [movieId])
 
   const movie = useSelector(getMovieDetails);
-  console.log(movie);
 
   const handleClick = () => {
     dispatch(addMovieToWatchlist(movieId)); //
@@ -25,6 +30,7 @@ export default function MovieDetailPage({ match }) {
     dispatch(start());
     return null;
   } else {
+    document.title = `${movie.title} (${movie.year}) • FILMLIST`
     dispatch(complete());
     return (
       <div data-router-view="movie-page" className="movie-page-container">
@@ -41,7 +47,13 @@ export default function MovieDetailPage({ match }) {
             <span>R</span>
           </div>
           <div className="movie-rate">
-            <Rating name="hover-feedback" value={5} precision={0.5} size="large" />
+            <Rating name="hover-feedback" value={2} precision={0.5} />
+            <IconButton aria-label="delete" disableFocusRipple={true} disableRipple={true}>
+              <AddCircleIcon />
+            </IconButton>
+            <IconButton aria-label="delete" disableFocusRipple={true} disableRipple={true} classes={{label: 'heartIcon'}}>
+              <FavoriteIcon />
+            </IconButton>
           </div>
           <div className="movie-overview">
             {movie.overview}
@@ -49,17 +61,31 @@ export default function MovieDetailPage({ match }) {
           <div className="movie-genres">
             {movie.genres.map(genre => <span className="movie-genre">{genre.name}</span>)}
           </div>
-          <div className="movie-crew">
-            <div className="movie-sub-heading">
-              <h3>CREW</h3>
-              <div className="movie-crew-list">
-                {movie.credits.crew.map(member => (
-                  <div className="movie-crew-member">
-                    <div className="movie-crew-member-name">{member.name}</div>
-                    <div className="movie-crew-member-job">{member.job}</div>
+          <div className="movie-credits">
+            <h3>Crew</h3>
+            <div className="movie-credits-list">
+              {movie.credits.crew.map(member => (
+                <div className="movie-credit">
+                  <div className="movie-credit-name">{member.name}</div>
+                  <div className="movie-credit-role">{member.job}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="movie-credits">
+            <h3>Cast</h3>
+            <div className="movie-credits-list">
+              <OwlCarousel className="owl-theme" margin={10} dots={false}>
+                {movie.credits.cast.map(member => (
+                  <div className="movie-credit">
+                    <div className="movie-credit-img">
+                      <img src={`https://image.tmdb.org/t/p/w138_and_h175_face${member.profile_path}`} />
+                    </div>
+                    <div className="movie-credit-name">{member.name}</div>
+                    <div className="movie-credit-role">{member.character}</div>
                   </div>
                 ))}
-              </div>
+              </OwlCarousel>
             </div>
           </div>
         </div>
