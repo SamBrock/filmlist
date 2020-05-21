@@ -1,3 +1,10 @@
+// COLOURS
+$red: #e71d36;
+$blue: #2ec4b6;
+$yellow: #ff9f1c;
+
+
+//  FONTS
 @font-face {
   font-family: 'Gotham';
   src: url("../../fonts/gotham/GothamBook.woff") format("woff");
@@ -34,7 +41,7 @@ $narrowBlack: 'Gotham Narrow Black';
   font-family: $black;
   font-size: 3em;
   letter-spacing: -.3px;
-  line-height: .95em;
+  line-height: .96em;
   margin: 0;
 }
 
@@ -59,10 +66,10 @@ $narrowBlack: 'Gotham Narrow Black';
   line-height: 1.5em;
 }
 
-@mixin bodyTxtMedium() {
+@mixin bodyTxtBold() {
   font-family: $bold;
   font-size: 1em;
-  line-height: 1.5em;
+  line-height: 1em;
 }
 
 @mixin filter($radius) {

@@ -1,13 +1,18 @@
 .movie-page-container {
-  display: grid;
-  grid-template-columns: 72% 28%;
+  // display: grid;
+  // grid-template-columns: 72% 28%;
   color: #222;
 
   .backdrop-container {
-    // border: 1px red solid;
+    position: fixed;
+    height: 100vh;
+    width: 70%;
+    top: 0;
+    left: 0;
 
     img {
       object-fit: cover;
+      overflow: hidden;
       width: 100%;
       height: 100vh;
       @include brightness(.7);
@@ -16,7 +21,14 @@
 
   .movie-container {
     background: #fff;
-    padding: 5em 3em;
+    padding: 5em 48px;
+    position: fixed;
+    height: calc(100vh - 5em);
+    width: calc(30vw - 96px);
+    top: 0;
+    right: 0;
+    bottom: 0;
+    overflow-y: auto;
 
     .movie-title {
       margin: 0 0 12px 0;
@@ -34,7 +46,8 @@
     }
 
     .movie-rate {
-      margin: 0 0 48px 0;
+      margin: 0 0 24px 0;
+      display: flex;
     }
 
     .movie-overview {
@@ -47,23 +60,61 @@
 
       .movie-genre {
         margin: 0 12px 0 0;
-        @include bodyTxtMedium();
+        @include bodyTxtBold();
       }
     }
 
-    .movie-crew {
-      .movie-crew-list {
+    .movie-credits {
+      margin: 0 0 48px 0;
+
+      .movie-credits-list {
         display: flex;
 
-        .movie-crew-member {
+        .movie-credit {
           margin: 0 24px 0 0;
 
-          .movie-crew-member-name {
-            @include bodyTxtMedium();
+          .movie-credit-img {
+            margin: 0 0 12px 0;
+          }
+
+          .movie-credit-name {
+            @include bodyTxtBold();
+            margin: 0 0 6px 0;
           }
         }
       }
 
     }
   }
+}
+
+.MuiRating-root {
+  color: $red !important;
+  font-size: 2.5em !important;
+
+  .MuiRating-iconEmpty {
+    color: rgba(255, 0, 0, 0.1) !important;
+  }
+}
+
+
+.MuiIconButton-root {
+  color: $red !important;
+  padding: 0 !important;
+
+  .MuiSvgIcon-root {
+    height: 1.5em !important;
+    width: 1.5em !important;
+
+  }
+
+
+  .MuiIconButton-label.heartIcon {
+    color: $red;
+  }
+}
+
+.styles_loading-bar__13vNf  {
+  box-shadow: 0px 0px 20px 1px $red;
+  background: $red !important;
 }
