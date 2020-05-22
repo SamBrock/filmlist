@@ -6,7 +6,7 @@ import Header from './components/layout/Header'
 import './styles/main.scss'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import MovieDetailPage from '../src/pages/MovieDetailPage';
-import LoadingBar from './components/LoadingBar';
+import LoadingBar from './components/layout/LoadingBar';
 
 const store = configureStore();
 
