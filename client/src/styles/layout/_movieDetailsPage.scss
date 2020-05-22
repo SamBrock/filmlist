@@ -10,6 +10,10 @@
     top: 0;
     left: 0;
 
+    @media (min-width: 2000px) {
+      width: calc(100% - 400px);
+    }
+
     img {
       object-fit: cover;
       overflow: hidden;
@@ -20,7 +24,7 @@
   }
 
   .movie-container {
-    background: #fff;
+    background: #edf2f4;
     padding: 5em 48px;
     position: fixed;
     height: calc(100vh - 5em);
@@ -29,6 +33,7 @@
     right: 0;
     bottom: 0;
     overflow-y: auto;
+    max-width: 480px;
 
     .movie-title {
       margin: 0 0 12px 0;
@@ -42,12 +47,26 @@
 
       span {
         margin: 0 6px 0 0;
+
+        &:nth-last-child(3):after,
+        &:nth-last-child(2):after {
+          content: "|";
+          margin: 0 0 0 6px;
+        }
       }
     }
 
-    .movie-rate {
-      margin: 0 0 24px 0;
+    .movie-buttons {
       display: flex;
+      margin: 0 0 48px 0;
+
+      .movie-rate {
+        margin: 0 48px 0 0;
+      }
+
+      .movie-button {
+        margin: 0 48px 0 0;
+      }
     }
 
     .movie-overview {
@@ -60,7 +79,7 @@
 
       .movie-genre {
         margin: 0 12px 0 0;
-        @include bodyTxtBold();
+        @include highlightTxt();
       }
     }
 
@@ -71,19 +90,55 @@
         display: flex;
 
         .movie-credit {
-          margin: 0 24px 0 0;
+
 
           .movie-credit-img {
             margin: 0 0 12px 0;
+
+            img {
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
+            }
+
+            .no-profile {
+              width: 138px;
+              height: 175px;
+              background: #222;
+            }
           }
 
           .movie-credit-name {
-            @include bodyTxtBold();
+            @include highlightTxt();
             margin: 0 0 6px 0;
           }
+
+          .movie-credit-role {
+            @include subTxt();
+            color: rgba(0, 0, 0, 0.7);
+          }
+        }
+
+        .movie-crew {
+          margin: 0 24px 0 0;
         }
       }
 
+      .movie-cast-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .carousel-btn {
+          margin: 0 0 2px 0;
+          color: #222;
+
+          .MuiSvgIcon-root {
+            height: .6em !important;
+            width: .6em !important;
+          }
+        }
+      }
     }
   }
 }
@@ -105,7 +160,6 @@
   .MuiSvgIcon-root {
     height: 1.5em !important;
     width: 1.5em !important;
-
   }
 
 
@@ -114,7 +168,7 @@
   }
 }
 
-.styles_loading-bar__13vNf  {
-  box-shadow: 0px 0px 20px 1px $red;
-  background: $red !important;
+.owl-theme {
+  position: absolute;
+  width: calc(100%) !important;
 }
