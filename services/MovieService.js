@@ -7,6 +7,7 @@ function getMovieDetails(movie) {
     title: movie.title,
     backdrop_path: movie.backdrop_path,
     genres: movie.genres,
+    tagline: movie.tagline,
     overview: movie.overview,
     release_date: movie.release_date,
     year: new Date(movie.release_date).getFullYear(),
