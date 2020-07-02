@@ -11,7 +11,7 @@ const api_key = config.get('TMDb.api_key');
 
 // @route GET movies
 router.get('/', (req, res) => {
-  const url = `/movie/27205/recommendations?api_key=${api_key}&language=en-US&page=1`;
+  const url = `/movie/421/recommendations?api_key=${api_key}&language=en-US&page=1`;
   axios.get(baseURL + url)
     .then(result => res.send(result.data))
     .catch(err => res.send(err));

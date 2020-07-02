@@ -4,7 +4,13 @@ import { apiRequest } from './api';
 const slice = createSlice({
   name: 'movie',
   initialState: {
-    data: [],
+    data: {
+      genres: [],
+      credits: {
+        crew: [],
+        cast: []
+      }
+    },
     loading: false
   },
   reducers: {
