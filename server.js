@@ -5,11 +5,18 @@ const cors = require('cors');
 
 const movies = require('./routes/api/movies');
 const watchlist = require('./routes/api/watchlist');
+const users = require('./routes/api/users');
+const auth = require('./routes/api/auth');
 
 const app = express();
 
 app.use(express.json());
 app.use(cors());
+
+if(!config.get('jwtPrivateKey')) {
+  console.error('FATAL ERROR: jwtPrivateKey is not defined.');
+  process.exit(1);
+}
 
 // DB Config
 const db = config.get('DB.mongoURI');
@@ -21,6 +28,8 @@ mongoose.connect(db)
 
 // Use routes
 app.use('/api/movies', movies);
+app.use('/api/users', users);
+app.use('/api/auth', auth);
 app.use('/api/watchlist', watchlist);
 
 const port = process.env.PORT || 3001;

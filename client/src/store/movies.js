@@ -13,7 +13,7 @@ const slice = createSlice({
     moviesRequested: (movies, action) => {
       movies.loading = true;
     },
-    moviesRecieved: (movies, action) => {
+    moviesReceived: (movies, action) => {
       movies.list = action.payload.results;
       movies.loading = false;
       movies.lastFetch = Date.now();
@@ -26,7 +26,7 @@ const slice = createSlice({
 
 export default slice.reducer;
 
-const { moviesRequested, moviesRecieved, moviesRequestFailed } = slice.actions;
+const { moviesRequested, moviesReceived, moviesRequestFailed } = slice.actions;
 
 // Action Creators
 export const loadMovies = () => (dispatch, getState) => {
@@ -38,7 +38,7 @@ export const loadMovies = () => (dispatch, getState) => {
   dispatch(apiRequest({
     url: '/api/movies/',
     onStart: moviesRequested.type,
-    onSuccess: moviesRecieved.type,
+    onSuccess: moviesReceived.type,
     onError: moviesRequestFailed.type
   }))
 };

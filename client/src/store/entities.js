@@ -1,10 +1,15 @@
 import { combineReducers } from 'redux';
+
+import authReducer from './auth';
+import errorReducer from './error';
 import moviesReducer from './movies';
 import movieReducer from './movie';
 import loadingBarReducer from './loadingBar';
 
 export default combineReducers({
-    movies: moviesReducer,
-    movie: movieReducer,
-    loadingbar: loadingBarReducer
+  auth: authReducer,
+  error: errorReducer,
+  movies: moviesReducer,
+  movie: movieReducer,
+  loadingbar: loadingBarReducer
 })

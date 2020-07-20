@@ -16,13 +16,12 @@ export default function MovieDetailPage({ match }) {
 
   const movie = useSelector(getMovieDetails);
 
-  const handleClick = () => {
-    dispatch(addMovieToWatchlist(movieId)); //
+  // Movie buttons events
+  const handleWatchlist = () => {
+    dispatch(addMovieToWatchlist(movieId));
   }
 
   const isLoading = useSelector(state => state.entities.movie.loading);
-  console.log(isLoading);
-
   if (isLoading) {
     dispatch(start());
     return null;
@@ -44,7 +43,7 @@ export default function MovieDetailPage({ match }) {
           <span>{movie.runtime}</span>
           <span>R</span>
         </div>
-        <MovieButtons />
+        <MovieButtons addWatchlist={handleWatchlist}/>
         <div className="movie-overview">
           {movie.overview}
         </div>

@@ -11,7 +11,7 @@ function getMovieDetails(movie) {
     overview: movie.overview,
     release_date: movie.release_date,
     year: new Date(movie.release_date).getFullYear(),
-    runtime: `${moment.duration({"minutes": movie.runtime}).hours()}h ${moment.duration({"minutes": movie.runtime}).minutes()}m`,
+    runtime: `${moment.duration({ "minutes": movie.runtime }).hours()}h ${moment.duration({ "minutes": movie.runtime }).minutes()}m`,
     credits: movie.credits
   }
 
@@ -30,6 +30,7 @@ function getMovieDetails(movie) {
       if (member.job === 'Screenplay') return { ...obj, job: 'Writer' };
       return { ...obj, job: member.job };
     })
+    .sort((a, b) => (a.job > b.job) ? 1 : -1);
 
   const groupCrew = movie.credits.crew
     .reduce((member, i) => {
@@ -41,8 +42,7 @@ function getMovieDetails(movie) {
       return member
     }, {})
 
-    movie.credits.crew = Object.values(groupCrew);
-    
+  movie.credits.crew = Object.values(groupCrew);
 
   return movie;
 }
