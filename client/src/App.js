@@ -24,7 +24,7 @@ export default function App() {
       <Provider store={store}>
         <div className="container">
           <div data-router-wrapper>
-            <RegisterModal />
+            {/* <RegisterModal /> */}
             <LoadingBar />
             <Header />
             <Switch>
