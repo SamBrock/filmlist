@@ -1,11 +1,14 @@
 import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { registerUser, getIsAuthenticated } from '../../store/auth'
+import { getRegisterError } from '../../store/error';
 
 export default function RegisterModal() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const registerError = useSelector(getRegisterError);
 
   const dispatch = useDispatch();
 
@@ -14,12 +17,21 @@ export default function RegisterModal() {
     dispatch(registerUser(username, email, password));
   }
 
+  const verifyPassword = () => {
+    if (document.getElementById('password').value === document.getElementById('confirmPassword').value) return true; else return false;
+  }
+
   return (
-    <div class="register-modal">
-      <input type="text" name="username" placeholder="Username" onChange={(e) => setUsername(e.target.value)}></input>
-      <input type="text" name="email" placeholder="Email" onChange={(e) => setEmail(e.target.value)}></input>
-      <input type="password" name="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)}></input>
-      <input type="submit" value="Submit" onClick={(e) => handleSubmit(e)} />
+    <div className="register-modal-container">
+      <div className="register-modal center">
+        <h2>Register</h2>
+        <input type="text" name="email" placeholder="Email" onChange={(e) => setEmail(e.target.value)}></input>
+        <input type="text" name="username" placeholder="Username" onChange={(e) => setUsername(e.target.value)}></input>
+        <input id="password" type="password" name="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)}></input>
+        <input id="confirmPassword" type="password" name="confirm-password" placeholder="Confirm password" onChange={(e) => setPassword(e.target.value)}></input>
+        <input className="btn-primary" type="submit" value="Register" onClick={(e) => handleSubmit(e)} />
+        <span>{registerError}</span>
+      </div>
     </div>
   )
 }
