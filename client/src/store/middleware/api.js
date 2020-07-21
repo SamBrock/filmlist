@@ -11,15 +11,24 @@ const api = ({ dispatch }) => next => async action => {
 
   try {
     const response = await axios.request({ baseURL: 'http://localhost:3001', url, method, data, config });
-    
-    // General
+    console.log(response);
+
     dispatch(actions.apiRequestSuccess(response.data))
-    // Specific
     if (onSuccess) dispatch({ type: onSuccess, payload: response.data })
-  } catch (error) {
-    dispatch(actions.apiRequestFailed(error.message));
-    if (onError) dispatch({ type: onError, payload: error.message })
+  } catch (err) {
+    dispatch(actions.apiRequestFailed());
+    if (onError) dispatch({ type: onError, payload: { msg: err.response.data.msg, status: err.response.status } })
   }
+
+  // axios.request({ baseURL: 'http://localhost:3001', url, method, data, config })
+  //   .then(res => {
+  //     dispatch(actions.apiRequestSuccess(res.data));
+  //     if (onSuccess) dispatch({ type: onSuccess, payload: res.data })
+  //   })
+  //   .catch(err => {
+  //     // dispatch(actions.apiRequestFailed(err.response.data));
+  //     if (onError) dispatch({ type: onError, payload: { msg: err.response.data, status: err.response.status } })
+  //   })
 }
 
 export default api;

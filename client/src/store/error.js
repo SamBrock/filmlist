@@ -5,12 +5,12 @@ const slice = createSlice({
   initialState: {
     id: null,
     status: null,
-    msg:{}
+    msg: ''
   },
   reducers: {
     errorsRecieved: (error, action) => {
-      error.id = action.payload.id;
-      error.status = action.payload.status;
+      // error.id = action.payload.id;
+      // error.status = action.payload.status;
       error.msg = action.payload.msg;
     },
     errorsDeleted: (error, action) => {
@@ -23,12 +23,12 @@ const slice = createSlice({
 
 export default slice.reducer;
 
-const {errorsRecieved, errorsDeleted} = slice.actions;
+export const { errorsRecieved, errorsDeleted } = slice.actions;
 
 export const returnErrors = (msg, status, id = null) => {
   return {
     type: errorsRecieved.type,
-    payload: {msg, status, id}
+    payload: { msg, status, id }
   }
 }
 
@@ -37,3 +37,6 @@ export const deleteErrors = () => {
     type: errorsDeleted.type
   }
 }
+
+// Selectors
+export const getRegisterError = state => state.entities.error.msg;
