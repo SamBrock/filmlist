@@ -6,7 +6,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import MovieDetailPage from '../src/pages/MovieDetailPage';
 import LoadingBar from './components/layout/LoadingBar';
 
-import { Provider, useSelector, useDispatch } from 'react-redux'
+import { Provider } from 'react-redux'
 import configureStore from './store/configureStore';
 import { loadUser } from './store/auth';
 import RegisterModal from './components/auth/RegisterModal';
@@ -14,8 +14,7 @@ import RegisterModal from './components/auth/RegisterModal';
 const store = configureStore();
 
 export default function App() {
-  // const dispatch = useDispatch();
-  
+
   useEffect(() => {
     store.dispatch(loadUser())
   })

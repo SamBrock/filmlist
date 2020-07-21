@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { apiRequest } from './api';
+import { errorsRecieved } from "./error";
 
 const slice = createSlice({
   name: 'user',
@@ -47,7 +48,8 @@ export const registerUser = (username, email, password) => dispatch => {
     method: 'post',
     onStart: userRequested.type,
     onSuccess: userRequestReceived.type,
-    onError: userRequestFailed.type,
+    onFail: userRequestFailed.type,
+    onError: errorsRecieved.type,
     data: { username, email, password },
     config: config
   }))
@@ -56,7 +58,6 @@ export const registerUser = (username, email, password) => dispatch => {
 export const loadUser = () => (dispatch, getState) => {  
   dispatch(apiRequest({
     url: '/api/auth/user',
-    method: 'post',
     onStart: userRequested.type,
     onSuccess: userReceived.type,
     onError: userRequestFailed.type,
