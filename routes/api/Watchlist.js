@@ -1,5 +1,7 @@
 const express = require('express');
 const router = express.Router();
+const jwt = require('jsonwebtoken');
+const config = require('config');
 
 // const Watchlist = require('../../models/watchlist');
 const User = require('../../models/user');
@@ -14,16 +16,17 @@ const auth = require('../../middleware/auth');
 // })
 
 // @route POST api/watchlist
-router.post('/:username', auth, async (req, res) => {
-  const username = req.params.username;
-  const user = await User.findOne({ username: username });
+router.post('/', auth, async (req, res) => {
+  const token = req.header('x-auth-token');
+  const decoded = jwt.verify(token, config.get('jwtPrivateKey'));
+  const userId = decoded.id;
+  const user = await User.findById(userId);
 
   user.watchlist.push({ filmId: req.body.filmId });
 
   user.save()
-    .then(movie => {
-      res.json(movie);
-      console.log(movie);
+    .then(() => {
+      res.status(200);
     });
 })
 
