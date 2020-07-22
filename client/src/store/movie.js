@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { apiRequest } from './api';
+import { tokenConfig } from './auth';
 
 const slice = createSlice({
   name: 'movie',
@@ -40,15 +41,15 @@ export const loadMovie = (id) => dispatch => {
   }))
 }
 
-export const addMovieToWatchlist = (id) => dispatch => {
+export const addMovieToWatchlist = (id) => (dispatch, getState) => {
   dispatch(apiRequest({
     url: '/api/watchlist',
-    method : 'post',
-    data: {
-      filmId: id
-    }
+    method: 'post',
+    data: { filmId: id },
+    headers: tokenConfig(getState).headers
   }))
 }
 
 // Selector
 export const getMovieDetails = state => state.entities.movie.data;
+
