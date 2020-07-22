@@ -9,27 +9,28 @@ const User = require('../../models/user');
 // @route   POST api/users
 // @desc    Register users
 // @access  Public
-router.post('/', async (req, res) => {
-  const { error } = validateUser(req.body);
-  if (error) return res.status(400).send({ msg: error.details[0].message });
+// router.post('/', async (req, res) => {
+//   const { error } = validateUser(req.body);
+//   if (error) return res.status(400).send({ id: 'REGISTER_ERROR', msg: error.details[0].message});
 
-  let user = await User.findOne({ email: req.body.email });
-  if (user) return res.status(400).send({ msg: 'User already registered.' });
+//   let user = await User.findOne({ email: req.body.email });
+//   if (user) return res.status(400).send({ type: 'REGISTER_ERROR', msg: 'User already registered.' });
 
-  user = new User(_.pick(req.body, ['username', 'email', 'password']));
+//   user = new User(_.pick(req.body, ['username', 'email', 'password']));
 
-  user.password = await user.generateHash(user.password);
+//   user.password = await user.generateHash(user.password);
 
-  try {
-    await user.save();
-  } catch (ex) {
-    if(ex.code === 11000) ex.message = 'Username already exists.';
-    return res.status(400).send({ msg: ex.message });
-  }
+//   try {
+//     await user.save();
+//   } catch (ex) {
+//     if(ex.code === 11000) ex.message = 'Username already exists.';
+//     return res.status(400).send({ msg: ex.message });
+//   }
 
-  const token = user.generateAuthToken();
-  return res.header('x-auth-token', token).send(_.pick(user, ['username', ['email']]));
-})
+//   const token = user.generateAuthToken();
+//   // return res.header('x-auth-token', token).send(_.pick(user, ['username', ['email']]));
+//   return res.status(200).send({token, user: { id: user._id, username: user.username, email: user.email}})
+// })
 
 module.exports = router;
 
