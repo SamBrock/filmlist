@@ -1,4 +1,4 @@
-import React, { useEffect, Fragment } from 'react'
+import React, { Fragment } from 'react'
 import Logo from '../../images/f-logo.png'
 import Search from '../../images/search.png'
 import { Link } from 'react-router-dom'
@@ -7,6 +7,7 @@ import LoginModal from '../auth/LoginModal'
 import Logout from '../auth/Logout'
 import { useSelector } from 'react-redux'
 import { getIsAuthenticated, getUser } from '../../store/auth'
+import ProfileBtn from '../ProfileBtn'
 
 export default function Header() {
   const isAuthenticated = useSelector(getIsAuthenticated);
@@ -14,24 +15,31 @@ export default function Header() {
 
   const authLinks = (
     <Fragment>
-      <Logout />
+      <ProfileBtn />
+      {/* <Logout /> */}
     </Fragment>
   )
 
   const guestLinks = (
     <Fragment>
-      <RegisterModal />
-      <LoginModal />
+      <a className="auth-btn">Log In</a>
+      {/* <a className="auth-btn btn-border">Register</a> */}
+
+      {/* <RegisterModal />
+      <LoginModal /> */}
     </Fragment>
   )
 
   return (
     <header>
-      <Link to="/"><img src={Logo} className="logo" alt="Logo" /></Link>
-      <img src={Search} className="search-btn" alt="Search button" />
-      {isAuthenticated ? authLinks : guestLinks}
+      <nav className="left-nav">
+        <Link to="/"><img src={Logo} className="logo" alt="Logo" /></Link>
+        {/* <img src={Search} className="search-btn" alt="Search button" /> */}
+      </nav>
+      <nav className="right-nav">
+        {isAuthenticated ? authLinks : guestLinks}
+      </nav>
     </header>
   )
 }
-
 

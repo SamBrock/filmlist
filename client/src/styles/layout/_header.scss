@@ -1,25 +1,50 @@
 header {
-  display: grid;
-  grid-template-rows: 166px 83px 83px;
   position: fixed;
   top: 0;
-  margin: 24px;
-  background-color: transparent;
-  z-index: 10;
-
-  .logo,
-  .search-btn,
-  .watchlist-btn {
-    cursor: pointer;
-  }
-
-  .logo {
-    height: 35px;
-  }
-
-  .search-btn,
-  .watchlist-btn {
-    height: 24px;
+  display: flex;
+  justify-content: space-between;
+  width: 100vw;
+  
+  nav {
     display: flex;
+    width: 10%;
+    max-width: 190px;
+    z-index: 10;
+  }
+  
+  nav.left-nav {
+    margin: 24px 48px;
+
+    .logo,
+    .search-btn,
+    .watchlist-btn {
+      cursor: pointer;
+    }
+
+    .logo {
+      height: 3em;
+    }
+
+    .search-btn,
+    .watchlist-btn {
+      height: 24px;
+      display: flex;
+    }
+  }
+
+  nav.right-nav {
+    margin: 24px 0;
+
+    .auth-btn {
+      border: 1px transparent solid;
+      padding: 8px 12px;
+      // margin: 0 12px;
+      font-size: .9em;
+      line-height: 1em;
+    }
+
+    .btn-border {
+      border: 1px #ebebeb solid;
+    }
   }
 }
