@@ -14,7 +14,7 @@ router.post('/register', async (req, res) => {
   const { error } = validateUser(req.body);
   if (error) return res.status(400).send({ id: 'REGISTER_ERROR', msg: error.details[0].message });
 
-  let user = await User.findOne({ email: req.body.email });
+  let user = await User.findOne({$or: [{ email: req.body.email }, { username: req.body.username }]}).collation({ locale: 'en', strength: 2 });
   if (user) return res.status(400).send({ type: 'REGISTER_ERROR', msg: 'User already registered.' });
 
   user = new User(_.pick(req.body, ['username', 'email', 'password']));
@@ -25,7 +25,7 @@ router.post('/register', async (req, res) => {
     await user.save();
   } catch (ex) {
     if (ex.code === 11000) ex.message = 'Username already exists.';
-    return res.status(400).send({ msg: ex.message });
+    return res.status(400).send({ id: 'REGISTER_ERROR', msg: ex.message });
   }
 
   const token = user.generateAuthToken();
@@ -33,7 +33,9 @@ router.post('/register', async (req, res) => {
   return res.status(200).send({ token, user: { id: user._id, username: user.username, email: user.email } })
 })
 
-// @route POST api/auth
+// @route   POST api/auth
+// @desc    Login user
+// @access  Public
 router.post('/login', async (req, res) => {
   console.log(req.body);
   if (!req.body.email || !req.body.password) return res.status(400).send({ id: 'LOGIN_ERROR', msg: 'Please enter all fields.' });
@@ -48,6 +50,9 @@ router.post('/login', async (req, res) => {
   res.send({ token, user: { id: user._id, username: user.username, email: user.email } });
 })
 
+// @route   POST api/auth
+// @desc    Get user info
+// @access  Private
 router.get('/user', auth, async (req, res) => {
   try {
     const user = await User.findById(req.user.id).select('-password');
