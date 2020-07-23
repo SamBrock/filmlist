@@ -2,10 +2,12 @@
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-gap: 32px;
-  box-sizing: border-box;
-  width: 1200px;
+  // box-sizing: border-box;
+  // width: 1200px;
   margin: 0 auto;
-  margin-top: 5em !important;
+  margin-top: 6em !important;
+  width: 75%;
+  max-width: 1400px;
 
   .movie {
     min-width: 100%;
@@ -20,10 +22,11 @@
       min-height: 414px;
       margin: 0 auto;
       margin: 0 0 12px 0;
+      height: 100%;
     }
 
     .movie-poster-container {
-      height: 414px;
+      // height: 414px;
       width: 100%;
       top: 0;
       left: 0;
@@ -44,8 +47,9 @@
       left: 0;
 
       .movie-backdrop-container {
-        height: 414px;
+        // height: 414px;
         width: 100%;
+        height: 100%;
         // top: 0;
         // left: 0;
         overflow: hidden;
