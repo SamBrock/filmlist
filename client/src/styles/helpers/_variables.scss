@@ -2,18 +2,20 @@
 $red: #e71d36;
 
 //  FONTS
-@font-face {
-  font-family: 'Netto';
-  src: url("../../fonts/netto/NettoPro.otf") format("woff");
-}
+@import url('https://fonts.googleapis.com/css2?family=Maven+Pro:wght@400;500;600;700&display=swap');
 
-@font-face {
-  font-family: 'Netto Bold';
-  src: url("../../fonts/netto/NettoPro-Bold.otf") format("woff");
-}
+// @font-face {
+//   font-family: 'Maven Pro', sans-serif;
+//   src: url("../../fonts/netto/NettoPro.otf") format("woff");
+// }
 
-$regular: 'Netto';
-$bold: 'Netto Bold';
+// @font-face {
+//   font-family: 'Netto Bold';
+//   src: url("../../fonts/netto/NettoPro-Bold.otf") format("woff");
+// }
+
+$regular: 'Maven Pro';
+$bold: 'Maven Pro';
 
 @mixin headerTxt() {
   font-family: $bold;

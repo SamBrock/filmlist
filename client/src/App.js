@@ -4,6 +4,7 @@ import LeftNav from './components/layout/LeftNav'
 import RightNav from './components/layout/RightNav';
 import './styles/main.scss'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import LoginPage from '../src/pages/LoginPage';
 import MovieDetailPage from '../src/pages/MovieDetailPage';
 import LoadingBar from './components/layout/LoadingBar';
 
@@ -23,13 +24,12 @@ export default function App() {
     <Router>
       <Provider store={store}>
         <LoadingBar />
-        <div className="container">
           <Header />
           <Switch>
             <Route path="/movie/:id" component={MovieDetailPage}></Route>
+            <Route path="/login" component={LoginPage}></Route>
             <Route exact path="/" component={Movies} />
           </Switch>
-        </div>
       </Provider>
     </Router>
   )

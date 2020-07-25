@@ -4,16 +4,16 @@ header {
   display: flex;
   justify-content: space-between;
   width: 100vw;
+  z-index: 10;
   
   nav {
     display: flex;
     width: 10%;
     max-width: 190px;
-    z-index: 10;
   }
   
   nav.left-nav {
-    margin: 24px 48px;
+    margin: 32px;
 
     .logo,
     .search-btn,
