@@ -4,6 +4,7 @@ import authReducer from './auth';
 import errorReducer from './error';
 import moviesReducer from './movies';
 import movieReducer from './movie';
+import watchlistReducer from './watchlist';
 import loadingBarReducer from './loadingBar';
 
 export default combineReducers({
@@ -11,5 +12,6 @@ export default combineReducers({
   error: errorReducer,
   movies: moviesReducer,
   movie: movieReducer,
+  watchlist: watchlistReducer,
   loadingbar: loadingBarReducer
 })
