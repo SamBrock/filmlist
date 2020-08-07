@@ -17,7 +17,7 @@ const slice = createSlice({
     userReceived: (user, action) => {
       user.isAuthenticated = true;
       user.isLoading = false;
-      user.user = action.payload.user;
+      user.user = action.payload;
     },
     userRequestReceived: (user, action) => {
       user.isAuthenticated = true;
@@ -68,7 +68,7 @@ export const loadUser = () => (dispatch, getState) => {
     onStart: userRequested.type,
     onSuccess: userReceived.type,
     onError: userRequestFailed.type,
-    config: tokenConfig(getState).headers
+    headers: tokenConfig(getState).headers
   }))
 }
 
