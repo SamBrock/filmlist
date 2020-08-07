@@ -37,7 +37,6 @@ router.post('/register', async (req, res) => {
 // @desc    Login user
 // @access  Public
 router.post('/login', async (req, res) => {
-  console.log(req.body);
   if (!req.body.email || !req.body.password) return res.status(400).send({ id: 'LOGIN_ERROR', msg: 'Please enter all fields.' });
 
   let user = await User.findOne({ email: req.body.email });
@@ -55,7 +54,7 @@ router.post('/login', async (req, res) => {
 // @access  Private
 router.get('/user', auth, async (req, res) => {
   try {
-    const user = await User.findById(req.user.id).select('-password');
+    const user = await User.findById(req.user.id).select('-password').select('-watchlist');
     if (!user) throw Error('User Does not exist');
     res.send(user);
   } catch (err) {
