@@ -18,44 +18,42 @@ $regular: 'Maven Pro';
 $bold: 'Maven Pro';
 
 @mixin headerTxt() {
-  font-family: $bold;
   font-size: 3em;
-  letter-spacing: .5px;
   line-height: .96em;
   margin: 0;
-}
-
-@mixin subHeadingTxt() {
-  font-family: $bold;
-  font-size: .85em;
-  line-height: 1.15;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-}
-
-@mixin infoTxt() {
-  font-family: $bold;
-  font-size: .9em;
   letter-spacing: -.3px;
 }
 
+@mixin subHeadingTxt() {
+  font-size: .85em;
+  line-height: 1.15;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+@mixin infoTxt() {
+  font-size: .9em;
+  letter-spacing: -.3px;
+  font-weight: 600;
+}
+
 @mixin bodyTxt() {
-  font-family: $regular;
   font-size: 1em;
   // letter-spacing: -.3px;
   line-height: 1.7em;
+  
 }
 
 @mixin highlightTxt() {
-  font-family: $bold;
   font-size: 1em;
   line-height: 1em;
-  letter-spacing: .5px;
+  letter-spacing: -.3px;
+  font-weight: 600;
 }
 
 @mixin subTxt() {
-  font-family: $regular;
   font-size: .9em;
+  font-weight: 500;
 }
 
 
