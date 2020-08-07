@@ -12,7 +12,6 @@ const api = ({ dispatch }) => next => async action => {
   try {
     // const response = await axios.request({ baseURL: 'http://localhost:3001', url, method, data, config });
     const response = await axios({ baseURL: 'http://localhost:3001', url, method, data, headers });
-    console.log(response);
 
     dispatch(actions.apiRequestSuccess(response.data))
     if (onSuccess) dispatch({ type: onSuccess, payload: response.data })
