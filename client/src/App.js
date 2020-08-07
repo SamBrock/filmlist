@@ -1,35 +1,39 @@
 import React, { useEffect } from 'react';
 import Movies from './components/Movies'
-import LeftNav from './components/layout/LeftNav'
-import RightNav from './components/layout/RightNav';
 import './styles/main.scss'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-import LoginPage from '../src/pages/LoginPage';
-import MovieDetailPage from '../src/pages/MovieDetailPage';
 import LoadingBar from './components/layout/LoadingBar';
+import Header from './components/layout/Header';
+
+import LoginPage from '../src/pages/LoginPage';
+import RegisterPage from './pages/RegisterPage';
+import MovieDetailPage from '../src/pages/MovieDetailPage';
+import WatchlistPage from '../src/pages/WatchlistPage';
 
 import { Provider } from 'react-redux'
 import configureStore from './store/configureStore';
-import Header from './components/layout/Header.js';
+import { loadUser } from './store/auth';
 
 const store = configureStore();
 
 export default function App() {
 
-  // useEffect(() => {
-  //   store.dispatch(loadUser())
-  // })
+  useEffect(() => {
+    store.dispatch(loadUser());
+  })
 
   return (
     <Router>
       <Provider store={store}>
         <LoadingBar />
-          <Header />
-          <Switch>
-            <Route path="/movie/:id" component={MovieDetailPage}></Route>
-            <Route path="/login" component={LoginPage}></Route>
-            <Route exact path="/" component={Movies} />
-          </Switch>
+        <Header />
+        <Switch>
+          <Route path="/movie/:id" component={MovieDetailPage}></Route>
+          <Route path="/register" component={RegisterPage}></Route>
+          <Route path="/login" component={LoginPage}></Route>
+          <Route path="/:username" component={WatchlistPage}></Route>
+          <Route exact path="/" component={Movies} />
+        </Switch>
       </Provider>
     </Router>
   )
