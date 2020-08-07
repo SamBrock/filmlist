@@ -12,6 +12,7 @@ import ProfileBtn from '../ProfileBtn'
 export default function Header() {
   const isAuthenticated = useSelector(getIsAuthenticated);
   const user = useSelector(getUser);
+  // console.log(user);
 
   const authLinks = (
     <Fragment>
@@ -34,7 +35,8 @@ export default function Header() {
         {/* <img src={Search} className="search-btn" alt="Search button" /> */}
       </nav>
       <nav className="right-nav">
-        {/* {isAuthenticated ? authLinks : guestLinks} */}
+        <span class="username">{isAuthenticated ? user.username : ''}</span>
+        <Logout />
       </nav>
     </header>
   )
