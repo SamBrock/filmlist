@@ -6,7 +6,6 @@ import MovieButtons from '../components/MovieButtons';
 import Carousel from '../components/layout/Carousel';
 
 export default function MovieDetailPage({ match }) {
-
   const dispatch = useDispatch();
 
   const movieId = parseInt(match.params.id);
@@ -22,6 +21,7 @@ export default function MovieDetailPage({ match }) {
   }
 
   const isLoading = useSelector(state => state.entities.movie.loading);
+  console.log(isLoading);
   if (isLoading) {
     dispatch(start());
     return null;
