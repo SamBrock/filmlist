@@ -1,7 +1,7 @@
 .movie-page-container {
   // display: grid;
   // grid-template-columns: 72% 28%;
-  color: #222;
+  color: $white;
 
   .backdrop-container {
     position: fixed;
@@ -24,8 +24,9 @@
   }
 
   .movie-container {
-    background: #edf2f4;
-    padding: 5em 48px;
+    background: $black;
+    padding: 5em 52px;
+    margin-right: calc(6em + 64px);
     position: fixed;
     height: calc(100vh - 5em);
     width: calc(30vw - 96px);
@@ -33,7 +34,10 @@
     right: 0;
     bottom: 0;
     overflow-y: auto;
+    @include custom-scroll-bar();
     max-width: 480px;
+    border-right: 1px $blue1opacity solid;
+    direction:ltr;
 
     .movie-title {
       margin: 0 0 12px 0;
@@ -43,7 +47,7 @@
       @include infoTxt();
       color: rbg(0, 0, 0);
       margin: 0 0 24px 0;
-      color: rgba(0, 0, 0, 0.4);
+      color: rgba(255, 255, 255, 0.4);
 
       span {
         margin: 0 6px 0 0;
@@ -115,7 +119,7 @@
 
           .movie-credit-role {
             @include subTxt();
-            color: rgba(0, 0, 0, 0.7);
+            color: rgba(255, 255, 255, 0.7);
           }
         }
 
@@ -144,17 +148,17 @@
 }
 
 .MuiRating-root {
-  color: $red !important;
+  color: $blue1 !important;
   font-size: 2.5em !important;
 
   .MuiRating-iconEmpty {
-    color: rgba(255, 0, 0, 0.1) !important;
+    color: $blue1opacity !important;
   }
 }
 
 
 .MuiIconButton-root {
-  color: $red !important;
+  color: $orange1 !important;
   padding: 0 !important;
 
   .MuiSvgIcon-root {
@@ -164,7 +168,7 @@
 
 
   .MuiIconButton-label.heartIcon {
-    color: $red;
+    color: $orange1;
   }
 }
 

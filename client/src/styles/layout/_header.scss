@@ -4,12 +4,14 @@ header {
   display: flex;
   justify-content: space-between;
   width: 100vw;
-  z-index: 10;
+  z-index: 1;
+  // border: 1px red solid;
+  box-sizing: border-box;
   
   nav {
     display: flex;
-    width: 10%;
-    max-width: 190px;
+    // width: 10%;
+    // max-width: 190px;
   }
   
   nav.left-nav {
@@ -33,18 +35,24 @@ header {
   }
 
   nav.right-nav {
-    margin: 24px 0;
+    margin: 30px 48px;
+    // border: 1px red solid;
+    justify-content: right;
 
-    .auth-btn {
-      border: 1px transparent solid;
-      padding: 8px 12px;
-      // margin: 0 12px;
-      font-size: .9em;
-      line-height: 1em;
-    }
+    // .auth-btn {
+    //   border: 1px transparent solid;
+    //   padding: 8px 12px;
+    //   // margin: 0 12px;
+    //   font-size: .9em;
+    //   line-height: 1em;
+    // }
 
-    .btn-border {
-      border: 1px #ebebeb solid;
-    }
+    // .btn-border {
+    //   border: 1px #ebebeb solid;
+    // }
+
+    // .username {
+    //   font-weight: 600;
+    // }
   }
 }

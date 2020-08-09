@@ -1,13 +1,13 @@
 .movies-container {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-gap: 32px;
+  grid-template-columns: repeat(5, 1fr);
+  grid-gap: 24px 32px;
   // box-sizing: border-box;
   // width: 1200px;
-  margin: 0 auto;
-  margin-top: 6em !important;
-  width: 75%;
-  max-width: 1400px;
+  margin: 83px 144px;
+  // margin-top:  !important;
+  // width: 100%;
+  // max-width: 1400px;
   // z-index: 110;
 
   .movie {
@@ -16,6 +16,7 @@
     position: relative;
     opacity: 0;
     cursor: pointer;
+    z-index: 2;
 
     .movie-poster-container,
     .movie-info-container {

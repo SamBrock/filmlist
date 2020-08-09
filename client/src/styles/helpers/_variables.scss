@@ -1,5 +1,12 @@
 // COLOURS
 $red: #e71d36;
+$white: #F2F2F2;
+$blue1: #3DF2E0;
+$blue2: #35F2D0;
+$orange1: #F27405;
+$orange2: #F25C05;
+$black: #0D0D0D;
+$blue1opacity: rgba(61,242,224, .1);
 
 //  FONTS
 @import url('https://fonts.googleapis.com/css2?family=Maven+Pro:wght@400;500;600;700&display=swap');
@@ -64,4 +71,33 @@ $bold: 'Maven Pro';
 
 @mixin brightness($brightness) {
   filter: brightness($brightness);
+}
+
+@mixin custom-scroll-bar() {
+  &::-webkit-scrollbar {
+    height: 10px;
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $blue2;
+  }
+}
+
+// no scroll bar
+@mixin no-scroll-bar() {
+  &::-webkit-scrollbar {
+    height: 0;
+    width: 0;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    height: 0;
+    width: 0;
+  }
+
+  &::-webkit-scrollbar-track {
+    height: 0;
+    width: 0;
+  }
 }
