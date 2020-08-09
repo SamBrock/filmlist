@@ -16,27 +16,27 @@ const slice = createSlice({
   },
   reducers: {
     movieRequested: (movie, action) => {
-      movie.loading = true
+      movie.loading = true;
     },
-    movieRecieved: (movie, action) => {
+    movieReceived: (movie, action) => {
       movie.data = action.payload;
       movie.loading = false;
     },
     movieRequestFailed: (movie, action) => {
-      movie.loading = false
+      movie.loading = false;
     }
   }
 })
 
 export default slice.reducer;
 
-const { movieRequested, movieRecieved, movieRequestFailed } = slice.actions;
+const { movieRequested, movieReceived, movieRequestFailed } = slice.actions;
 
 export const loadMovie = (id) => dispatch => {
   dispatch(apiRequest({
     url: `/api/movies/${id}`,
     onStart: movieRequested.type,
-    onSuccess: movieRecieved.type,
+    onSuccess: movieReceived.type,
     onError: movieRequestFailed.type
   }))
 }
