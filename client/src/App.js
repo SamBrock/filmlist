@@ -13,6 +13,7 @@ import WatchlistPage from '../src/pages/WatchlistPage';
 import { Provider } from 'react-redux'
 import configureStore from './store/configureStore';
 import { loadUser } from './store/auth';
+import SideNav from './components/layout/SideNav';
 
 const store = configureStore();
 
@@ -27,6 +28,7 @@ export default function App() {
       <Provider store={store}>
         <LoadingBar />
         <Header />
+        <SideNav />
         <Switch>
           <Route path="/movie/:id" component={MovieDetailPage}></Route>
           <Route path="/register" component={RegisterPage}></Route>
