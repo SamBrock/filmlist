@@ -8,6 +8,6 @@ export default function LoadingBar() {
   const loadingBarProgress = useSelector(state => state.entities.loadingbar.loadingBarProgress);
 
   return (
-      <LoadingBarTop progress={loadingBarProgress} height={1} color='white' />
+      <LoadingBarTop progress={loadingBarProgress} height={1} />
   )
 }
