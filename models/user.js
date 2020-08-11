@@ -11,6 +11,24 @@ const watchlistSchema = new Schema({
   }
 });
 
+const likeSchema = new Schema({
+  filmId: {
+    type: Number,
+    required: true
+  }
+});
+
+const ratingsSchema = new Schema({
+  filmId: {
+    type: Number,
+    required: true
+  },
+  rating: {
+    type: Number,
+    required: true
+  }
+});
+
 const userSchema = new Schema({
   username: {
     type: String,
@@ -26,7 +44,9 @@ const userSchema = new Schema({
     type: String,
     required: true
   },
-  watchlist: [watchlistSchema]
+  watchlist: [watchlistSchema],
+  ratings: [ratingsSchema],
+  likes: [likeSchema]
 });
 
 userSchema.methods.generateHash = async function (password) {
@@ -38,7 +58,7 @@ userSchema.methods.validPassword = async function (password) {
 };
 
 userSchema.methods.generateAuthToken = function () {
-  const token = jwt.sign({ id: this.id }, config.get('jwtPrivateKey'));
+  const token = jwt.sign({ id: this.id, username: this.username }, config.get('jwtPrivateKey'));
   return token;
 };
 

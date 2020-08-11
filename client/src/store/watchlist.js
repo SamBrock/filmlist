@@ -28,7 +28,7 @@ const { watchlistReceived, watchlistRequested, watchlistRequestFailed } = slice.
 
 export const loadWatchlist = (username) => dispatch => {
   dispatch(apiRequest({
-    url: `/api/watchlist/${username}`,
+    url: `/api/${username}/watchlist`,
     onStart: watchlistRequested.type,
     onSuccess: watchlistReceived.type,
     onError: watchlistRequestFailed.type
