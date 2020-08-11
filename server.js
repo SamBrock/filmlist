@@ -5,7 +5,7 @@ const cors = require('cors');
 
 const movies = require('./routes/api/movies');
 const watchlist = require('./routes/api/watchlist');
-const users = require('./routes/api/users');
+const user = require('./routes/api/user');
 const auth = require('./routes/api/auth');
 
 const app = express();
@@ -27,10 +27,9 @@ mongoose.connect(db)
   .catch(err => console.log('Error', err));
 
 // Use routes
-app.use('/api/movies', movies);
-app.use('/api/users', users);
 app.use('/api/auth', auth);
-app.use('/api/watchlist', watchlist);
+app.use('/api/movies', movies);
+app.use('/api', user);
 
 const port = process.env.PORT || 3001;
 
