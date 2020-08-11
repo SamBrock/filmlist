@@ -6,22 +6,22 @@ const slice = createSlice({
   name: 'user',
   initialState: {
     token: localStorage.getItem('token'),
-    isAuthenticated: null,
-    isLoading: false,
+    authenticated: null,
+    loading: false,
     user: null
   },
   reducers: {
     userRequested: (user, action) => {
-      user.isLoading = true;
+      user.loading = true;
     },
     userReceived: (user, action) => {
-      user.isAuthenticated = true;
-      user.isLoading = false;
+      user.authenticated = true;
+      user.loading = false;
       user.user = action.payload;
     },
     userRequestReceived: (user, action) => {
-      user.isAuthenticated = true;
-      user.isLoading = false;
+      user.authenticated = true;
+      user.loading = false;
       user.token = action.payload.token;
       user.user = action.payload.user;
       localStorage.setItem('token', action.payload.token);
@@ -29,15 +29,15 @@ const slice = createSlice({
     userRequestFailed: (user, action) => {
       user.token = null;
       user.user = null;
-      user.isAuthenticated = false;
-      user.isLoading = false;
+      user.authenticated = false;
+      user.loading = false;
       localStorage.removeItem('token');
     },
     userLogoutSuccess: (user, action) => {
       user.token = null;
       user.user = null;
-      user.isAuthenticated = false;
-      user.isLoading = false;
+      user.authenticated = false;
+      user.loading = false;
       localStorage.removeItem('token');
     }
   }
@@ -90,9 +90,9 @@ export const logoutUser = () => dispatch => {
 }
 
 // Selectors
-export const getIsAuthenticated = state => state.entities.auth.isAuthenticated;
+export const getIsAuthenticated = state => state.entities.auth.authenticated;
 export const getUser = state => state.entities.auth.user;
-
+export const getIsLoading = state => state.entities.auth.loading;
 
 // Get token and config
 export const tokenConfig = getState => {
