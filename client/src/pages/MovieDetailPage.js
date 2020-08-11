@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { loadMovie, getMovieDetails, addMovieToWatchlist } from '../store/movie';
+import { loadMovie, getMovieDetails } from '../store/movie';
 import { start, complete } from '../store/loadingBar';
 import MovieButtons from '../components/MovieButtons';
 import Carousel from '../components/layout/Carousel';
@@ -15,13 +15,8 @@ export default function MovieDetailPage({ match }) {
 
   const movie = useSelector(getMovieDetails);
 
-  // Movie buttons events
-  const handleWatchlist = () => {
-    dispatch(addMovieToWatchlist(movieId));
-  }
-
   const isLoading = useSelector(state => state.entities.movie.loading);
-  console.log(isLoading);
+
   if (isLoading) {
     dispatch(start());
     return null;
@@ -43,7 +38,7 @@ export default function MovieDetailPage({ match }) {
           <span>{movie.runtime}</span>
           <span>R</span>
         </div>
-        <MovieButtons addWatchlist={handleWatchlist}/>
+        <MovieButtons filmId={movie.id}/>
         <div className="movie-overview">
           {movie.overview}
         </div>
