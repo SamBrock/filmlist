@@ -87,9 +87,27 @@ export const deleteMovieWatchlist = (filmId) => (dispatch, getState) => {
 
 export const addMovieRating = (filmId, rating) => (dispatch, getState) => {
   dispatch(apiRequest({
-    url: `/api/${getState().entities.auth.user.username}/rating`,
+    url: `/api/${getState().entities.auth.user.username}/ratings`,
     method: 'post',
     data: { filmId, rating },
+    headers: tokenConfig(getState).headers
+  }))
+}
+
+export const addMovieLike = (filmId) => (dispatch, getState) => {
+  dispatch(apiRequest({
+    url: `/api/${getState().entities.auth.user.username}/likes`,
+    method: 'post',
+    data: { filmId },
+    headers: tokenConfig(getState).headers
+  }))
+}
+
+export const deleteMovieLike = (filmId) => (dispatch, getState) => {
+  dispatch(apiRequest({
+    url: `/api/${getState().entities.auth.user.username}/likes`,
+    method: 'delete',
+    data: { filmId },
     headers: tokenConfig(getState).headers
   }))
 }
