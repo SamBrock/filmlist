@@ -9,14 +9,16 @@ import { getIsAuthenticated, getUser } from '../../store/auth';
 export default function SideNav({ username }) {
   const isAuthenticated = useSelector(getIsAuthenticated);
   const user = useSelector(getUser);
-  
+
   return (
     <div className="side-nav center">
       <SearchIcon className="search-btn icon-btn" />
       <Link to={isAuthenticated ? `/${user.username}` : `/login`}>
         <AddIcon className="watchlist-btn icon-btn" />
       </Link>
-      <FavoriteBorderIcon className="likes-btn icon-btn" />
+      <Link to={isAuthenticated ? `/${user.username}/likes` : `/login`}>
+        <FavoriteBorderIcon className="likes-btn icon-btn" />
+      </Link>
     </div>
   )
 }
