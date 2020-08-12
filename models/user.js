@@ -18,6 +18,13 @@ const likeSchema = new Schema({
   }
 });
 
+const seenSchema = new Schema({
+  filmId: {
+    type: Number,
+    required: true
+  }
+});
+
 const ratingsSchema = new Schema({
   filmId: {
     type: Number,
@@ -46,7 +53,8 @@ const userSchema = new Schema({
   },
   watchlist: [watchlistSchema],
   ratings: [ratingsSchema],
-  likes: [likeSchema]
+  likes: [likeSchema],
+  seen: [seenSchema]
 });
 
 userSchema.methods.generateHash = async function (password) {

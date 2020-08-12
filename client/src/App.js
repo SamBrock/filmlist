@@ -9,12 +9,12 @@ import LoginPage from '../src/pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import MovieDetailPage from '../src/pages/MovieDetailPage';
 import WatchlistPage from '../src/pages/WatchlistPage';
+import SeenPage from './pages/SeenPage';
 
 import { Provider } from 'react-redux'
 import configureStore from './store/configureStore';
 import { loadUser } from './store/auth';
 import SideNav from './components/layout/SideNav';
-import LikesPage from './pages/LikesPages';
 
 const store = configureStore();
 
@@ -34,8 +34,8 @@ export default function App() {
           <Route path="/movie/:id" component={MovieDetailPage}></Route>
           <Route path="/register" component={RegisterPage}></Route>
           <Route path="/login" component={LoginPage}></Route>
-          <Route path="/:username/likes" component={LikesPage}></Route>
-          <Route path="/:username" component={WatchlistPage}></Route>
+          <Route path="/:username/watchlist" component={WatchlistPage}></Route>
+          <Route path="/:username/seen" component={SeenPage}></Route>
           <Route exact path="/" component={Movies} />
         </Switch>
       </Provider>
