@@ -6,7 +6,7 @@ $blue2: #35F2D0;
 $orange1: #F27405;
 $orange2: #F25C05;
 $black: #0D0D0D;
-$blue1opacity: rgba(61,242,224, .1);
+$blue1opacity: rgba(61, 242, 224, .1);
 
 //  FONTS
 @import url('https://fonts.googleapis.com/css2?family=Maven+Pro:wght@400;500;600;700&display=swap');
@@ -48,7 +48,7 @@ $bold: 'Maven Pro';
   font-size: 1em;
   // letter-spacing: -.3px;
   line-height: 1.7em;
-  
+
 }
 
 @mixin highlightTxt() {
@@ -80,7 +80,7 @@ $bold: 'Maven Pro';
   }
 
   &::-webkit-scrollbar-thumb {
-    background: $blue2;
+    background: #343434;
   }
 }
 
