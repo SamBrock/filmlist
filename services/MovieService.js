@@ -47,4 +47,17 @@ function getMovieDetails(movie) {
   return movie;
 }
 
+function getMovieArrDetails(moviesArr) {
+  const movies = moviesArr.map(movie => {
+    const { id, title, vote_average, release_date, backdrop_path, poster_path, popularity } = movie;
+
+    return ({
+      id, title, vote_average: vote_average.toFixed(1), backdrop_path, poster_path, popularity, year: new Date(release_date).getFullYear()
+    })
+  })
+
+  return movies;
+}
+
 exports.getMovieDetails = getMovieDetails;
+exports.getMovieArrDetails = getMovieArrDetails;
