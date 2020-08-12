@@ -1,7 +1,7 @@
 .movies-container {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  grid-gap: 24px 32px;
+  grid-gap: 32px;
   // box-sizing: border-box;
   // width: 1200px;
   margin: 83px 144px;
@@ -11,19 +11,27 @@
   // z-index: 110;
 
   .movie {
-    min-width: 100%;
-    min-height: 414px;
+    // min-width: 100%;
+    // min-height: 414px;
     position: relative;
     opacity: 0;
     cursor: pointer;
     z-index: 2;
+    box-sizing: border-box;
+    border: transparent solid 2px;
+    transition: border ease-in .2s;
+
+    // &:hover {
+    //   border: $blue2 solid 2px;
+    //   // box-shadow: 0px 0px 15px 1px $orange2;
+    // }
 
     .movie-poster-container,
     .movie-info-container {
       min-width: 100%;
-      min-height: 414px;
+      // min-height: 414px;
       margin: 0 auto;
-      margin: 0 0 12px 0;
+      // margin: 0 0 12px 0;
       height: 100%;
     }
 
@@ -71,7 +79,7 @@
         bottom: 24px;
         left: 24px;
         right: 24px;
-        width: 228px;
+        // width: 228px;
         //opacity: 0;
 
         .movie-title {
@@ -80,29 +88,31 @@
           // right: 24px;
           font-size: 24px;
           grid-column: span 2;
-          width: 228px;
+          // width: 228px;
           font-family: $bold;
           padding: 6px 0;
           letter-spacing: -.4px;
+          font-weight: 600;
           //opacity: inherit;
         }
 
-        .movie-year,
-        .movie-genre,
-        .movie-info-divider {
-          @include infoTxt();
+        .movie-subinfo {
+          display: flex;
+          justify-content: space-between;
+
+          .movie-year {
+            @include infoTxt();
+            color: rgba(255, 255, 255, 0.8);
+            padding: 2px 0;
+          }
+
+          .movie-average-vote {
+            @include infoTxt();
+            background: $blue2;
+            color: $black;
+            padding: 2px 4px;
+          }
         }
-
-        .movie-year,
-        .movie-info-divider {
-          margin: 0 6px 0 0;
-        }
-
-        .movie-genre {
-          margin: 0 3px 0 0;
-        }
-
-
       }
     }
   }
