@@ -24,10 +24,10 @@ export default function WatchlistPage({ match }) {
 
   dispatch(complete());
   return (
-    <div className="movies-container" data-router-view="movie">
-      {movies.map((movie) => (
-        <MovieItem key={movie.movie.id} movie={movie.movie} />
-      ))}
-    </div>
+      <div className="movies-container" data-router-view="movie">
+        {movies.map((movie) => (
+          <MovieItem key={movie.movie.id} movie={movie.movie} />
+        ))}
+      </div>
   )
 }
