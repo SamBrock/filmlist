@@ -5,7 +5,7 @@ import errorReducer from './error';
 import moviesReducer from './movies';
 import movieReducer from './movie';
 import watchlistReducer from './watchlist';
-import likesReducer from './likes';
+import seenReducer from './seen';
 import loadingBarReducer from './loadingBar';
 
 export default combineReducers({
@@ -14,6 +14,6 @@ export default combineReducers({
   movies: moviesReducer,
   movie: movieReducer,
   watchlist: watchlistReducer,
-  likes: likesReducer,
+  seen: seenReducer,
   loadingbar: loadingBarReducer
 })
