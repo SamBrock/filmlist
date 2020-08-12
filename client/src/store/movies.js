@@ -14,7 +14,7 @@ const slice = createSlice({
       movies.loading = true;
     },
     moviesReceived: (movies, action) => {
-      movies.list = action.payload.results;
+      movies.list = action.payload;
       movies.loading = false;
       movies.lastFetch = Date.now();
     },
