@@ -1,9 +1,10 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useEffect } from 'react'
 import Logo from '../../images/f-logo.png'
 import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { getIsAuthenticated, getUser } from '../../store/auth'
 import ProfileButton from '../ProfileButton'
+import Logout from '../auth/Logout';
 
 export default function Header() {
   const isAuthenticated = useSelector(getIsAuthenticated);
@@ -30,6 +31,7 @@ export default function Header() {
       </nav>
       <nav className="right-nav">
         {isAuthenticated ? authLinks : guestLinks}
+        {/* <Logout /> */}
       </nav>
     </header>
   )
