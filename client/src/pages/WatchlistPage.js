@@ -24,9 +24,9 @@ export default function WatchlistPage({ match }) {
 
   dispatch(complete());
   return (
-      <div className="movies-container" data-router-view="movie">
+      <div className="movies-container watchlist" data-router-view="movie">
         {movies.map((movie) => (
-          <MovieItem key={movie.movie.id} movie={movie.movie} />
+          <MovieItem key={movie.movie.id} movie={movie.movie} page="watchlist" />
         ))}
       </div>
   )
