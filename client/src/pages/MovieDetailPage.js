@@ -38,7 +38,7 @@ export default function MovieDetailPage({ match }) {
           <span>{movie.runtime}</span>
           <span>R</span>
         </div>
-        <MovieButtons filmId={movie.id}/>
+        <MovieButtons filmId={movie.id} ui={{watchlist: movie.watchlist, rating: movie.rating, like: movie.like}}/>
         <div className="movie-overview">
           {movie.overview}
         </div>
