@@ -47,7 +47,7 @@ function getMovieDetails(movie) {
   return movie;
 }
 
-function getMovieArrDetails(moviesArr) {
+async function getMovieArrDetails(moviesArr) {
   const movies = moviesArr.map(movie => {
     const { id, title, vote_average, release_date, backdrop_path, poster_path, popularity } = movie;
 

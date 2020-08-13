@@ -12,57 +12,33 @@ const slice = createSlice({
         cast: []
       }
     },
-    ui: {
-      watchlist: false,
-      rating: 0,
-      like: false
-    },
-    loading: false,
-    uiLoading: false
+    loading: false
   },
   reducers: {
     movieRequested: (movie, action) => {
       movie.loading = true;
     },
     movieReceived: (movie, action) => {
+      console.log(action.payload);
       movie.data = action.payload;
       movie.loading = false;
     },
     movieRequestFailed: (movie, action) => {
       movie.loading = false;
-    },
-    uiRequested: (movie, action) => {
-      movie.uiLoading = true;
-    },
-    uiRecieved: (movie, action) => {
-      movie.ui = action.payload;
-      movie.uiLoading = false;
-    },
-    uiRequestFailed: (movie, action) => {
-      movie.uiLoading = false;
-    },
+    }
   }
 })
 
 export default slice.reducer;
 
-const { movieRequested, movieReceived, movieRequestFailed, uiRequested, uiRecieved, uiRequestFailed } = slice.actions;
+const { movieRequested, movieReceived, movieRequestFailed } = slice.actions;
 
-export const loadMovie = (filmId) => dispatch => {
+export const loadMovie = (filmId) => (dispatch, getState) => {
   dispatch(apiRequest({
-    url: `/api/movies/${filmId}`,
+    url: `/api/movies/details/${filmId}`,
     onStart: movieRequested.type,
     onSuccess: movieReceived.type,
-    onError: movieRequestFailed.type
-  }))
-}
-
-export const loadUI = (filmId) => (dispatch, getState) => {
-  dispatch(apiRequest({
-    url: `/api/${getState().entities.auth.user.username}/${filmId}`,
-    onStart: uiRequested.type,
-    onSuccess: uiRecieved.type,
-    onError: uiRequestFailed.type,
+    onError: movieRequestFailed.type,
     headers: tokenConfig(getState).headers
   }))
 }
@@ -112,6 +88,23 @@ export const deleteMovieLike = (filmId) => (dispatch, getState) => {
   }))
 }
 
+export const addMovieSeen = (filmId) => (dispatch, getState) => {
+  dispatch(apiRequest({
+    url: `/api/${getState().entities.auth.user.username}/seen`,
+    method: 'post',
+    data: { filmId },
+    headers: tokenConfig(getState).headers
+  }))
+}
+
+export const deleteMovieSeen = (filmId) => (dispatch, getState) => {
+  dispatch(apiRequest({
+    url: `/api/${getState().entities.auth.user.username}/seen`,
+    method: 'delete',
+    data: { filmId },
+    headers: tokenConfig(getState).headers
+  }))
+}
+
 // Selector
 export const getMovieDetails = state => state.entities.movie.data;
-export const getUiData = state => state.entities.movie.ui;

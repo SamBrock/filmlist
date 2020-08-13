@@ -36,7 +36,7 @@ export const loadMovies = () => (dispatch, getState) => {
   if (diffInMinutes < 10) return;
 
   dispatch(apiRequest({
-    url: '/api/movies/',
+    url: `/api/movies/${getState().entities.auth.user.username}`,
     onStart: moviesRequested.type,
     onSuccess: moviesReceived.type,
     onError: moviesRequestFailed.type

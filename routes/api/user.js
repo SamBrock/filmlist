@@ -2,6 +2,7 @@ const express = require('express');
 const axios = require('axios');
 const config = require('config');
 const mongoose = require('mongoose');
+const _ = require('lodash');
 
 const User = require('../../models/user');
 const auth = require('../../middleware/auth');
@@ -54,18 +55,6 @@ router.delete('/:username/watchlist', auth, async (req, res) => {
   res.sendStatus(200);
 })
 
-// @route   GET api/username/ratings
-// @desc    Get user ratings
-// @access  Public
-router.get('/:username/ratings', async (req, res) => {
-  let user = await User.findOne({ username: req.params.username });
-  if (!user) return res.status(404).send('User does not exist.');
-
-  const ratings = await getMovieData(user.ratings);
-
-  res.send(ratings);
-})
-
 // @route   POST api/username/ratings
 // @desc    Add movie rating to user ratings
 // @access  Private 
@@ -74,29 +63,17 @@ router.post('/:username/ratings', auth, async (req, res) => {
   if (!verifyUser) return res.status(403).send('Forbidden. Not autorized as that user.');
 
   const user = await User.findOne({ username: req.params.username });
-  const ratings = await user.ratings.filter(r => r.filmId != req.body.filmId);
-  ratings.push({ filmId: req.body.filmId, rating: req.body.rating });
+  let index = user.seen.map(s => s.filmId).indexOf(req.body.filmId);
+
+  index != -1 ? user.seen[index].rating = req.body.rating : user.seen.push({ filmId: req.body.filmId, rating: req.body.rating });
 
   // Delete from watchlist after rating
-  const index = user.watchlist.map(w => w.filmId).indexOf(req.body.filmId);
+  index = user.watchlist.map(w => w.filmId).indexOf(req.body.filmId);
   if (index != -1) user.watchlist.splice(index, 1);
 
-  user.ratings = ratings;
   await user.save();
 
   res.sendStatus(200);
-})
-
-// @route   GET api/username/likes
-// @desc    Get user likes
-// @access  Public
-router.get('/:username/likes', async (req, res) => {
-  let user = await User.findOne({ username: req.params.username });
-  if (!user) return res.status(404).send('User does not exist.');
-
-  const likes = await getMovieData(user.likes);
-
-  res.send(likes);
 })
 
 // @route   POST api/username/likes
@@ -107,49 +84,79 @@ router.post('/:username/likes', auth, async (req, res) => {
   if (!verifyUser) return res.status(403).send('Forbidden. Not autorized as that user.');
 
   const user = await User.findOne({ username: req.params.username });
-  user.likes.push({ filmId: req.body.filmId });
+  const index = user.seen.map(s => s.filmId).indexOf(req.body.filmId);
+
+  index != -1 ? user.seen[index].like = true : user.seen.push({ filmId: req.body.filmId, like: true });
+
   await user.save();
 
   res.sendStatus(200);
 })
 
-// @route   DELETE api/username/watchlist
-// @desc    Remove movie from user watchlist
+// @route   DELETE api/username/likes
+// @desc    Remove movie from user likes
 // @access  Private 
 router.delete('/:username/likes', auth, async (req, res) => {
   const verifyUser = verifyUserRequest(req);
   if (!verifyUser) return res.status(403).send('Forbidden. Not autorized as that user.');
 
   const user = await User.findOne({ username: req.params.username });
-  const index = user.likes.map(l => l.filmId).indexOf(req.body.filmId);
-  if (index == -1) return res.status(400).send('Failed to delete. Film is not in watchlist.');
-  user.likes.splice(index, 1);
+  const index = user.seen.map(l => l.filmId).indexOf(req.body.filmId);
+  if (index == -1) return res.status(400).send('Failed to delete. Film is already not liked.');
+
+  user.seen[index].like = false;
 
   await user.save();
 
   res.sendStatus(200);
 })
 
-// @route   GET api/username/ratings/filmId
-// @desc    Get user data for ui components for movie
+// @route   GET api/username/seen
+// @desc    Get user seen
+// @access  Public
+router.get('/:username/seen', async (req, res) => {
+  let user = await User.findOne({ username: req.params.username });
+  if (!user) return res.status(404).send('User does not exist.');
+
+  seen = await getMovieData(user.seen);
+
+  res.send(seen);
+})
+
+// @route   POST api/username/seen
+// @desc    Add movie to user seen
 // @access  Private 
-router.get('/:username/:filmId', auth, async (req, res) => {
+router.post('/:username/seen', auth, async (req, res) => {
   const verifyUser = verifyUserRequest(req);
   if (!verifyUser) return res.status(403).send('Forbidden. Not autorized as that user.');
 
   const user = await User.findOne({ username: req.params.username });
 
-  const userWatchlist = await user.watchlist.find(w => w.filmId == req.params.filmId);
-  const userRatings = await user.ratings.find(r => r.filmId == req.params.filmId);
-  const userLikes = await user.likes.find(l => l.filmId == req.params.filmId);
+  const index = user.seen.map(s => s.filmId).indexOf(req.body.filmId);
+  if (index != -1) return res.status(400).send('Film already in seen');
 
-  const ui = {
-    watchlist: userWatchlist ? true : false,
-    rating: userRatings ? userRatings.rating : 0,
-    like: userLikes ? true : false
-  }
+  user.seen.push({ filmId: req.body.filmId });
 
-  res.status(200).send(ui);
+  await user.save();
+
+  res.sendStatus(200);
+})
+
+// @route   DELETE api/username/seen
+// @desc    Remove movie from user seen
+// @access  Private 
+router.delete('/:username/seen', auth, async (req, res) => {
+  const verifyUser = verifyUserRequest(req);
+  if (!verifyUser) return res.status(403).send('Forbidden. Not autorized as that user.');
+
+  const user = await User.findOne({ username: req.params.username });
+  const index = user.seen.map(s => s.filmId).indexOf(req.body.filmId);
+  if (index == -1) return res.status(400).send('Failed to delete. Film is not in seen.');
+  user.seen.splice(index, 1);
+
+  await user.save();
+
+  res.sendStatus(200);
 })
 
 async function getMovieData(userArr) {
@@ -158,9 +165,7 @@ async function getMovieData(userArr) {
   const requests = userArr.map(async user => {
     const url = `/movie/${user.filmId}?api_key=${api_key}`;
     const response = await axios.get(baseURL + url);
-
-    if( user.rating ) return arr.push({ timestamp: mongoose.Types.ObjectId(user.id).getTimestamp(), movie: response.data, rating: user.rating ? user.rating : null });
-    return arr.push({ timestamp: mongoose.Types.ObjectId(user.id).getTimestamp(), movie: response.data });
+    return arr.push({ timestamp: mongoose.Types.ObjectId(user.id).getTimestamp(), movie: response.data, rating: user.rating ? user.rating : 0, like: user.like ? true : false });
   });
 
   await Promise.all(requests);

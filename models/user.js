@@ -11,29 +11,13 @@ const watchlistSchema = new Schema({
   }
 });
 
-const likeSchema = new Schema({
-  filmId: {
-    type: Number,
-    required: true
-  }
-});
-
 const seenSchema = new Schema({
   filmId: {
     type: Number,
     required: true
-  }
-});
-
-const ratingsSchema = new Schema({
-  filmId: {
-    type: Number,
-    required: true
   },
-  rating: {
-    type: Number,
-    required: true
-  }
+  like: Boolean,
+  rating: Number
 });
 
 const userSchema = new Schema({
@@ -52,8 +36,6 @@ const userSchema = new Schema({
     required: true
   },
   watchlist: [watchlistSchema],
-  ratings: [ratingsSchema],
-  likes: [likeSchema],
   seen: [seenSchema]
 });
 
