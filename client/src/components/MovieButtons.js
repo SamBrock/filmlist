@@ -5,23 +5,15 @@ import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import FavoriteIcon from '@material-ui/icons/Favorite';
-import { useDispatch, useSelector } from 'react-redux';
-import { addMovieRating, loadUI, getUiData, deleteMovieWatchlist, addMovieWatchlist, addMovieLike, deleteMovieLike } from '../store/movie';
-import { getIsAuthenticated } from '../store/auth';
+import { useDispatch } from 'react-redux';
+import { addMovieRating, deleteMovieWatchlist, addMovieWatchlist, addMovieLike, deleteMovieLike } from '../store/movie';
 
-export default function MovieButtons({ filmId }) {
+export default function MovieButtons({ filmId, ui }) {
   const [rating, setRating] = useState(0);
   const [watchlist, setWatchlist] = useState(false);
   const [like, setLike] = useState(false);
 
-  const isAuthenticated = useSelector(getIsAuthenticated);
   const dispatch = useDispatch();
-
-  const ui = useSelector(getUiData);
-
-  useEffect(() => {
-    if (isAuthenticated) dispatch(loadUI(filmId));
-  }, [isAuthenticated])
 
   useEffect(() => {
     setRating(ui.rating);
@@ -29,7 +21,7 @@ export default function MovieButtons({ filmId }) {
     setLike(ui.like);
   }, [ui])
 
-  console.log(ui);
+  // console.log(ui);
 
   const handleRating = (rating) => {
     setRating(rating);
