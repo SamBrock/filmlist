@@ -9,7 +9,6 @@ const slice = createSlice({
   },
   reducers: {
     errorsRecieved: (error, action) => {
-      console.log(action.payload);
       error.id = action.payload.id;
       error.status = action.payload.status;
       error.msg = action.payload.msg;
@@ -26,15 +25,7 @@ export default slice.reducer;
 
 export const { errorsRecieved, errorsDeleted } = slice.actions;
 
-// export const returnErrors = (msg, status, id = null) => {
-//   return {
-//     type: errorsRecieved.type,
-//     payload: { msg, status, id }
-//   }
-// }
-
 export const clearErrors = () => dispatch => {
-  // console.log('does this work?');
   dispatch({ type: errorsDeleted.type});
 }
 
