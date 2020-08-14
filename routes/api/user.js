@@ -35,7 +35,7 @@ router.post('/:username/watchlist', auth, async (req, res) => {
   user.watchlist.push({ filmId: req.body.filmId });
   await user.save();
 
-  res.sendStatus(200);
+  res.status(200).send({id: 'ADD_WATCHLIST', msg: `'${req.body.title}' was added to your watchlist.`});
 })
 
 // @route   DELETE api/username/watchlist
@@ -52,7 +52,7 @@ router.delete('/:username/watchlist', auth, async (req, res) => {
 
   await user.save();
 
-  res.sendStatus(200);
+  res.status(200).send({id: 'DELETE_WATCHLIST', msg: `'${req.body.title}' was removed from your watchlist.`});
 })
 
 // @route   POST api/username/ratings
