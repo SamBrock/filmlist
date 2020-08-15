@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { apiRequest } from './api';
 import { tokenConfig } from './auth';
+import { notificationsRecieved } from './notification';
 
 const slice = createSlice({
   name: 'movie',
@@ -43,20 +44,22 @@ export const loadMovie = (filmId) => (dispatch, getState) => {
   }))
 }
 
-export const addMovieWatchlist = (filmId) => (dispatch, getState) => {
+export const addMovieWatchlist = (filmId, title) => (dispatch, getState) => {
   dispatch(apiRequest({
     url: `/api/${getState().entities.auth.user.username}/watchlist`,
     method: 'post',
-    data: { filmId },
+    data: { filmId, title },
+    onSuccess: notificationsRecieved.type,
     headers: tokenConfig(getState).headers
   }))
 }
 
-export const deleteMovieWatchlist = (filmId) => (dispatch, getState) => {
+export const deleteMovieWatchlist = (filmId, title) => (dispatch, getState) => {
   dispatch(apiRequest({
     url: `/api/${getState().entities.auth.user.username}/watchlist`,
     method: 'delete',
-    data: { filmId },
+    data: { filmId, title },
+    onSuccess: notificationsRecieved.type,
     headers: tokenConfig(getState).headers
   }))
 }
@@ -88,20 +91,42 @@ export const deleteMovieLike = (filmId) => (dispatch, getState) => {
   }))
 }
 
-export const addMovieSeen = (filmId) => (dispatch, getState) => {
+export const addMovieSeen = (filmId, title) => (dispatch, getState) => {
   dispatch(apiRequest({
     url: `/api/${getState().entities.auth.user.username}/seen`,
     method: 'post',
-    data: { filmId },
+    data: { filmId, title },
+    onSuccess: notificationsRecieved.type,
     headers: tokenConfig(getState).headers
   }))
 }
 
-export const deleteMovieSeen = (filmId) => (dispatch, getState) => {
+export const deleteMovieSeen = (filmId, title) => (dispatch, getState) => {
   dispatch(apiRequest({
     url: `/api/${getState().entities.auth.user.username}/seen`,
     method: 'delete',
-    data: { filmId },
+    data: { filmId, title },
+    onSuccess: notificationsRecieved.type,
+    headers: tokenConfig(getState).headers
+  }))
+}
+
+export const addMovieNotInterested = (filmId, title) => (dispatch, getState) => {
+  dispatch(apiRequest({
+    url: `/api/${getState().entities.auth.user.username}/not-interested`,
+    method: 'post',
+    data: { filmId, title },
+    onSuccess: notificationsRecieved.type,
+    headers: tokenConfig(getState).headers
+  }))
+}
+
+export const deleteMovieNotInterested = (filmId, title) => (dispatch, getState) => {
+  dispatch(apiRequest({
+    url: `/api/${getState().entities.auth.user.username}/not-interested`,
+    method: 'delete',
+    data: { filmId, title },
+    onSuccess: notificationsRecieved.type,
     headers: tokenConfig(getState).headers
   }))
 }
