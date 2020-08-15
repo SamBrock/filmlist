@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import LoadingBar from './components/layout/LoadingBar';
 import Header from './components/layout/Header';
+import Notification from './components/layout/Notification';
 
 import MoviesPage from '../src/pages/MoviesPage'
 import LoginPage from '../src/pages/LoginPage';
@@ -31,6 +32,7 @@ export default function App() {
         <LoadingBar />
         <Header />
         <SideNav />
+        <Notification />
         <Switch>
           <Route path="/movie/:id" component={MovieDetailPage}></Route>
           <Route path="/register" component={RegisterPage}></Route>

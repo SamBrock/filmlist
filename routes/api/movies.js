@@ -28,6 +28,8 @@ router.get('/:username', async (req, res) => {
   let movies = await getRecommendedMovies(randomLikedMovies);
   movies = _.differenceBy(movies, user.seen.map(s => ({ id: s.filmId })), 'id');
 
+  movies = movies.slice(0, 20);
+
   res.send(movies);
 });
 
@@ -43,10 +45,10 @@ router.get('/details/:id', user, async (req, res) => {
 
     if (req.user) {
       let user = await User.findOne({ username: req.user.username });
-      
+
       const index1 = user.watchlist.map(w => w.filmId).indexOf(req.params.id);
       if (index1 != -1) movie.watchlist = true;
-      
+
       const index2 = user.seen.map(s => s.filmId).indexOf(req.params.id);
       if (index2 != -1) {
         movie.rating = user.seen[index2].rating ? user.seen[index2].rating : 0;

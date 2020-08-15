@@ -6,6 +6,7 @@ import moviesReducer from './movies';
 import movieReducer from './movie';
 import watchlistReducer from './watchlist';
 import seenReducer from './seen';
+import notificationReducer from './notification';
 import loadingBarReducer from './loadingBar';
 
 export default combineReducers({
@@ -15,5 +16,6 @@ export default combineReducers({
   movie: movieReducer,
   watchlist: watchlistReducer,
   seen: seenReducer,
+  notification: notificationReducer,
   loadingbar: loadingBarReducer
 })

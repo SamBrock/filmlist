@@ -25,7 +25,7 @@ export default function Notification() {
   }, [notification])
 
   return (
-    <div className="notification" ref={notificationContainer}>
+    <div className={`notification ${notification.id}`} ref={notificationContainer}>
       <span>{notification.msg}</span>
     </div>
   )

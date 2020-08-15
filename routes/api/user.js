@@ -35,7 +35,7 @@ router.post('/:username/watchlist', auth, async (req, res) => {
   user.watchlist.push({ filmId: req.body.filmId });
   await user.save();
 
-  res.status(200).send({id: 'ADD_WATCHLIST', msg: `'${req.body.title}' was added to your watchlist.`});
+  res.status(200).send({id: 'ADD', msg: `'${req.body.title}' was added to your watchlist.`});
 })
 
 // @route   DELETE api/username/watchlist
@@ -52,7 +52,7 @@ router.delete('/:username/watchlist', auth, async (req, res) => {
 
   await user.save();
 
-  res.status(200).send({id: 'DELETE_WATCHLIST', msg: `'${req.body.title}' was removed from your watchlist.`});
+  res.status(200).send({id: 'DELETE', msg: `'${req.body.title}' was removed from your watchlist.`});
 })
 
 // @route   POST api/username/ratings
@@ -118,9 +118,11 @@ router.get('/:username/seen', async (req, res) => {
   let user = await User.findOne({ username: req.params.username });
   if (!user) return res.status(404).send('User does not exist.');
 
-  seen = await getMovieData(user.seen);
+  const seen = await getMovieData(user.seen);
 
-  res.send(seen);
+  const slice = seen.slice(0, 24);
+
+  res.send(slice);
 })
 
 // @route   POST api/username/seen
@@ -139,7 +141,7 @@ router.post('/:username/seen', auth, async (req, res) => {
 
   await user.save();
 
-  res.sendStatus(200);
+  res.status(200).send({id: 'ADD', msg: `'${req.body.title}' was added to your seen.`});
 })
 
 // @route   DELETE api/username/seen
@@ -156,7 +158,55 @@ router.delete('/:username/seen', auth, async (req, res) => {
 
   await user.save();
 
-  res.sendStatus(200);
+  res.status(200).send({id: 'DELETE', msg: `'${req.body.title}' was removed from your seen.`});
+})
+
+// @route   GET api/username/not-interested
+// @desc    Get user not interested
+// @access  Public
+router.get('/:username/not-interested', async (req, res) => {
+  let user = await User.findOne({ username: req.params.username });
+  if (!user) return res.status(404).send('User does not exist.');
+
+  const notInterested = await getMovieData(user.notInterested);
+
+  res.send(notInterested);
+})
+
+// @route   POST api/username/not-interested
+// @desc    Add movie to user not interested
+// @access  Private 
+router.post('/:username/not-interested', auth, async (req, res) => {
+  const verifyUser = verifyUserRequest(req);
+  if (!verifyUser) return res.status(403).send('Forbidden. Not autorized as that user.');
+
+  const user = await User.findOne({ username: req.params.username });
+
+  const index = user.notInterested.map(n => n.filmId).indexOf(req.body.filmId);
+  if (index != -1) return res.status(400).send('Film already in seen');
+
+  user.notInterested.push({ filmId: req.body.filmId });
+
+  await user.save();
+
+  res.status(200).send({id: 'ADD', msg: `'${req.body.title}' was added to your not interested.`});
+})
+
+// @route   DELETE api/username/seen
+// @desc    Remove movie from user seen
+// @access  Private 
+router.delete('/:username/not-interested', auth, async (req, res) => {
+  const verifyUser = verifyUserRequest(req);
+  if (!verifyUser) return res.status(403).send('Forbidden. Not autorized as that user.');
+
+  const user = await User.findOne({ username: req.params.username });
+  const index = user.notInterested.map(n => n.filmId).indexOf(req.body.filmId);
+  if (index == -1) return res.status(400).send('Failed to delete. Film is not in seen.');
+  user.notInterested.splice(index, 1);
+
+  await user.save();
+
+  res.status(200).send({id: 'DELETE', msg: `'${req.body.title}' was removed from your not interested.`});
 })
 
 async function getMovieData(userArr) {
