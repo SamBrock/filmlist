@@ -20,6 +20,18 @@ const seenSchema = new Schema({
   rating: Number
 });
 
+const notInterestedSchema = new Schema({
+  filmId: {
+    type: Number,
+    required: true
+  },
+  createdAt: {
+    type: Date,
+    expires: 60*60*24*7*4, // 1 month
+    default: Date.now
+  }
+});
+
 const userSchema = new Schema({
   username: {
     type: String,
@@ -36,7 +48,8 @@ const userSchema = new Schema({
     required: true
   },
   watchlist: [watchlistSchema],
-  seen: [seenSchema]
+  seen: [seenSchema],
+  notInterested: [notInterestedSchema]
 });
 
 userSchema.methods.generateHash = async function (password) {

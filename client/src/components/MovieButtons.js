@@ -8,7 +8,7 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import { useDispatch } from 'react-redux';
 import { addMovieRating, deleteMovieWatchlist, addMovieWatchlist, addMovieLike, deleteMovieLike } from '../store/movie';
 
-export default function MovieButtons({ filmId, ui }) {
+export default function MovieButtons({ filmId, title, ui }) {
   const [rating, setRating] = useState(0);
   const [watchlist, setWatchlist] = useState(false);
   const [like, setLike] = useState(false);
@@ -31,11 +31,11 @@ export default function MovieButtons({ filmId, ui }) {
 
   const handleWatchlist = (inWatchlist) => {
     setWatchlist(inWatchlist);
-    inWatchlist ? dispatch(addMovieWatchlist(filmId)) : dispatch(deleteMovieWatchlist(filmId));
+    inWatchlist ? dispatch(addMovieWatchlist(filmId, title)) : dispatch(deleteMovieWatchlist(filmId, title));
   }
 
   const handleLike = (isLiked) => {
-    setLike(isLiked); 
+    setLike(isLiked);
     isLiked ? dispatch(addMovieLike(filmId)) : dispatch(deleteMovieLike(filmId));
   }
 

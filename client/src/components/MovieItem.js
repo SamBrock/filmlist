@@ -1,33 +1,27 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { TweenMax } from "gsap";
 import { Link } from 'react-router-dom';
-import IconButton from '@material-ui/core/IconButton';
-import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
-import VisibilityIcon from '@material-ui/icons/Visibility';
 import { useDispatch } from 'react-redux';
-import { addMovieSeen, deleteMovieSeen } from '../store/movie';
+import { addMovieSeen, deleteMovieSeen, addMovieWatchlist } from '../store/movie';
 import Rating from '@material-ui/lab/Rating';
 import FavoriteIcon from '@material-ui/icons/Favorite';
+import MovieItemButtons from './MovieItemButtons';
 
+export default function MovieItem({ movie, rating, like, page }) {
+  const [hover, setHover] = useState(null);
+  const [hide, setHide] = useState(null);
 
-export default function MovieItem({ movie, seen, rating, like, page }) {
-  const dispatch = useDispatch();
-
-  const [isSeen, setIsSeen] = useState(false);
-
-  useEffect(() => {
-    setIsSeen(seen);
-  }, [seen])
+  // useEffect(() => {
+  //   console.log(hide);
+  // }, [hide])
 
   let moviePoster = useRef(null);
   let movieBackdrop = useRef(null);
   let movieInfo = useRef(null);
-  let movieTopInfo = useRef(null);
 
   const [posterAnimate, setPosterAnimate] = useState(null);
   const [backdropAnimate, setBackdropAnimate] = useState(null);
   const [infoAnimate, setInfoAnimate] = useState(null);
-  const [infoTopAnimate, setInfoTopAnimate] = useState(null);
 
   useEffect(() => {
     TweenMax.staggerFromTo('.movie', .5, { opacity: 0, y: 15 }, { opacity: 1, y: 0 }, 0.1);
@@ -35,41 +29,22 @@ export default function MovieItem({ movie, seen, rating, like, page }) {
     setPosterAnimate(TweenMax.to(moviePoster, .5, { opacity: 0, scaleX: 1.1, scaleY: 1.1, paused: true }));
     setBackdropAnimate(TweenMax.to(movieBackdrop, .5, { opacity: 1, scaleX: 1, scaleY: 1, rotation: 0.01, paused: true }));
     setInfoAnimate(TweenMax.fromTo(movieInfo, .5, { opacity: 0, y: 10 }, { opacity: 1, y: 0 }).pause());
-    setInfoTopAnimate(TweenMax.fromTo(movieTopInfo, .5, { opacity: 0, y: -10 }, { opacity: 1, y: 0 }).pause());
   }, []);
 
-  function overOn() {
-    if (posterAnimate) {
-      posterAnimate.play();
-      backdropAnimate.play();
-      infoAnimate.play();
-      infoTopAnimate.play();
-    }
-  }
+  const movieItemAnimations = [posterAnimate, backdropAnimate, infoAnimate];
 
-  function overOut() {
-    if (posterAnimate) {
-      posterAnimate.reverse();
-      backdropAnimate.reverse();
-      infoAnimate.reverse();
-      infoTopAnimate.reverse();
-    }
-  }
+  useEffect(() => {
+    if (hover) movieItemAnimations.map(animation => animation.play());
+    if (!hover && posterAnimate) movieItemAnimations.map(animation => animation.reverse());
+  }, [hover])
 
-  const handleSeen = (e, seen) => {
-    setIsSeen(seen);
-    seen ? dispatch(addMovieSeen(movie.id)) : dispatch(deleteMovieSeen(movie.id));
-    e.preventDefault();
-  }
-
-  console.log(isSeen);
 
   const posterIMG = 'https://image.tmdb.org/t/p/w300_and_h450_bestv2/' + movie.poster_path;
   const backdropImg = 'https://image.tmdb.org/t/p/w500/' + movie.backdrop_path;
 
   return (
     <Link to={`/movie/${movie.id}`}>
-      <div className={`movie ${page}`} onMouseEnter={overOn} onMouseLeave={overOut}>
+      <div className={`movie ${hide ? 'hide' : null}`} onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
         <div className="movie-poster-container">
           <img className="movie-poster" src={posterIMG} alt="movie poster" ref={element => moviePoster = element} />
         </div>
@@ -78,17 +53,7 @@ export default function MovieItem({ movie, seen, rating, like, page }) {
             <div className="blur"></div>
             <img className="movie-backdrop" src={backdropImg} alt="movie backdrop" ref={element => movieBackdrop = element} />
           </div>
-          <div className="movie-info-text-top" ref={element => movieTopInfo = element}>
-            {
-              !isSeen ?
-                <IconButton className="seen-icon" aria-label="add to watchlist" disableFocusRipple={true} disableRipple={true} onClick={(e) => handleSeen(e, true)}>
-                  <VisibilityOutlinedIcon />
-                </IconButton> :
-                <IconButton className="seen-icon" aria-label="add to watchlist" disableFocusRipple={true} disableRipple={true} onClick={(e) => handleSeen(e, false)}>
-                  <VisibilityIcon />
-                </IconButton>
-            }
-          </div>
+          <MovieItemButtons movie={movie} page={page} hover={hover} setHide={setHide} />
           <div className="movie-info-text" ref={element => movieInfo = element}>
             <div className="movie-title">{movie.title}</div>
             <div className="movie-subinfo">
@@ -97,15 +62,16 @@ export default function MovieItem({ movie, seen, rating, like, page }) {
             </div>
           </div>
         </div>
-      </div>
-      <div className="user-seen">
-        <div className="user-seen-ui rating">
-          {rating ? (<Rating className="seen-icon" name="hover-feedback" value={rating} precision={0.5} readOnly />) : null}
+        <div className="user-seen">
+          <div className="user-seen-ui rating">
+            {rating ? (<Rating className="seen-icon" name="hover-feedback" value={rating} precision={0.5} readOnly />) : null}
+          </div>
+          <div className="user-seen-ui like">
+            {like ? (<FavoriteIcon className="seen-icon" />) : null}
+          </div>
         </div>
-        <div className="user-seen-ui like">
-          {like ? (<FavoriteIcon className="seen-icon" />) : null}
-        </div>
       </div>
-    </Link>
+    </Link >
   )
 }
+
