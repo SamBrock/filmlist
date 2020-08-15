@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect } from 'react'
-import Logo from '../../images/f-logo.png'
+import Logo from '../../images/filmlist-f.svg'
 import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { getIsAuthenticated, getUser } from '../../store/auth'
