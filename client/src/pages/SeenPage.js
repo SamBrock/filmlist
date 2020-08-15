@@ -26,7 +26,7 @@ export default function SeenPage({ match }) {
   return (
     <div className="movies-container seen" data-router-view="movie">
       {movies.map((movie) => (
-        <MovieItem key={movie.movie.id} movie={movie.movie} seen={true} rating={movie.rating} like={movie.like} page="seen"/>
+        <MovieItem key={movie.movie.id} movie={movie.movie} rating={movie.rating} like={movie.like} page="seen"/>
       ))}
     </div>
   )
