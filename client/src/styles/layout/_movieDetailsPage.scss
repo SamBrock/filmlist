@@ -37,7 +37,7 @@
     @include custom-scroll-bar();
     max-width: 480px;
     border-right: 1px $blue1opacity solid;
-    direction:ltr;
+    direction: ltr;
 
     .movie-title {
       margin: 0 0 12px 0;
@@ -87,9 +87,11 @@
       .movie-credits-list {
         display: flex;
 
+        .owl-theme {
+          position: relative;
+        }
+        
         .movie-credit {
-
-
           .movie-credit-img {
             margin: 0 0 12px 0;
 
@@ -130,6 +132,7 @@
         .carousel-btn {
           margin: 0 0 2px 0;
           color: #222;
+          
 
           .MuiSvgIcon-root {
             height: .6em !important;
