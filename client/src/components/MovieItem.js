@@ -25,6 +25,7 @@ export default function MovieItem({ movie, rating, like, page }) {
 
   useEffect(() => {
     TweenMax.staggerFromTo('.movie', .5, { opacity: 0, y: 15 }, { opacity: 1, y: 0 }, 0.1);
+    TweenMax.staggerFromTo('.user-seen', .5, { opacity: 0 }, { opacity: 1 }, 0.1);
 
     setPosterAnimate(TweenMax.to(moviePoster, .5, { opacity: 0, scaleX: 1.1, scaleY: 1.1, paused: true }));
     setBackdropAnimate(TweenMax.to(movieBackdrop, .5, { opacity: 1, scaleX: 1, scaleY: 1, rotation: 0.01, paused: true }));
@@ -62,13 +63,13 @@ export default function MovieItem({ movie, rating, like, page }) {
             </div>
           </div>
         </div>
-        <div className="user-seen">
-          <div className="user-seen-ui rating">
-            {rating ? (<Rating className="seen-icon" name="hover-feedback" value={rating} precision={0.5} readOnly />) : null}
-          </div>
-          <div className="user-seen-ui like">
-            {like ? (<FavoriteIcon className="seen-icon" />) : null}
-          </div>
+      </div>
+      <div className="user-seen">
+        <div className="user-seen-ui rating">
+          {rating ? (<Rating className="seen-icon" name="hover-feedback" value={rating} precision={0.5} readOnly />) : null}
+        </div>
+        <div className="user-seen-ui like">
+          {like ? (<FavoriteIcon className="seen-icon" />) : null}
         </div>
       </div>
     </Link >
