@@ -47,7 +47,7 @@
     // min-width: 100%;
     // min-height: 414px;
     position: relative;
-    opacity: 0;
+    // opacity: 0;
     cursor: pointer;
     z-index: 2;
     box-sizing: border-box;
@@ -156,7 +156,7 @@
         left: 24px;
         right: 24px;
         // width: 228px;
-        //opacity: 0;
+        opacity: 0;
 
         .movie-title {
           // bottom: 24px;
