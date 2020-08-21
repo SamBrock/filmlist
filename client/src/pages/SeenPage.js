@@ -24,7 +24,7 @@ export default function SeenPage({ match }) {
     return null;
   }
 
-  document.title = `Seen • FILMLIST`;
+  document.title = `${username}'s Seen - FILMLIST`;
   dispatch(complete());
   return (
     <InfiniteScroll dataLength={movies.length} next={() => setPageNumber(page => page + 1)} hasMore={true} endMessage={<p style={{ textAlign: 'center' }}> <b>Yay! You have seen it all</b> </p>} >

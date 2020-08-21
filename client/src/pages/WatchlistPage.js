@@ -24,10 +24,10 @@ export default function WatchlistPage({ match }) {
     return null;
   }
 
-  document.title = `Watchlist • FILMLIST`;
+  document.title = `${username}'s Watchlist - FILMLIST`;
   dispatch(complete());
   return (
-    <InfiniteScroll dataLength={movies.length} next={() => setPageNumber(page => page + 1)} hasMore={true} endMessage={<p style={{ textAlign: 'center' }}> <b>Yay! You have seen it all</b> </p>} >
+    <InfiniteScroll dataLength={movies.length} next={() => setPageNumber(page => page + 1)} >
       <div className="movies-container watchlist" data-router-view="movie">
         {movies.map((movie) => (
           <MovieItem key={movie.id} movie={movie} page="watchlist" />
