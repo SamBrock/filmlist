@@ -20,7 +20,6 @@ const slice = createSlice({
       movie.loading = true;
     },
     movieReceived: (movie, action) => {
-      console.log(action.payload);
       movie.data = action.payload;
       movie.loading = false;
     },
