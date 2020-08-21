@@ -1,16 +1,41 @@
 const express = require('express');
 const axios = require('axios');
 const config = require('config');
-const mongoose = require('mongoose');
 const _ = require('lodash');
 
 const User = require('../../models/user');
 const auth = require('../../middleware/auth');
+const MovieService = require('../../services/MovieService');
 
 const baseURL = config.get('TMDb.baseURL');
 const api_key = config.get('TMDb.api_key');
 
 const router = express.Router();
+
+// @route   GET api/username
+// @desc    Get recommended movies for user
+// @access  Public
+router.get('/:username', async (req, res) => {
+  let user = await User.findOne({ username: req.params.username });
+  if (!user) return res.status(404).send('User does not exist.');
+
+  const { page, limit } = req.query;
+  const startIndex = (page - 1) * limit;
+  const endIndex = page * limit;
+
+  const likes = user.seen.filter(s => s.like === true);
+  const randomNums = randomLikesIndex(likes.length);
+  const randomLikedMovies = _.at(likes, randomNums);
+
+  let movies = await MovieService.getTMDbRecommendedMovies(randomLikedMovies);
+  movies = _.differenceBy(movies, user.seen.map(s => ({ id: s.filmId })), 'id');
+
+  movies = movies.slice(startIndex, endIndex);
+
+  movies = await MovieService.getMovieArrDetails(movies);
+
+  res.send(movies);
+});
 
 // @route   GET api/username/watchlist
 // @desc    Get user watchlist
@@ -19,9 +44,33 @@ router.get('/:username/watchlist', async (req, res) => {
   let user = await User.findOne({ username: req.params.username });
   if (!user) return res.status(404).send('User does not exist.');
 
-  const watchlist = await getMovieData(user.watchlist);
+  const { page, limit } = req.query;
+  const startIndex = (page - 1) * limit;
+  const endIndex = page * limit;
+
+  const userWatchlist = user.watchlist.reverse().slice(startIndex, endIndex);
+  const tmdbData = await MovieService.getTMDbData(userWatchlist);
+  const watchlist = await MovieService.getMovieArrDetails(tmdbData);
 
   res.send(watchlist);
+})
+
+// @route   GET api/username/seen
+// @desc    Get user seen
+// @access  Public
+router.get('/:username/seen', async (req, res) => {
+  let user = await User.findOne({ username: req.params.username });
+  if (!user) return res.status(404).send('User does not exist.');
+
+  const { page, limit } = req.query;
+  const startIndex = (page - 1) * limit;
+  const endIndex = page * limit;
+
+  const userSeen = user.seen.reverse().slice(startIndex, endIndex);
+  const tmdbData = await MovieService.getTMDbData(userSeen);
+  const seen = await MovieService.getMovieArrDetails(tmdbData);
+
+  res.send(seen);
 })
 
 // @route   POST api/username/watchlist
@@ -35,7 +84,7 @@ router.post('/:username/watchlist', auth, async (req, res) => {
   user.watchlist.push({ filmId: req.body.filmId });
   await user.save();
 
-  res.status(200).send({id: 'ADD', msg: `'${req.body.title}' was added to your watchlist.`});
+  res.status(200).send({ id: 'ADD', msg: `'${req.body.title}' was added to your watchlist.` });
 })
 
 // @route   DELETE api/username/watchlist
@@ -52,7 +101,7 @@ router.delete('/:username/watchlist', auth, async (req, res) => {
 
   await user.save();
 
-  res.status(200).send({id: 'DELETE', msg: `'${req.body.title}' was removed from your watchlist.`});
+  res.status(200).send({ id: 'DELETE', msg: `'${req.body.title}' was removed from your watchlist.` });
 })
 
 // @route   POST api/username/ratings
@@ -111,19 +160,6 @@ router.delete('/:username/likes', auth, async (req, res) => {
   res.sendStatus(200);
 })
 
-// @route   GET api/username/seen
-// @desc    Get user seen
-// @access  Public
-router.get('/:username/seen', async (req, res) => {
-  let user = await User.findOne({ username: req.params.username });
-  if (!user) return res.status(404).send('User does not exist.');
-
-  const seen = await getMovieData(user.seen);
-
-  const slice = seen.slice(0, 24);
-
-  res.send(slice);
-})
 
 // @route   POST api/username/seen
 // @desc    Add movie to user seen
@@ -141,7 +177,7 @@ router.post('/:username/seen', auth, async (req, res) => {
 
   await user.save();
 
-  res.status(200).send({id: 'ADD', msg: `'${req.body.title}' was added to your seen.`});
+  res.status(200).send({ id: 'ADD', msg: `'${req.body.title}' was added to your seen.` });
 })
 
 // @route   DELETE api/username/seen
@@ -158,7 +194,7 @@ router.delete('/:username/seen', auth, async (req, res) => {
 
   await user.save();
 
-  res.status(200).send({id: 'DELETE', msg: `'${req.body.title}' was removed from your seen.`});
+  res.status(200).send({ id: 'DELETE', msg: `'${req.body.title}' was removed from your seen.` });
 })
 
 // @route   GET api/username/not-interested
@@ -189,7 +225,7 @@ router.post('/:username/not-interested', auth, async (req, res) => {
 
   await user.save();
 
-  res.status(200).send({id: 'ADD', msg: `'${req.body.title}' was added to your not interested.`});
+  res.status(200).send({ id: 'ADD', msg: `'${req.body.title}' was added to your not interested.` });
 })
 
 // @route   DELETE api/username/seen
@@ -206,30 +242,23 @@ router.delete('/:username/not-interested', auth, async (req, res) => {
 
   await user.save();
 
-  res.status(200).send({id: 'DELETE', msg: `'${req.body.title}' was removed from your not interested.`});
+  res.status(200).send({ id: 'DELETE', msg: `'${req.body.title}' was removed from your not interested.` });
 })
-
-async function getMovieData(userArr) {
-  const arr = [];
-
-  const requests = userArr.map(async user => {
-    const url = `/movie/${user.filmId}?api_key=${api_key}`;
-    const response = await axios.get(baseURL + url);
-    return arr.push({ timestamp: mongoose.Types.ObjectId(user.id).getTimestamp(), movie: response.data, rating: user.rating ? user.rating : 0, like: user.like ? true : false });
-  });
-
-  await Promise.all(requests);
-
-  arr.sort((a, b) => {
-    return new Date(b.timestamp) - new Date(a.timestamp);
-  });
-
-  return arr;
-}
 
 function verifyUserRequest(req) {
   if (req.params.username != req.user.username) return false;
   return true;
+}
+
+function randomLikesIndex(max) {
+  const arr = [];
+
+  while (arr.length < max) {
+    const r = Math.floor(Math.random() * max);
+    if (arr.indexOf(r) === -1) arr.push(r);
+  }
+
+  return arr;
 }
 
 module.exports = router;

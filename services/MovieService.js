@@ -1,4 +1,53 @@
 const moment = require('moment');
+const config = require('config');
+const axios = require('axios');
+const _ = require('lodash');
+const mongoose = require('mongoose');
+
+const baseURL = config.get('TMDb.baseURL');
+const api_key = config.get('TMDb.api_key');
+
+
+async function getTMDbData(userArr) {
+  const arr = [];
+
+  const requests = userArr.map(async user => {
+    const url = `/movie/${user.filmId}?api_key=${api_key}`;
+    const response = await axios.get(baseURL + url);
+
+    let movie = response.data;
+    movie.timestamp = mongoose.Types.ObjectId(user.id).getTimestamp();
+    movie.rating = user.rating ? user.rating : 0;
+    movie.like = user.like ? true : false;
+    
+    return arr.push(movie);
+  });
+
+  await Promise.all(requests);
+
+  arr.sort((a, b) => {
+    return new Date(b.timestamp) - new Date(a.timestamp);
+  });
+
+  return arr;
+}
+
+async function getTMDbRecommendedMovies(userArr) {
+  let arr = [];
+
+  const requests = userArr.map(async user => {
+    const url = `/movie/${user.filmId}/recommendations?api_key=${api_key}`;
+    const response = await axios.get(baseURL + url);
+
+    return arr.push(response.data.results);
+  });
+
+  await Promise.all(requests);
+
+  arr = _.flatten(arr);
+
+  return arr;
+}
 
 function getMovieDetails(movie) {
   // Get relevant movie details
@@ -49,10 +98,18 @@ function getMovieDetails(movie) {
 
 async function getMovieArrDetails(moviesArr) {
   const movies = moviesArr.map(movie => {
-    const { id, title, vote_average, release_date, backdrop_path, poster_path, popularity } = movie;
-
+    const { id, title, vote_average, release_date, backdrop_path, poster_path, popularity, rating, like } = movie;
+    
     return ({
-      id, title, vote_average: vote_average.toFixed(1), backdrop_path, poster_path, popularity, year: new Date(release_date).getFullYear()
+      id, 
+      title, 
+      vote_average: vote_average.toFixed(1), 
+      backdrop_path, 
+      poster_path, 
+      popularity, 
+      year: new Date(release_date).getFullYear(),
+      rating,
+      like
     })
   })
 
@@ -61,3 +118,5 @@ async function getMovieArrDetails(moviesArr) {
 
 exports.getMovieDetails = getMovieDetails;
 exports.getMovieArrDetails = getMovieArrDetails;
+exports.getTMDbRecommendedMovies = getTMDbRecommendedMovies;
+exports.getTMDbData = getTMDbData;

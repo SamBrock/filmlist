@@ -1,18 +1,27 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { loadWatchlist, getWatchlist } from '../store/watchlist';
 import MovieItem from '../components/MovieItem';
 import { start, complete } from '../store/loadingBar';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 export default function WatchlistPage({ match }) {
+  const [movies, setMovies] = useState([]);
+  const [pageNumber, setPageNumber] = useState(1);
+  const [limit, setLimit] = useState(18);
+
   const dispatch = useDispatch();
 
   const username = match.params.username;
   useEffect(() => {
-    dispatch(loadWatchlist(username))
-  }, [username])
+    dispatch(loadWatchlist(username, pageNumber, limit));
+  }, [username, pageNumber])
 
-  const movies = useSelector(getWatchlist);
+  const watchlist = useSelector(getWatchlist);
+
+  useEffect(() => {
+    setMovies(movies.concat(watchlist))
+  }, [watchlist])
 
   const isLoading = useSelector(state => state.entities.watchlist.loading);
   if (isLoading) {
@@ -20,14 +29,15 @@ export default function WatchlistPage({ match }) {
     return null;
   }
 
-  console.log(movies);
-
+  document.title = `Watchlist • FILMLIST`;
   dispatch(complete());
   return (
+    <InfiniteScroll dataLength={movies.length} next={() => setPageNumber(page => page + 1)} hasMore={true} endMessage={<p style={{ textAlign: 'center' }}> <b>Yay! You have seen it all</b> </p>} >
       <div className="movies-container watchlist" data-router-view="movie">
         {movies.map((movie) => (
-          <MovieItem key={movie.movie.id} movie={movie.movie} page="watchlist" />
+          <MovieItem key={movie.id} movie={movie} page="watchlist" />
         ))}
       </div>
+    </InfiniteScroll>
   )
 }

@@ -7,7 +7,7 @@ const slice = createSlice({
   initialState: {
     list: [],
     loading: false,
-    lastFetch: null
+    moreLoading: false
   },
   reducers: {
     moviesRequested: (movies, action) => {
@@ -16,29 +16,30 @@ const slice = createSlice({
     moviesReceived: (movies, action) => {
       movies.list = action.payload;
       movies.loading = false;
-      movies.lastFetch = Date.now();
     },
     moviesRequestFailed: (movies, action) => {
       movies.loading = false;
+    },
+    moreMoviesRequested: (movies, action) => {
+      movies.moreLoading = true;
+    },
+    moreMoviesReceived: (movies, action) => {
+      movies.moreLoading = false;
+      movies.data = action.payload;
     }
   }
 })
 
 export default slice.reducer;
 
-const { moviesRequested, moviesReceived, moviesRequestFailed } = slice.actions;
+const { moviesRequested, moviesReceived, moviesRequestFailed, moreMoviesReceived, moreMoviesRequested } = slice.actions;
 
 // Action Creators
-export const loadMovies = () => (dispatch, getState) => {
-  const { lastFetch } = getState().entities.movies;
-
-  const diffInMinutes = moment().diff(moment(lastFetch), 'minutes');
-  if (diffInMinutes < 10) return;
-
+export const loadMovies = (pageNumber, limit) => (dispatch, getState) => {
   dispatch(apiRequest({
-    url: `/api/movies/${getState().entities.auth.user.username}`,
-    onStart: moviesRequested.type,
-    onSuccess: moviesReceived.type,
+    url: `/api/${getState().entities.auth.user.username}?page=${pageNumber}&limit=${limit}`,
+    onStart: pageNumber === 1 ? moviesRequested.type : moreMoviesRequested.type,
+    onSuccess: pageNumber === 1 ? moviesReceived.type : moviesReceived.type,
     onError: moviesRequestFailed.type
   }))
 };

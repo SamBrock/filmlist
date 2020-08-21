@@ -6,7 +6,8 @@ const slice = createSlice({
   name: 'seen',
   initialState: {
     data: [],
-    loading: false
+    loading: false,
+    moreLoading: false
   },
   reducers: {
     seenRequested: (seen, action) => {
@@ -18,19 +19,26 @@ const slice = createSlice({
     },
     seenRequestFailed: (seen, action) => {
       seen.loading = false;
+    },
+    moreSeenRequested: (seen, action) => {
+      seen.moreLoading = true;
+    },
+    moreSeenReceived: (seen, action) => {
+      seen.moreLoading = false;
+      seen.data = action.payload;
     }
   }
 });
 
 export default slice.reducer;
 
-const { seenReceived, seenRequested, seenRequestFailed } = slice.actions;
+const { seenReceived, seenRequested, seenRequestFailed, moreSeenRequested, moreSeenReceived  } = slice.actions;
 
-export const loadSeen = (username) => dispatch => {
+export const loadSeen = (username, pageNumber, limit) => dispatch => {
   dispatch(apiRequest({
-    url: `/api/${username}/seen`,
-    onStart: seenRequested.type,
-    onSuccess: seenReceived.type,
+    url: `/api/${username}/seen?page=${pageNumber}&limit=${limit}`,
+    onStart: pageNumber === 1 ? seenRequested.type : moreSeenRequested.type,
+    onSuccess: pageNumber === 1 ? seenReceived.type : moreSeenReceived.type,
     onError: seenRequestFailed.type
   }))
 }
