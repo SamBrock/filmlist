@@ -6,7 +6,6 @@ import { start, complete } from '../store/loadingBar';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 export default function SeenPage({ match }) {
-  const [movies, setMovies] = useState([]);
   const [pageNumber, setPageNumber] = useState(1);
   const [limit, setLimit] = useState(18);
 
@@ -17,11 +16,7 @@ export default function SeenPage({ match }) {
     dispatch(loadSeen(username, pageNumber, limit));
   }, [username, pageNumber])
 
-  const seen = useSelector(getSeen);
-
-  useEffect(() => {
-    setMovies(movies.concat(seen))
-  }, [seen])
+  const movies = useSelector(getSeen);
 
   const isLoading = useSelector(state => state.entities.seen.loading);
   if (isLoading) {

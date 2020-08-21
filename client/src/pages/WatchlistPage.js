@@ -6,7 +6,6 @@ import { start, complete } from '../store/loadingBar';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 export default function WatchlistPage({ match }) {
-  const [movies, setMovies] = useState([]);
   const [pageNumber, setPageNumber] = useState(1);
   const [limit, setLimit] = useState(18);
 
@@ -17,11 +16,7 @@ export default function WatchlistPage({ match }) {
     dispatch(loadWatchlist(username, pageNumber, limit));
   }, [username, pageNumber])
 
-  const watchlist = useSelector(getWatchlist);
-
-  useEffect(() => {
-    setMovies(movies.concat(watchlist))
-  }, [watchlist])
+  const movies = useSelector(getWatchlist);
 
   const isLoading = useSelector(state => state.entities.watchlist.loading);
   if (isLoading) {

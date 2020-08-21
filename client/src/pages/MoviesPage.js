@@ -7,7 +7,6 @@ import { start, complete } from '../store/loadingBar';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 export default function Movies() {
-  const [movies, setMovies] = useState([]);
   const [pageNumber, setPageNumber] = useState(1);
   const [limit, setLimit] = useState(20);
   
@@ -18,11 +17,7 @@ export default function Movies() {
     if (isAuthenticated) dispatch(loadMovies(pageNumber, limit));
   }, [isAuthenticated, pageNumber])
 
-  const recommended = useSelector(getMovies);
-
-  useEffect(() => {
-    setMovies(movies.concat(recommended))
-  }, [recommended])
+  const movies = useSelector(getMovies);
 
   const isLoading = useSelector(state => state.entities.movies.loading);
   if (isLoading) {

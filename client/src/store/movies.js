@@ -5,7 +5,7 @@ import moment from 'moment';
 const slice = createSlice({
   name: 'movies',
   initialState: {
-    list: [],
+    data: [],
     loading: false,
     moreLoading: false
   },
@@ -14,7 +14,7 @@ const slice = createSlice({
       movies.loading = true;
     },
     moviesReceived: (movies, action) => {
-      movies.list = action.payload;
+      movies.data = action.payload;
       movies.loading = false;
     },
     moviesRequestFailed: (movies, action) => {
@@ -25,7 +25,7 @@ const slice = createSlice({
     },
     moreMoviesReceived: (movies, action) => {
       movies.moreLoading = false;
-      movies.data = action.payload;
+      movies.data = [...movies.data, ...action.payload];
     }
   }
 })
@@ -38,11 +38,11 @@ const { moviesRequested, moviesReceived, moviesRequestFailed, moreMoviesReceived
 export const loadMovies = (pageNumber, limit) => (dispatch, getState) => {
   dispatch(apiRequest({
     url: `/api/${getState().entities.auth.user.username}?page=${pageNumber}&limit=${limit}`,
-    onStart: pageNumber === 1 ? moviesRequested.type : moreMoviesRequested.type,
-    onSuccess: pageNumber === 1 ? moviesReceived.type : moviesReceived.type,
+    onStart: pageNumber != 1 ? moreMoviesRequested.type : moviesRequested.type,
+    onSuccess: pageNumber != 1 ? moreMoviesReceived.type : moviesReceived.type,
     onError: moviesRequestFailed.type
   }))
 };
 
 // Selectors
-export const getMovies = state => state.entities.movies.list;
+export const getMovies = state => state.entities.movies.data;

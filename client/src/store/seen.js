@@ -25,20 +25,20 @@ const slice = createSlice({
     },
     moreSeenReceived: (seen, action) => {
       seen.moreLoading = false;
-      seen.data = action.payload;
+      seen.data = [...seen.data, ...action.payload];
     }
   }
 });
 
 export default slice.reducer;
 
-const { seenReceived, seenRequested, seenRequestFailed, moreSeenRequested, moreSeenReceived  } = slice.actions;
+const { seenReceived, seenRequested, seenRequestFailed, moreSeenRequested, moreSeenReceived } = slice.actions;
 
 export const loadSeen = (username, pageNumber, limit) => dispatch => {
   dispatch(apiRequest({
     url: `/api/${username}/seen?page=${pageNumber}&limit=${limit}`,
-    onStart: pageNumber === 1 ? seenRequested.type : moreSeenRequested.type,
-    onSuccess: pageNumber === 1 ? seenReceived.type : moreSeenReceived.type,
+    onStart: pageNumber != 1 ? moreSeenRequested.type : seenRequested.type,
+    onSuccess: pageNumber != 1 ? moreSeenReceived.type : seenReceived.type,
     onError: seenRequestFailed.type
   }))
 }

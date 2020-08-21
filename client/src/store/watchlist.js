@@ -25,7 +25,7 @@ const slice = createSlice({
     },
     moreWatchlistReceived: (watchlist, action) => {
       watchlist.moreLoading = false;
-      watchlist.data = action.payload;
+      watchlist.data = [...watchlist.data, ...action.payload];
     }
   }
 });
@@ -37,8 +37,8 @@ const { watchlistReceived, watchlistRequested, watchlistRequestFailed, moreWatch
 export const loadWatchlist = (username, pageNumber, limit) => dispatch => {
   dispatch(apiRequest({
     url: `/api/${username}/watchlist?page=${pageNumber}&limit=${limit}`,
-    onStart: pageNumber === 1 ? watchlistRequested.type : moreWatchlistRequested.type,
-    onSuccess: pageNumber === 1 ? watchlistReceived.type : moreWatchlistReceived.type,
+    onStart: pageNumber != 1 ? moreWatchlistRequested.type : watchlistRequested.type,
+    onSuccess: pageNumber != 1 ? moreWatchlistReceived.type : watchlistReceived.type,
     onError: watchlistRequestFailed.type
   }))
 }
