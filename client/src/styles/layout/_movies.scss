@@ -184,8 +184,8 @@
 
           .movie-average-vote {
             @include infoTxt();
-            background: $blue2;
-            color: $black;
+            border: 1px $blue2 solid;
+            color: $blue2;
             padding: 2px 4px;
           }
         }
@@ -208,4 +208,9 @@
       }
     }
   }
+}
+
+.load-more-container {
+  text-align: center;
+  margin: 0 0 83px 0;
 }
