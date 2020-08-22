@@ -10,7 +10,7 @@
     background-size: 24px;
 
     &:focus {
-      background: url('../../images/email-red.png') no-repeat scroll 7px 7px;
+      background: url('../../images/email-blue.png') no-repeat scroll 7px 7px;
       background-position-y: 13px;
       background-position-x: 12px;
       background-size: 24px;
@@ -24,7 +24,7 @@
     background-size: 20px;
 
     &:focus {
-      background: url('../../images/lock-red.png') no-repeat scroll 7px 7px;
+      background: url('../../images/lock-blue.png') no-repeat scroll 7px 7px;
       background-position-y: 10px;
       background-position-x: 13px;
       background-size: 20px;
@@ -38,7 +38,7 @@
     background-size: 20px;
 
     &:focus {
-      background: url('../../images/user-red.png') no-repeat scroll 7px 7px;
+      background: url('../../images/user-blue.png') no-repeat scroll 7px 7px;
       background-position-y: 12px;
       background-position-x: 13px;
       background-size: 20px;
@@ -50,7 +50,7 @@
     margin: 0 0 32px 0;
     border: none;
     background-color: $black;
-    border: 1px #141414 solid;
+    border: 1px #212121 solid;
     color: $white;
     // width: 300px;
     cursor: pointer;
