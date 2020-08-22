@@ -6,6 +6,16 @@ body {
   margin: 0 auto;
   @include custom-scroll-bar();
 
+  // Preload css background images
+  &::after {
+    position: absolute;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    z-index: -1; // hide images
+    content: url('../../images/add-outline.svg') url('../../images/add-outline-orange.svg');
+  }
+
   .container {
     // display: grid;
     // grid-template-columns: 1fr 1fr 1fr;
