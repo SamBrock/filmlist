@@ -37,8 +37,8 @@ export default function SeenPage({ match }) {
           ))}
         </div>
       </InfiniteScroll>
-      <div className="load-more-container" >
-        <div style={isMoreLoading ? {} : { display: 'none' }} className="load-more-animation">
+      <div style={isMoreLoading ? {} : { display: 'none' }} className="load-more-container" >
+        <div className="load-more-animation">
           <div className="load-more-bar"></div>
         </div>
       </div>
