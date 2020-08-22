@@ -60,7 +60,7 @@ export default function MovieItem({ movie, rating, like, page }) {
           {rating ? (<Rating className="seen-icon" name="hover-feedback" value={rating} precision={0.5} readOnly />) : null}
         </div>
         <div className="user-seen-ui like">
-          {like ? (<FavoriteIcon className="seen-icon" />) : null}
+          {like ? (<FavoriteIcon className="like-icon" />) : null}
         </div>
       </div>
     </Link >

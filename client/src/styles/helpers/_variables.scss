@@ -7,6 +7,7 @@ $orange1: #F27405;
 $orange2: #F25C05;
 $black: #0D0D0D;
 $blue1opacity: rgba(61, 242, 224, .1);
+$grey: #2a2a2a;
 
 //  FONTS
 @import url('https://fonts.googleapis.com/css2?family=Maven+Pro:wght@400;500;600;700&display=swap');
@@ -80,7 +81,7 @@ $bold: 'Maven Pro';
   }
 
   &::-webkit-scrollbar-thumb {
-    background: #343434;
+    background: $grey;
   }
 }
 

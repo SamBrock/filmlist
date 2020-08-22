@@ -201,11 +201,15 @@
     margin: 6px 0 -6px;
 
     .seen-icon {
-      color: rgba(255, 255, 255, .2) !important;
+      color: $grey !important;
 
       .MuiRating-iconEmpty {
         color: $black !important;
       }
+    }
+
+    .like-icon {
+      color: $grey !important;
     }
   }
 }

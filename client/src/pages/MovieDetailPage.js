@@ -22,7 +22,7 @@ export default function MovieDetailPage({ match }) {
     return null;
   }
 
-  document.title = `${movie.title} (${movie.year}) • FILMLIST`
+  document.title = `${movie.title} (${movie.year}) - FILMLIST`
   dispatch(complete());
   return (
     <div data-router-view="movie-page" className="movie-page-container">
