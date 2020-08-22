@@ -39,7 +39,7 @@ export default function MovieItemButtons({ movie, page, hover, setHide }) {
 
   const handleWatchlist = (e, watchlist) => {
     setWatchlist(watchlist);
-    setHide(!watchlist);
+    if(page != 'movies') setHide(!watchlist);
     setAddedToWatchlist(watchlist);
     watchlist ? dispatch(addMovieWatchlist(movie.id, movie.title)) : dispatch(deleteMovieWatchlist(movie.id, movie.title));
     e.preventDefault();
@@ -72,12 +72,12 @@ export default function MovieItemButtons({ movie, page, hover, setHide }) {
     return (
       <div className="movie-item-buttons">
         <div className="top-btns" ref={el => movieTopBtns = el}>
-          {!isNotInterested ? !isSeen ? <div className="seen-btn" onClick={(e) => handleSeen(e, true)}><VisibilityOutlinedIcon /></div> : <div className="seen-btn" onClick={(e) => handleSeen(e, false)}><UndoIcon /></div> : null}
-          {!isSeen ? !isNotInterested ? <div className="not-interested-btn" onClick={(e) => handleNotInterested(e, true)} ><ClearIcon /></div> : <div className="not-interested-btn" onClick={(e) => handleNotInterested(e, false)}><UndoIcon /></div> : null}
+          {!addedToWatchlist ? !isNotInterested ? !isSeen ? <div className="seen-btn" onClick={(e) => handleSeen(e, true)}><VisibilityOutlinedIcon /></div> : <div className="seen-btn" onClick={(e) => handleSeen(e, false)}><UndoIcon /></div> : null : null}
+          {!addedToWatchlist ? !isSeen ? !isNotInterested ? <div className="not-interested-btn" onClick={(e) => handleNotInterested(e, true)} ><ClearIcon /></div> : <div className="not-interested-btn" onClick={(e) => handleNotInterested(e, false)}><UndoIcon /></div> : null : null}
+          {!addedToWatchlist ? null : <div className="not-interested-btn" onClick={(e) => handleWatchlist(e, false)}><UndoIcon /></div>}
         </div>
         <div className="movie-add-watchlist" ref={el => movieAdddBtn = el} onClick={(e) => handleWatchlist(e, true)}>
           <div className={`add-icon ${addedToWatchlist ? 'active' : ''}`}></div>
-          {/* <img src={AddOutlineIcon} className="add-icon"  /> */}
         </div>
       </div>
     )
