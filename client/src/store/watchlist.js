@@ -44,3 +44,5 @@ export const loadWatchlist = (username, pageNumber, limit) => dispatch => {
 }
 
 export const getWatchlist = state => state.entities.watchlist.data;
+export const loading = state => state.entities.watchlist.loading;
+export const moreLoading = state => state.entities.watchlist.moreLoading;

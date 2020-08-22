@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, Fragment } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { loadWatchlist, getWatchlist } from '../store/watchlist';
+import { loadWatchlist, getWatchlist, loading, moreLoading } from '../store/watchlist';
 import MovieItem from '../components/MovieItem';
 import { start, complete } from '../store/loadingBar';
 import InfiniteScroll from 'react-infinite-scroll-component';
@@ -18,7 +18,9 @@ export default function WatchlistPage({ match }) {
 
   const movies = useSelector(getWatchlist);
 
-  const isLoading = useSelector(state => state.entities.watchlist.loading);
+  const isMoreLoading = useSelector(moreLoading);
+
+  const isLoading = useSelector(loading);
   if (isLoading) {
     dispatch(start());
     return null;
@@ -27,12 +29,19 @@ export default function WatchlistPage({ match }) {
   document.title = `${username}'s Watchlist - FILMLIST`;
   dispatch(complete());
   return (
-    <InfiniteScroll dataLength={movies.length} next={() => setPageNumber(page => page + 1)} >
-      <div className="movies-container watchlist" data-router-view="movie">
-        {movies.map((movie) => (
-          <MovieItem key={movie.id} movie={movie} page="watchlist" />
-        ))}
+    <Fragment>
+      <InfiniteScroll dataLength={movies.length} next={() => setPageNumber(page => page + 1)} hasMore={true}>
+        <div className="movies-container watchlist" data-router-view="movie">
+          {movies.map((movie) => (
+            <MovieItem key={movie.id} movie={movie} page="watchlist" />
+          ))}
+        </div>
+      </InfiniteScroll>
+      <div style={isMoreLoading ? {} : { display: 'none' }} className="load-more-container" >
+        <div className="load-more-animation">
+          <div className="load-more-bar"></div>
+        </div>
       </div>
-    </InfiniteScroll>
+    </Fragment>
   )
 }
