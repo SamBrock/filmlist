@@ -1,6 +1,6 @@
 import React, { useEffect, useState, Fragment } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { loadMovies, getMovies } from '../store/movies';
+import { loadMovies, getMovies, loading, moreLoading } from '../store/movies';
 import MovieItem from '../components/MovieItem'
 import { getIsAuthenticated } from '../store/auth';
 import { start, complete } from '../store/loadingBar';
@@ -23,14 +23,15 @@ export default function Movies() {
 
   useEffect(() => {
     setCount(count => count + movies.length);
-
     if (count > 60) {
       setHasMore(false);
       setCount(0);
     }
   }, [movies])
 
-  const isLoading = useSelector(state => state.entities.movies.loading);
+  const isMoreLoading = useSelector(moreLoading);
+
+  const isLoading = useSelector(loading);
   if (isLoading) {
     dispatch(start());
     return null;
@@ -47,9 +48,12 @@ export default function Movies() {
           ))}
         </div>
       </InfiniteScroll>
-      <div className="load-more-container" style={hasMore ? { display: 'none' } : {}}>
-        <a className="load-more-btn btn-primary" onClick={() => setHasMore(true)}>Load more films</a>
+      <div className="load-more-container" >
+        <a className="load-more-btn btn-primary" style={hasMore ? { display: 'none' } : {}} onClick={() => setHasMore(true)}>Load more films</a>
+        <div style={isMoreLoading ? {} : { display: 'none' }} className="load-more-animation">
+          <div className="load-more-bar"></div>
+        </div>
       </div>
     </Fragment>
-  ) 
+  )
 }

@@ -213,4 +213,34 @@
 .load-more-container {
   text-align: center;
   margin: 0 0 83px 0;
+
+  .load-more-animation {
+    width: 155px;
+    height: 1px;
+    overflow: hidden;
+    margin: 0 auto;
+
+    .load-more-bar {
+      width: 155px;
+      height: 1px;
+      background: $blue1;
+      position: relative;
+      top: 0px;
+      animation-name: moreLoading;
+      animation-duration: .7s;
+      animation-iteration-count: infinite;
+      animation-timing-function: linear;
+    }
+
+    @keyframes moreLoading {
+      0% {
+        left: -150px;
+      }
+
+      100% {
+        left: 300px;
+      }
+
+    }
+  }
 }

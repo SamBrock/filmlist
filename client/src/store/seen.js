@@ -44,3 +44,5 @@ export const loadSeen = (username, pageNumber, limit) => dispatch => {
 }
 
 export const getSeen = state => state.entities.seen.data;
+export const loading = state => state.entities.seen.loading;
+export const moreLoading = state => state.entities.seen.moreLoading;

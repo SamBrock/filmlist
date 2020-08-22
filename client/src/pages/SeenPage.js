@@ -1,6 +1,6 @@
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useEffect, useState, useRef, Fragment } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { loadSeen, getSeen } from '../store/seen';
+import { loadSeen, getSeen, loading, moreLoading } from '../store/seen';
 import MovieItem from '../components/MovieItem';
 import { start, complete } from '../store/loadingBar';
 import InfiniteScroll from 'react-infinite-scroll-component';
@@ -18,7 +18,9 @@ export default function SeenPage({ match }) {
 
   const movies = useSelector(getSeen);
 
-  const isLoading = useSelector(state => state.entities.seen.loading);
+  const isMoreLoading = useSelector(moreLoading);
+
+  const isLoading = useSelector(loading);
   if (isLoading) {
     dispatch(start());
     return null;
@@ -27,12 +29,19 @@ export default function SeenPage({ match }) {
   document.title = `${username}'s Seen - FILMLIST`;
   dispatch(complete());
   return (
-    <InfiniteScroll dataLength={movies.length} next={() => setPageNumber(page => page + 1)} hasMore={true} endMessage={<p style={{ textAlign: 'center' }}> <b>Yay! You have seen it all</b> </p>} >
-      <div className="movies-container seen" data-router-view="movie">
-        {movies.map((movie) => (
-          <MovieItem  key={movie.id} movie={movie} rating={movie.rating} like={movie.like} page="seen" />
-        ))}
+    <Fragment>
+      <InfiniteScroll dataLength={movies.length} next={() => setPageNumber(page => page + 1)} hasMore={true} endMessage={<p style={{ textAlign: 'center' }}> <b>Yay! You have seen it all</b> </p>} >
+        <div className="movies-container seen" data-router-view="movie">
+          {movies.map((movie) => (
+            <MovieItem key={movie.id} movie={movie} rating={movie.rating} like={movie.like} page="seen" />
+          ))}
+        </div>
+      </InfiniteScroll>
+      <div className="load-more-container" >
+        <div style={isMoreLoading ? {} : { display: 'none' }} className="load-more-animation">
+          <div className="load-more-bar"></div>
+        </div>
       </div>
-    </InfiniteScroll>
+    </Fragment>
   )
 }

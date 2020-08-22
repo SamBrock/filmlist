@@ -46,3 +46,5 @@ export const loadMovies = (pageNumber, limit) => (dispatch, getState) => {
 
 // Selectors
 export const getMovies = state => state.entities.movies.data;
+export const loading = state => state.entities.movies.loading;
+export const moreLoading = state => state.entities.movies.moreLoading;
