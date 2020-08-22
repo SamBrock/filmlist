@@ -145,9 +145,43 @@
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        height: 100px;
-        width: 100px;
         margin: 0 auto;
+
+        .add-icon {
+          height: 100px;
+          width: 100px;
+          background-image: url('../../images/add-outline.svg');
+          background-size: 100px 100px;
+
+          &.active {
+            animation-name: addWatchlist;
+            animation-duration: .5s;
+            animation-fill-mode: forwards;
+            animation-timing-function: ease-in-out;
+
+            @keyframes addWatchlist {
+              0% {
+                opacity: 1;
+                height: 130px;
+                width: 130px;
+                background-image: url('../../images/add-outline-orange.svg');
+                background-size: 130px 130px;
+                margin-bottom: 30px;
+              }
+
+              100% {
+                opacity: 0;
+                height: 140px;
+                width: 140px;
+                background-image: url('../../images/add-outline-orange.svg');
+                background-size: 140px 140px;
+                margin-bottom: 30px;
+              }
+
+            }
+          }
+
+        }
       }
 
       .movie-info-text {

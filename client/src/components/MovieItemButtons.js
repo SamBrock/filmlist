@@ -1,12 +1,12 @@
 import React, { useState, useRef, useEffect, Fragment } from 'react';
 import { TweenMax } from "gsap";
 import AddOutlineIcon from '../images/add-outline.svg';
-// import AddIcon from '../images/add.svg';
+// import AddOutlineIcon from '../images/add-outline-orange.svg';
 import { useDispatch } from 'react-redux';
 import { addMovieWatchlist, addMovieSeen, deleteMovieSeen, addMovieNotInterested, deleteMovieNotInterested, deleteMovieWatchlist } from '../store/movie';
-import VisibilityIcon from '@material-ui/icons/Visibility';
 import ClearIcon from '@material-ui/icons/Clear';
 import UndoIcon from '@material-ui/icons/Undo';
+import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
 
 export default function MovieItemButtons({ movie, page, hover, setHide }) {
   const [topBtns, setTopBtns] = useState(null);
@@ -14,6 +14,7 @@ export default function MovieItemButtons({ movie, page, hover, setHide }) {
   const [isSeen, setSeen] = useState(false);
   const [isNotInterested, setNotInterested] = useState(false);
   const [isWatchlist, setWatchlist] = useState(true);
+  const [addedToWatchlist, setAddedToWatchlist] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -39,6 +40,7 @@ export default function MovieItemButtons({ movie, page, hover, setHide }) {
   const handleWatchlist = (e, watchlist) => {
     setWatchlist(watchlist);
     setHide(!watchlist);
+    setAddedToWatchlist(watchlist);
     watchlist ? dispatch(addMovieWatchlist(movie.id, movie.title)) : dispatch(deleteMovieWatchlist(movie.id, movie.title));
     e.preventDefault();
   }
@@ -64,15 +66,18 @@ export default function MovieItemButtons({ movie, page, hover, setHide }) {
     e.preventDefault();
   }
 
+  console.log(movie.id, isWatchlist);
+
   if (page === 'movies') {
     return (
       <div className="movie-item-buttons">
         <div className="top-btns" ref={el => movieTopBtns = el}>
-          {!isNotInterested ? !isSeen ? <div className="seen-btn" onClick={(e) => handleSeen(e, true)}><VisibilityIcon /></div> : <div className="seen-btn" onClick={(e) => handleSeen(e, false)}><UndoIcon /></div> : null}
+          {!isNotInterested ? !isSeen ? <div className="seen-btn" onClick={(e) => handleSeen(e, true)}><VisibilityOutlinedIcon /></div> : <div className="seen-btn" onClick={(e) => handleSeen(e, false)}><UndoIcon /></div> : null}
           {!isSeen ? !isNotInterested ? <div className="not-interested-btn" onClick={(e) => handleNotInterested(e, true)} ><ClearIcon /></div> : <div className="not-interested-btn" onClick={(e) => handleNotInterested(e, false)}><UndoIcon /></div> : null}
         </div>
-        <div className="movie-add-watchlist" ref={el => movieAdddBtn = el}>
-          <img src={AddOutlineIcon} className="logo" alt="Logo" onClick={(e) => handleWatchlist(e, true)} />
+        <div className="movie-add-watchlist" ref={el => movieAdddBtn = el} onClick={(e) => handleWatchlist(e, true)}>
+          <div className={`add-icon ${addedToWatchlist ? 'active' : ''}`}></div>
+          {/* <img src={AddOutlineIcon} className="add-icon"  /> */}
         </div>
       </div>
     )
