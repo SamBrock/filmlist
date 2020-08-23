@@ -4,6 +4,10 @@ import { loadSeen, getSeen, loading, moreLoading } from '../store/seen';
 import MovieItem from '../components/MovieItem';
 import { start, complete } from '../store/loadingBar';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import { motion } from 'framer-motion';
+
+const transition1 = { duration: 0.3, ease: [0.43, 0.13, 0.23, 0.96]};
+const transition2 = { duration: 0.5, ease: [0.43, 0.13, 0.23, 0.96]};
 
 export default function SeenPage({ match }) {
   const [pageNumber, setPageNumber] = useState(1);
@@ -29,7 +33,7 @@ export default function SeenPage({ match }) {
   document.title = `${username}'s Seen - FILMLIST`;
   dispatch(complete());
   return (
-    <Fragment>
+    <main>
       <InfiniteScroll dataLength={movies.length} next={() => setPageNumber(page => page + 1)} hasMore={true} endMessage={<p style={{ textAlign: 'center' }}> <b>Yay! You have seen it all</b> </p>} >
         <div className="movies-container seen" data-router-view="movie">
           {movies.map((movie) => (
@@ -42,6 +46,8 @@ export default function SeenPage({ match }) {
           <div className="load-more-bar"></div>
         </div>
       </div>
-    </Fragment>
+      {/* <motion.div exit={{width: 520}} transition={transition1} className="bg-animate bg-1"></motion.div> */}
+      {/* <motion.div exit={{width: 515}} transition={transition2} className="bg-animate bg-2"></motion.div> */}
+    </main>
   )
 }

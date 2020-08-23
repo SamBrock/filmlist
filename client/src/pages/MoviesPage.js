@@ -40,7 +40,7 @@ export default function Movies() {
   document.title = `FILMLIST`
   dispatch(complete());
   return (
-    <Fragment>
+    <main>
       <InfiniteScroll dataLength={movies.length} next={() => setPageNumber(page => page + 1)} hasMore={hasMore} >
         <div className="movies-container movies" data-router-view="movie">
           {movies.map((movie) => (
@@ -54,6 +54,6 @@ export default function Movies() {
           <div className="load-more-bar"></div>
         </div>
       </div>
-    </Fragment>
+    </main>
   )
 }

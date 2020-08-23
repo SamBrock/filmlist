@@ -39,7 +39,7 @@ export default function MovieItemButtons({ movie, page, hover, setHide }) {
 
   const handleWatchlist = (e, watchlist) => {
     setWatchlist(watchlist);
-    if(page != 'movies') setHide(!watchlist);
+    if (page != 'movies') setHide(!watchlist);
     setAddedToWatchlist(watchlist);
     watchlist ? dispatch(addMovieWatchlist(movie.id, movie.title)) : dispatch(deleteMovieWatchlist(movie.id, movie.title));
     e.preventDefault();

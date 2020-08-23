@@ -1,17 +1,19 @@
 .movie-page-container {
-  // display: grid;
-  // grid-template-columns: 72% 28%;
-  color: $white;
+  height: calc(100vh - 1px);
+  box-sizing: border-box;
 
   .backdrop-container {
+    // display: none;
     position: fixed;
     height: 100vh;
-    width: 70%;
+    // width: 60%;
+    overflow: hidden;
     top: 0;
     left: 0;
+    // border: 1px blue solid;
 
     @media (min-width: 2000px) {
-      width: calc(100% - 400px);
+      // width: calc(100% - 400px);
     }
 
     img {
@@ -23,120 +25,131 @@
     }
   }
 
-  .movie-container {
-    background: $black;
-    padding: 5em 52px;
-    margin-right: calc(6em + 64px);
-    position: fixed;
-    height: calc(100vh - 5em);
-    width: calc(30vw - 96px);
-    top: 0;
-    right: 0;
-    bottom: 0;
-    overflow-y: auto;
-    @include custom-scroll-bar();
-    max-width: 480px;
-    border-right: 1px $blue1opacity solid;
-    direction: ltr;
+  .movie-details-container {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    color: $white;
+    margin: 0 calc(6em + 50px) 0 0;
+    // border: 1px green solid;
+    
+    #backdrop-placeholder {
 
-    .movie-title {
-      margin: 0 0 12px 0;
     }
 
-    .movie-info {
-      @include infoTxt();
-      margin: 0 0 24px 0;
-      color: rgba(255, 255, 255, 0.4);
+    .movie-container {
+      padding: 5em 52px 0;
+      min-width: 600px;
+      min-height: calc(100vh - 1px);
+      box-sizing: border-box;
+      // width: calc(30vw - 96px);
+      // top: 0;
+      // right: 0;
+      // bottom: 0;
+      overflow-y: auto;
+      @include custom-scroll-bar();
+      // max-width: 480px;
+      border-right: 1px $grey solid;
+      // border: 1px red solid;
 
-      span {
-        margin: 0 12px 0 0;
-
-      }
-    }
-
-    .movie-buttons {
-      display: flex;
-      margin: 0 0 48px 0;
-
-      .movie-rate {
-        margin: 0 48px 0 0;
+      .movie-title {
+        margin: 0 0 12px 0;
       }
 
-      .movie-button {
-        margin: 0 48px 0 0;
-      }
-    }
+      .movie-info {
+        @include infoTxt();
+        margin: 0 0 24px 0;
+        color: rgba(255, 255, 255, 0.4);
 
-    .movie-overview {
-      @include bodyTxt();
-      margin: 0 0 24px 0;
-    }
+        span {
+          margin: 0 12px 0 0;
 
-    .movie-genres {
-      margin: 0 0 48px 0;
-
-      .movie-genre {
-        margin: 0 12px 0 0;
-        @include highlightTxt();
-      }
-    }
-
-    .movie-credits {
-      margin: 0 0 48px 0;
-
-      .movie-credits-list {
-        display: flex;
-
-        .owl-theme {
-          position: relative;
         }
-        
-        .movie-credit {
-          .movie-credit-img {
-            margin: 0 0 12px 0;
+      }
 
-            img {
-              width: 100%;
-              height: 100%;
-              object-fit: cover;
+      .movie-buttons {
+        display: flex;
+        margin: 0 0 48px 0;
+
+        .movie-rate {
+          margin: 0 48px 0 0;
+        }
+
+        .movie-button {
+          margin: 0 48px 0 0;
+        }
+      }
+
+      .movie-overview {
+        @include bodyTxt();
+        margin: 0 0 24px 0;
+      }
+
+      .movie-genres {
+        margin: 0 0 48px 0;
+
+        .movie-genre {
+          margin: 0 12px 0 0;
+          @include highlightTxt();
+        }
+      }
+
+      .movie-credits {
+        margin: 0 0 48px 0;
+
+        .movie-credits-list {
+          display: flex;
+
+          .owl-theme {
+            position: relative;
+          }
+
+          .movie-credit {
+            .movie-credit-img {
+              margin: 0 0 12px 0;
+
+              img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+              }
+
+              .no-profile {
+                width: 138px;
+                height: 175px;
+                background: #222;
+              }
             }
 
-            .no-profile {
-              width: 138px;
-              height: 175px;
-              background: #222;
+            .movie-credit-name {
+              @include highlightTxt();
+              margin: 0 0 6px 0;
+            }
+
+            .movie-credit-role {
+              @include subTxt();
+              color: rgba(255, 255, 255, 0.7);
             }
           }
 
-          .movie-credit-name {
-            @include highlightTxt();
-            margin: 0 0 6px 0;
-          }
-
-          .movie-credit-role {
-            @include subTxt();
-            color: rgba(255, 255, 255, 0.7);
+          .movie-crew {
+            margin: 0 24px 0 0;
           }
         }
 
-        .movie-crew {
-          margin: 0 24px 0 0;
-        }
-      }
+        .movie-cast-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
 
-      .movie-cast-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+          .carousel-btn {
+            margin: 0 0 2px 0;
+            color: #222;
 
-        .carousel-btn {
-          margin: 0 0 2px 0;
-          color: #222;
-          
 
-          .MuiSvgIcon-root {
-            height: .6em !important;
-            width: .6em !important;
+            .MuiSvgIcon-root {
+              height: .6em !important;
+              width: .6em !important;
+            }
           }
         }
       }

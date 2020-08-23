@@ -29,7 +29,7 @@ export default function WatchlistPage({ match }) {
   document.title = `${username}'s Watchlist - FILMLIST`;
   dispatch(complete());
   return (
-    <Fragment>
+    <main>
       <InfiniteScroll dataLength={movies.length} next={() => setPageNumber(page => page + 1)} hasMore={true}>
         <div className="movies-container watchlist" data-router-view="movie">
           {movies.map((movie) => (
@@ -42,6 +42,6 @@ export default function WatchlistPage({ match }) {
           <div className="load-more-bar"></div>
         </div>
       </div>
-    </Fragment>
+    </main>
   )
 }
