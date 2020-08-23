@@ -18,6 +18,7 @@ const slice = createSlice({
   reducers: {
     movieRequested: (movie, action) => {
       movie.loading = true;
+      movie.data = {};
     },
     movieReceived: (movie, action) => {
       movie.data = action.payload;
@@ -132,3 +133,4 @@ export const deleteMovieNotInterested = (filmId, title) => (dispatch, getState) 
 
 // Selector
 export const getMovieDetails = state => state.entities.movie.data;
+export const loading = state => state.entities.movie.loading;
