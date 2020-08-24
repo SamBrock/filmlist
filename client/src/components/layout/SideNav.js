@@ -3,7 +3,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import AddIcon from '@material-ui/icons/Add';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { getIsAuthenticated, getUser } from '../../store/auth';
 
@@ -11,6 +11,12 @@ export default function SideNav({ username }) {
   const isAuthenticated = useSelector(getIsAuthenticated);
   const user = useSelector(getUser);
 
+  const { pathname } = useLocation();
+
+  if(pathname === '/login' || pathname === '/register') {
+    return null;
+  }
+  
   return (
     <div className="side-nav center">
       <SearchIcon className="search-btn icon-btn" />
