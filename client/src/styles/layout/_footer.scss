@@ -1,0 +1,35 @@
+.footer-container {
+  padding: 0 0 52px 0;
+  width: 100%;
+  margin-bottom: -29px;
+
+  .footer-links {
+    display: flex;
+    justify-content: space-between;
+
+    img {
+      height: 24px;
+    }
+
+    .social-link {
+      margin-left: 12px;
+
+      img {
+        height: 24px;
+      }
+    }
+  }
+
+  .footer-copyright {
+    width: 100%;
+    text-align: right;
+    @include subTxt();
+    color: $grey;
+    margin: 12px 0 0 0;
+    a{
+      color: $grey;
+      font-weight: 600;
+    }
+  }
+
+}
