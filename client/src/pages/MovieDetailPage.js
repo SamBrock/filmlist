@@ -5,8 +5,8 @@ import { start, complete } from '../store/loadingBar';
 import MovieButtons from '../components/MovieButtons';
 import Carousel from '../components/layout/Carousel';
 import { motion } from 'framer-motion';
-import { useWindowSize } from '../hooks/useWindowSize';
-import ProgressiveImage from 'react-progressive-image';
+import BackdropImg from '../components/layout/BackdropImg';
+import Footer from '../components/layout/Footer';
 
 const transition = { ease: [0.43, 0.13, 0.23, 0.96] }
 const transition2 = { duration: 0.4, ease: [0.43, 0.13, 0.23, 0.96] }
@@ -37,8 +37,6 @@ const movieDetailsChildren = {
 }
 
 export default function MovieDetailPage({ match }) {
-  const [backdropWidth, setBackdropWidth] = useState(0);
-  const [width, height] = useWindowSize();
   const dispatch = useDispatch();
 
   const movieId = parseInt(match.params.id);
@@ -50,10 +48,6 @@ export default function MovieDetailPage({ match }) {
 
   const isLoading = useSelector(loading);
 
-  useEffect(() => {
-    const element = document.getElementById('backdrop-placeholder');
-    if (element) setBackdropWidth(element.getBoundingClientRect().width);
-  }, [width, height])
 
   if (isLoading) {
     dispatch(start());
@@ -63,15 +57,11 @@ export default function MovieDetailPage({ match }) {
   document.title = `${movie.title} (${movie.year}) - FILMLIST`
   dispatch(complete());
   return (
-    <motion.div exit={{ opacity: 1 }} className="movie-page-container">
-      <div className="backdrop-container" style={{ width: `${backdropWidth}px` }}>
-        <ProgressiveImage src={"https://image.tmdb.org/t/p/original" + movie.backdrop_path} placeholder={"https://image.tmdb.org/t/p/w780" + movie.backdrop_path}>
-          {src => <motion.img initial={{ scale: 1.1 }} animate={{ scale: 1 }} transition={transition} src={src} alt={`${movie.title} backdrop`} />}
-        </ProgressiveImage>
-      </div>
-      <div className="movie-details-container">
+    <motion.div exit={{ opacity: 1 }} className="grid-page-container">
+      <BackdropImg backdropPath={movie.backdrop_path} />
+      <div className="movie-details-container grid-2-col-backdrop">
         <div id="backdrop-placeholder"></div>
-        <motion.div variants={movieDetailsVariant} initial="hidden" animate="show" className="movie-container">
+        <motion.div variants={movieDetailsVariant} initial="hidden" animate="show" className="movie-container content-col">
           <motion.div variants={movieDetailsChildren} className="movie-title">
             <h1>{movie.title}</h1>
           </motion.div>
