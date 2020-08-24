@@ -31,10 +31,8 @@
     color: $white;
     margin: 0 calc(6em + 50px) 0 0;
     // border: 1px green solid;
-    
-    #backdrop-placeholder {
 
-    }
+    #backdrop-placeholder {}
 
     .movie-container {
       padding: 5em 52px 0;
@@ -50,6 +48,7 @@
       // max-width: 480px;
       border-right: 1px $grey solid;
       // border: 1px red solid;
+      overflow: hidden;
 
       .movie-title {
         margin: 0 0 12px 0;
