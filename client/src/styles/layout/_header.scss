@@ -7,15 +7,33 @@ header {
   z-index: 1;
   // border: 1px red solid;
   box-sizing: border-box;
-  
+  padding: 32px 0;
+
+  @include media('<=tablet') {
+    z-index: 20;
+    background: transparent;
+    transition: padding ease .3s;
+
+    &.active {
+      background: $black;
+    }
+  }
+
+  @include media('<=phone') {
+    padding: 18px 0;
+
+    &.active {
+      background: $black;
+      padding: 12px 0;
+    }
+  }
+
   nav {
     display: flex;
-    // width: 10%;
-    // max-width: 190px;
   }
-  
+
   nav.left-nav {
-    margin: 32px;
+    margin: 0 0 0 32px;
 
     .logo,
     .search-btn,
@@ -25,6 +43,10 @@ header {
 
     .logo {
       height: 3em;
+
+      @include media('<=phone') {
+        height: 2.5em;
+      }
     }
 
     .search-btn,
@@ -32,27 +54,25 @@ header {
       height: 24px;
       display: flex;
     }
+
+    @include media('<=phone') {
+      margin: 0 0 0 18px;
+    }
+
   }
 
   nav.right-nav {
-    margin: 30px 48px;
-    // border: 1px red solid;
+    margin: 0 48px 0 0;
     justify-content: right;
 
-    // .auth-btn {
-    //   border: 1px transparent solid;
-    //   padding: 8px 12px;
-    //   // margin: 0 12px;
-    //   font-size: .9em;
-    //   line-height: 1em;
-    // }
+    @include media('<=small-desktop') {
+      margin: 0 32px 0 0;
+    }
 
-    // .btn-border {
-    //   border: 1px #ebebeb solid;
-    // }
-
-    // .username {
-    //   font-weight: 600;
-    // }
+    @include media('<=phone') {
+      margin: 0 18px 0 0;
+    }
   }
+
+
 }

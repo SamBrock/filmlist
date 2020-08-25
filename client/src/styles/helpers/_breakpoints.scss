@@ -1,6 +1,8 @@
 $breakpoints: (
-  "phone": 360px,
+  "small-phone": 375px,
+  "phone": 550px,
   "tablet": 768px,
+  "small-desktop": 1172px,
   "desktop": 1366px,
   "large-desktop": 1950px
 ) !default;

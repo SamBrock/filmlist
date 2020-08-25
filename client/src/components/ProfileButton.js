@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 
 
 export default function ProfileButton({ username }) {
-  const [hover, setHover] = useState(true);
+  const [hover, setHover] = useState(false);
   const usernameLetter = username.toUpperCase().charAt(0);
 
   const dispatch = useDispatch();

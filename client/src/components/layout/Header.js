@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useState, useEffect } from 'react'
 import Logo from '../../images/filmlist-f.svg'
 import { Link, useLocation } from 'react-router-dom'
 import { useSelector } from 'react-redux'
@@ -6,6 +6,20 @@ import { getIsAuthenticated, getUser } from '../../store/auth'
 import ProfileButton from '../ProfileButton'
 
 export default function Header() {
+  const [hasScrolled, setHasScrolled] = useState(false);
+
+  const handleScroll = () => {
+    setHasScrolled(window.pageYOffset != 0) 
+  };
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
   const isAuthenticated = useSelector(getIsAuthenticated);
   const user = useSelector(getUser);
 
@@ -24,26 +38,26 @@ export default function Header() {
     </Fragment>
   )
 
-    if(pathname === '/login' || pathname === '/register') {
-      return (
-        <header>
-          <nav className="left-nav">
-            <Link to="/"><img src={Logo} className="logo" alt="Logo" /></Link>
-    
-          </nav>
-        </header>
-      )
-    }
-  
+  if (pathname === '/login' || pathname === '/register') {
+    return (
+      <header className={`${hasScrolled ? 'active' : ''}`}>
+        <nav className="left-nav">
+          <Link to="/"><img src={Logo} className="logo" alt="Logo" /></Link>
+
+        </nav>
+      </header>
+    )
+  }
+
   return (
-    <header>
+    <header className={`${hasScrolled ? 'active' : ''}`}>
       <nav className="left-nav">
         <Link to="/"><img src={Logo} className="logo" alt="Logo" /></Link>
 
       </nav>
       <nav className="right-nav">
         {isAuthenticated ? authLinks : guestLinks}
-        
+
       </nav>
     </header>
   )

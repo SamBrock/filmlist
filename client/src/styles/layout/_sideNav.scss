@@ -12,4 +12,8 @@
     width: 1.2em;
     cursor: pointer;
   }
+
+  @include media('<=tablet') {
+    display: none;
+  }
 }

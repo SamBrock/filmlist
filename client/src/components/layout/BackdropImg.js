@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useWindowSize } from '../../hooks/useWindowSize';
+import { useWindowSize } from '../../hooks/window-hooks';
 import { motion } from 'framer-motion'
 import ProgressiveImage from 'react-progressive-image';
 

@@ -5,13 +5,16 @@ import Rating from '@material-ui/lab/Rating';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import MovieItemButtons from './MovieItemButtons';
 import { motion } from 'framer-motion';
+import { useWindowSize } from '../hooks/window-hooks';
 
 const transition = { duration: 0.3, ease: [0.43, 0.13, 0.23, 0.96] }
 
 export default function MovieItem({ movie, rating, like, page }) {
-  const [hover, setHover] = useState(null);
+  const [show, setShow] = useState(null);
   const [hide, setHide] = useState(null);
   const [imgLoaded, setImgLoaded] = useState(false);
+
+  const [width] = useWindowSize();
 
   let moviePoster = useRef(null);
   let movieBackdrop = useRef(null);
@@ -30,26 +33,31 @@ export default function MovieItem({ movie, rating, like, page }) {
   const movieItemAnimations = [posterAnimate, backdropAnimate, infoAnimate];
 
   useEffect(() => {
-    if (hover) movieItemAnimations.map(animation => animation.play());
-    if (!hover && posterAnimate) movieItemAnimations.map(animation => animation.reverse());
-  }, [hover])
+    if (show) movieItemAnimations.map(animation => animation.play());
+    if (!show && posterAnimate) movieItemAnimations.map(animation => animation.reverse());
+  }, [show])
 
   const posterIMG = 'https://image.tmdb.org/t/p/w300_and_h450_bestv2/' + movie.poster_path;
   const backdropImg = 'https://image.tmdb.org/t/p/w500/' + movie.backdrop_path;
 
+  const handleMouseEnter = () => {
+    if (width < 1367) return;
+    setShow(true);
+  }
+
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 1 }} transition={transition}>
-      <Link to={`/movie/${movie.id}`}>
-        <div style={imgLoaded ? {} : { display: 'none' }} className={`movie ${hide ? 'hide' : null}`} onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
+      <Link to={show ? `/movie/${movie.id}` : '#'}>
+        <div style={imgLoaded ? {} : { display: 'none' }} className={`movie ${hide ? 'hide' : null}`} onClick={() => setShow(true)} onMouseEnter={() => handleMouseEnter()} onMouseLeave={() => setShow(false)}>
           <div className="movie-poster-container">
-            <img  className="movie-poster" src={posterIMG} alt="movie poster" ref={element => moviePoster = element} onLoad={() => setImgLoaded(true)} />
+            <img className="movie-poster" src={posterIMG} alt="movie poster" ref={element => moviePoster = element} onLoad={() => setImgLoaded(true)} />
           </div>
           <div className="movie-info-container">
             <div className="movie-backdrop-container">
               <div className="blur"></div>
               <img className="movie-backdrop" src={backdropImg} alt="movie backdrop" ref={element => movieBackdrop = element} />
             </div>
-            <MovieItemButtons movie={movie} page={page} hover={hover} setHide={setHide} />
+            <MovieItemButtons className={!show ? 'disable' : ''} movie={movie} page={page} show={show} setHide={setHide} setShow={setShow} />
             <div className="movie-info-text" ref={element => movieInfo = element}>
               <div className="movie-title">{movie.title}</div>
               <div className="movie-subinfo">

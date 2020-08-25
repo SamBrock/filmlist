@@ -8,7 +8,7 @@ import ClearIcon from '@material-ui/icons/Clear';
 import UndoIcon from '@material-ui/icons/Undo';
 import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
 
-export default function MovieItemButtons({ movie, page, hover, setHide }) {
+export default function MovieItemButtons({ movie, page, show, setHide, setShow }) {
   const [topBtns, setTopBtns] = useState(null);
   const [addBtn, setAddBtn] = useState(null);
   const [isSeen, setSeen] = useState(false);
@@ -34,8 +34,8 @@ export default function MovieItemButtons({ movie, page, hover, setHide }) {
 
   const movieButtonAnimations = [topBtns, addBtn];
 
-  if (hover) movieButtonAnimations.map(animation => animation.play());
-  if (!hover && topBtns) movieButtonAnimations.map(animation => animation.reverse());
+  if (show) movieButtonAnimations.map(animation => animation.play());
+  if (!show && topBtns) movieButtonAnimations.map(animation => animation.reverse());
 
   const handleWatchlist = (e, watchlist) => {
     setWatchlist(watchlist);
@@ -48,6 +48,7 @@ export default function MovieItemButtons({ movie, page, hover, setHide }) {
   const handleSeen = (e, seen) => {
     setSeen(seen);
     setHide(seen);
+    setShow(!seen);
     seen ? dispatch(addMovieSeen(movie.id, movie.title)) : dispatch(deleteMovieSeen(movie.id, movie.title));
     e.preventDefault();
   }
@@ -55,6 +56,7 @@ export default function MovieItemButtons({ movie, page, hover, setHide }) {
   const handleNotInterested = (e, notInterested) => {
     setNotInterested(notInterested);
     setHide(notInterested);
+    
     notInterested ? dispatch(addMovieNotInterested(movie.id, movie.title)) : dispatch(deleteMovieNotInterested(movie.id, movie.title));
     e.preventDefault();
   }
@@ -62,11 +64,10 @@ export default function MovieItemButtons({ movie, page, hover, setHide }) {
   const handleRemove = (e, seen) => {
     setSeen(seen);
     setHide(seen);
+    setShow(!seen);
     seen ? dispatch(deleteMovieSeen(movie.id, movie.title)) : dispatch(addMovieSeen(movie.id, movie.title));
     e.preventDefault();
   }
-
-  console.log(movie.id, isWatchlist);
 
   if (page === 'movies') {
     return (
@@ -76,8 +77,8 @@ export default function MovieItemButtons({ movie, page, hover, setHide }) {
           {!addedToWatchlist ? !isSeen ? !isNotInterested ? <div className="not-interested-btn" onClick={(e) => handleNotInterested(e, true)} ><ClearIcon /></div> : <div className="not-interested-btn" onClick={(e) => handleNotInterested(e, false)}><UndoIcon /></div> : null : null}
           {!addedToWatchlist ? null : <div className="not-interested-btn" onClick={(e) => handleWatchlist(e, false)}><UndoIcon /></div>}
         </div>
-        <div className="movie-add-watchlist" ref={el => movieAdddBtn = el} onClick={(e) => handleWatchlist(e, true)}>
-          <div className={`add-icon ${addedToWatchlist ? 'active' : ''}`}></div>
+        <div className="movie-add-watchlist" ref={el => movieAdddBtn = el}>
+          {show ? <div className={`add-icon ${addedToWatchlist ? 'active' : ''}`} onClick={(e) => handleWatchlist(e, true)}></div> : <div className={`add-icon ${addedToWatchlist ? 'active' : ''}`}></div>}
         </div>
       </div>
     )

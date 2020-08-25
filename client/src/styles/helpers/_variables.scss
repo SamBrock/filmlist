@@ -41,6 +41,26 @@ $bold: 'Maven Pro';
   font-weight: 600;
 }
 
+@mixin movieItemTitleTxt() {
+  font-size: 1.4em;
+  letter-spacing: -.3px;
+  font-weight: 600;
+
+  @include media('<=small-desktop') {
+    font-size: 1.2em;
+  }
+}
+
+@mixin movieSubInfoTxt() {
+  font-size: .9em;
+  letter-spacing: -.3px;
+  font-weight: 600;
+
+  @include media('<=small-desktop') {
+    font-size: .8em;
+  }
+}
+
 @mixin infoTxt() {
   font-size: .9em;
   letter-spacing: -.3px;
@@ -49,9 +69,7 @@ $bold: 'Maven Pro';
 
 @mixin bodyTxt() {
   font-size: 1em;
-  // letter-spacing: -.3px;
   line-height: 1.7em;
-
 }
 
 @mixin highlightTxt() {
@@ -65,6 +83,8 @@ $bold: 'Maven Pro';
   font-size: .9em;
   font-weight: 500;
 }
+
+
 
 
 // FILTERS
