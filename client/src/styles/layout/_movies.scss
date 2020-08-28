@@ -12,7 +12,7 @@
         filter: brightness(10%);
       }
     }
-    
+
     .movie-poster-container,
     .movie-info-container {
       min-width: 100%;
@@ -140,7 +140,6 @@
                 }
               }
             }
-
           }
         }
       }
@@ -163,6 +162,7 @@
           grid-column: span 2;
           padding: 6px 0;
           letter-spacing: -.4px;
+          margin-right: 40px;
         }
 
         .movie-subinfo {
