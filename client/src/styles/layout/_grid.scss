@@ -50,6 +50,10 @@
       @include media('<=desktop') {
         min-width: 450px;
       }
+
+      @include media('<=tablet') {
+        min-width: 0px;
+      }
     }
   }
 }

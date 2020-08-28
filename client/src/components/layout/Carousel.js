@@ -5,9 +5,12 @@ import 'owl.carousel/dist/assets/owl.theme.default.css';
 import IconButton from '@material-ui/core/IconButton';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
+import { useWindowSize } from '../../hooks/window-hooks';
 
 
 export default function Carousel(props) {
+  const [width, height] = useWindowSize();
+  
   const carousel = useRef(null);
 
   function next() {
@@ -32,7 +35,7 @@ export default function Carousel(props) {
         </div>
       </div>
       <div className="movie-credits-list">
-        <OwlCarousel className="owl-theme" margin={24} dots={false} slideBy={3} ref={carousel}>
+        <OwlCarousel className="owl-theme" margin={24} dots={false} slideBy={3} ref={carousel} items={width >= 375 ? 2 : 3} >
           {props.cast.map(member => (
             <div className="movie-credit">
               <div className="movie-credit-img">

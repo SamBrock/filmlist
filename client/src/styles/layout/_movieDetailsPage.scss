@@ -3,8 +3,19 @@
   .movie-container {
     padding: 5em 52px 0;
 
+    @include media('<=tablet') {
+      padding: 32px;
+      font-size: 1.3em;
+    }
+
+    @include media('<=phone') {
+      padding: 32px 18px;
+      font-size: 1em;
+    }
+
     .movie-title {
       margin: 0 0 12px 0;
+
     }
 
     .movie-info {
@@ -22,18 +33,35 @@
       display: flex;
       margin: 0 0 48px 0;
 
+      @include media('<=phone') {
+        justify-content: space-between;
+      }
+
       .movie-rate {
         margin: 0 48px 0 0;
+
+        @include media('<=phone') {
+          margin: 0;
+        }
       }
 
       .movie-button {
         margin: 0 48px 0 0;
+
+        @include media('<=phone') {
+          margin: 0;
+        }
+
       }
     }
 
     .movie-overview {
       @include bodyTxt();
       margin: 0 0 24px 0;
+
+      @include media('<=phone') {
+        width: auto;
+      }
     }
 
     .movie-genres {
