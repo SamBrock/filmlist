@@ -11,8 +11,6 @@
 
     @include media('<=tablet') {
       position: relative;
-      height: 400px;
-      border: 1px red solid;
     }
 
     img {

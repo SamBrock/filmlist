@@ -24,7 +24,7 @@ export default function Header() {
 
   const guestLinks = (
     <Fragment>
-      <Link className="btn-white login-btn" to={`/login`}>Login</Link>
+      <Link className="btn-white login-btn" to={`/login`}>Log in</Link>
       {/* <a className="auth-btn btn-border">Register</a> */}
     </Fragment>
   )
