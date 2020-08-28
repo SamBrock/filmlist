@@ -1,5 +1,4 @@
 // COLOURS
-$red: #e71d36;
 $white: #F2F2F2;
 $blue1: #3DF2E0;
 $blue2: #35F2D0;
@@ -83,9 +82,6 @@ $bold: 'Maven Pro';
   font-size: .9em;
   font-weight: 500;
 }
-
-
-
 
 // FILTERS
 @mixin filter($radius) {
