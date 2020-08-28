@@ -1,7 +1,5 @@
 import React, { useState, useRef, useEffect, Fragment } from 'react';
 import { TweenMax } from "gsap";
-import AddOutlineIcon from '../images/add-outline.svg';
-// import AddOutlineIcon from '../images/add-outline-orange.svg';
 import { useDispatch } from 'react-redux';
 import { addMovieWatchlist, addMovieSeen, deleteMovieSeen, addMovieNotInterested, deleteMovieNotInterested, deleteMovieWatchlist } from '../store/movie';
 import ClearIcon from '@material-ui/icons/Clear';
