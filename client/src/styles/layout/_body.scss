@@ -47,6 +47,10 @@ body {
     background: $blue1 !important;
   }
 
+  a{
+    
+  }
+  
   .btn-primary {
     border: 1px $orange2 solid;
     color: $orange2;
@@ -61,6 +65,25 @@ body {
       border: 1px $orange1 solid;
       color: $orange1;
     }
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  .btn-white {
+    border: 1px $white solid;
+    padding: 12px 16px;
+    cursor: pointer;
+    margin: 0 -16px 2px 0;
+    font-weight: 600;
+    transition: all ease .3s;
+    background: transparent;
+
+    &:focus {
+      // border: none;
+      outline: none;
+    }
   }
 
   .text-center {
@@ -70,5 +93,9 @@ body {
 
   .disable {
     pointer-events: none;
+  }
+
+  .hide {
+    display: none;
   }
 }

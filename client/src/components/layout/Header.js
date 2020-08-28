@@ -4,21 +4,12 @@ import { Link, useLocation } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { getIsAuthenticated, getUser } from '../../store/auth'
 import ProfileButton from '../ProfileButton'
+import { useHasScrolled, useWindowSize } from '../../hooks/window-hooks'
+import HamburgerMenu from './HamburgerMenu'
 
 export default function Header() {
-  const [hasScrolled, setHasScrolled] = useState(false);
-
-  const handleScroll = () => {
-    setHasScrolled(window.pageYOffset != 0) 
-  };
-
-  useEffect(() => {
-    window.addEventListener('scroll', handleScroll, { passive: true });
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
+  const hasScrolled = useHasScrolled();
+  const [width, height] = useWindowSize();
 
   const isAuthenticated = useSelector(getIsAuthenticated);
   const user = useSelector(getUser);
@@ -33,7 +24,7 @@ export default function Header() {
 
   const guestLinks = (
     <Fragment>
-      <a className="auth-btn">Log In</a>
+      <Link className="btn-white login-btn" to={`/login`}>Login</Link>
       {/* <a className="auth-btn btn-border">Register</a> */}
     </Fragment>
   )
@@ -43,7 +34,6 @@ export default function Header() {
       <header className={`${hasScrolled ? 'active' : ''}`}>
         <nav className="left-nav">
           <Link to="/"><img src={Logo} className="logo" alt="Logo" /></Link>
-
         </nav>
       </header>
     )
@@ -57,7 +47,7 @@ export default function Header() {
       </nav>
       <nav className="right-nav">
         {isAuthenticated ? authLinks : guestLinks}
-
+        {width <= 768 ? <HamburgerMenu /> : null}
       </nav>
     </header>
   )
