@@ -93,6 +93,7 @@ export const logoutUser = () => dispatch => {
 export const getIsAuthenticated = state => state.entities.auth.authenticated;
 export const getUser = state => state.entities.auth.user;
 export const getIsLoading = state => state.entities.auth.loading;
+export const loading = state => state.entities.auth.loading;
 
 // Get token and config
 export const tokenConfig = getState => {
