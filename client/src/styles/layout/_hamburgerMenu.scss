@@ -1,0 +1,76 @@
+.menu-btn {
+  margin-left: 16px;
+
+  .menu-icon {
+    height: 48px;
+    width: 48px;
+    margin-bottom: -2px;
+  }
+}
+
+.hamburger-menu-container {
+  flex-direction: column;
+  flex-grow: 1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  z-index: 100;
+  background: $black;
+  overflow: hidden;
+
+  &.active {
+    display: block;
+  }
+
+  .menu-head {
+    display: flex;
+    width: 100%;
+    margin-left: auto;
+
+    .clear-icon {
+      height: 48px;
+      width: 48px;
+      margin: 32px 24px 0 auto;
+
+      @include media('<=phone') {
+        margin: 18px 6px 0 auto;
+      }
+    }
+  }
+
+  nav {
+    display: flex;
+    flex-grow: 1;
+    font-size: 1.7em;
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+      margin: 0 32px;
+
+      li {
+        margin: 12px 0;
+
+        a {
+          font-size: 1.6em;
+          font-weight: 800;
+
+          &.logout-btn {
+            display: inline-block;
+            margin: 32px 0 0 0;
+            color: rgba(255, 255, 255, .3);
+          }
+        }
+
+      }
+    }
+  }
+
+  .footer-container {
+    margin-top: auto;
+    margin: 0 0 -29px 32px;
+    width: calc(100vw - 64px);
+  }
+}
