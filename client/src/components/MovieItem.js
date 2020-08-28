@@ -9,7 +9,7 @@ import { useWindowSize } from '../hooks/window-hooks';
 
 const transition = { duration: 0.3, ease: [0.43, 0.13, 0.23, 0.96] }
 
-export default function MovieItem({ movie, rating, like, page }) {
+export default function MovieItem({ movie, rating, like, page, isUserAuth}) {
   const [show, setShow] = useState(null);
   const [hide, setHide] = useState(null);
   const [imgLoaded, setImgLoaded] = useState(false);
@@ -57,7 +57,7 @@ export default function MovieItem({ movie, rating, like, page }) {
               <div className="blur"></div>
               <img className="movie-backdrop" src={backdropImg} alt="movie backdrop" ref={element => movieBackdrop = element} />
             </div>
-            <MovieItemButtons className={!show ? 'disable' : ''} movie={movie} page={page} show={show} setHide={setHide} setShow={setShow} />
+            {isUserAuth ? <MovieItemButtons className={!show ? 'disable' : ''} movie={movie} page={page} show={show} setHide={setHide} setShow={setShow} /> : ''}
             <div className="movie-info-text" ref={element => movieInfo = element}>
               <div className="movie-title">{movie.title}</div>
               <div className="movie-subinfo">

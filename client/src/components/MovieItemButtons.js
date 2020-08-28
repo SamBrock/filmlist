@@ -6,7 +6,7 @@ import ClearIcon from '@material-ui/icons/Clear';
 import UndoIcon from '@material-ui/icons/Undo';
 import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
 
-export default function MovieItemButtons({ movie, page, show, setHide, setShow }) {
+export default function MovieItemButtons({ match, movie, page, show, setHide, setShow }) {
   const [topBtns, setTopBtns] = useState(null);
   const [addBtn, setAddBtn] = useState(null);
   const [isSeen, setSeen] = useState(false);

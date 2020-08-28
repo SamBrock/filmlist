@@ -4,6 +4,7 @@ import { loadWatchlist, getWatchlist, loading, moreLoading } from '../store/watc
 import MovieItem from '../components/MovieItem';
 import { start, complete } from '../store/loadingBar';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import useIsUserAuth from '../hooks/useIsUserAuth';
 
 export default function WatchlistPage({ match }) {
   const [pageNumber, setPageNumber] = useState(1);
@@ -20,6 +21,8 @@ export default function WatchlistPage({ match }) {
 
   const isMoreLoading = useSelector(moreLoading);
 
+  const isUserAuth = useIsUserAuth(username);
+
   const isLoading = useSelector(loading);
   if (isLoading) {
     dispatch(start());
@@ -33,7 +36,7 @@ export default function WatchlistPage({ match }) {
       <InfiniteScroll dataLength={movies.length} next={() => setPageNumber(page => page + 1)} hasMore={true}>
         <div className="movies-container watchlist" data-router-view="movie">
           {movies.map((movie) => (
-            <MovieItem key={movie.id} movie={movie} page="watchlist" />
+            <MovieItem key={movie.id} movie={movie} page="watchlist" isUserAuth={isUserAuth} />
           ))}
         </div>
       </InfiniteScroll>

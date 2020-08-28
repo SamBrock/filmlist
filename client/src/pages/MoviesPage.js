@@ -44,7 +44,7 @@ export default function Movies() {
       <InfiniteScroll dataLength={movies.length} next={() => setPageNumber(page => page + 1)} hasMore={hasMore} >
         <div className="movies-container movies" data-router-view="movie">
           {movies.map((movie) => (
-            <MovieItem key={movie.id} movie={movie} page="movies" />
+            <MovieItem key={movie.id} movie={movie} page="movies" isUserAuth={true}/>
           ))}
         </div>
       </InfiniteScroll>

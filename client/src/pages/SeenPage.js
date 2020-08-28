@@ -4,6 +4,8 @@ import { loadSeen, getSeen, loading, moreLoading } from '../store/seen';
 import MovieItem from '../components/MovieItem';
 import { start, complete } from '../store/loadingBar';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import { getIsAuthenticated, getUser } from '../store/auth';
+import useIsUserAuth from '../hooks/useIsUserAuth';
 
 export default function SeenPage({ match }) {
   const [pageNumber, setPageNumber] = useState(1);
@@ -15,6 +17,8 @@ export default function SeenPage({ match }) {
   useEffect(() => {
     dispatch(loadSeen(username, pageNumber, limit));
   }, [username, pageNumber])
+  
+  const isUserAuth = useIsUserAuth(username);
 
   const movies = useSelector(getSeen);
 
@@ -33,7 +37,7 @@ export default function SeenPage({ match }) {
       <InfiniteScroll dataLength={movies.length} next={() => setPageNumber(page => page + 1)} hasMore={true} endMessage={<p style={{ textAlign: 'center' }}> <b>Yay! You have seen it all</b> </p>} >
         <div className="movies-container seen" data-router-view="movie">
           {movies.map((movie) => (
-            <MovieItem key={movie.id} movie={movie} rating={movie.rating} like={movie.like} page="seen" />
+            <MovieItem key={movie.id} movie={movie} rating={movie.rating} like={movie.like} page="seen" isUserAuth={isUserAuth} />
           ))}
         </div>
       </InfiniteScroll>
