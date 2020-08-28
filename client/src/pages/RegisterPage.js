@@ -8,8 +8,10 @@ import BackdropImg from '../components/layout/BackdropImg';
 import { motion } from 'framer-motion';
 import { registerBackdrops } from '../components/layout/backdrops'
 import Footer from '../components/layout/Footer';
+import { useWindowSize } from '../hooks/window-hooks';
 
 export default function RegisterPage() {
+  const [width, height] = useWindowSize();
   const [backdropsIndex, setBackdropsIndex] = useState(0);
   useEffect(() => {
     // Select random backdrop
@@ -41,7 +43,7 @@ export default function RegisterPage() {
 
   return (
     <motion.div exit={{ opacity: 1 }} className="grid-page-container">
-      <BackdropImg backdropPath={registerBackdrops[backdropsIndex].backdropPath} />
+      {width > 768 ? <BackdropImg backdropPath={registerBackdrops[backdropsIndex].backdropPath} /> : ''}
       <div className="grid-2-col-backdrop ">
         <div id="backdrop-placeholder"></div>
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="content-col form-container">
@@ -58,7 +60,7 @@ export default function RegisterPage() {
           <Footer />
         </motion.div>
       </div>
-      <div className="backdrop-info">
+      <div className={`backdrop-info ${width > 768 ? '' : 'hide'}`}>
         <div><span className="backdrop-movie-title">{registerBackdrops[backdropsIndex].movie}</span>, {registerBackdrops[backdropsIndex].year}</div>
         <div>{registerBackdrops[backdropsIndex].director}</div>
       </div>
