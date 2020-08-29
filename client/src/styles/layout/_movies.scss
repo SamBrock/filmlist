@@ -7,7 +7,7 @@
     border: transparent solid 2px;
     transition: border ease-in .2s;
 
-    &.hide {
+    &.hide-movie {
       .movie-poster-container {
         filter: brightness(10%);
       }
