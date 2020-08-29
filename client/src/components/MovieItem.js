@@ -48,7 +48,7 @@ export default function MovieItem({ movie, rating, like, page, isUserAuth}) {
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 1 }} transition={transition}>
       <Link to={show ? `/movie/${movie.id}` : '#'}>
-        <div style={imgLoaded ? {} : { display: 'none' }} className={`movie ${hide ? 'hide' : null}`} onClick={() => setShow(true)} onMouseEnter={() => handleMouseEnter()} onMouseLeave={() => setShow(false)}>
+        <div style={imgLoaded ? {} : { display: 'none' }} className={`movie ${hide ? 'hide-movie' : null}`} onClick={() => setShow(true)} onMouseEnter={() => handleMouseEnter()} onMouseLeave={() => setShow(false)}>
           <div className="movie-poster-container">
             <img className="movie-poster" src={posterIMG} alt="movie poster" ref={element => moviePoster = element} onLoad={() => setImgLoaded(true)} />
           </div>
