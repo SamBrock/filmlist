@@ -116,7 +116,24 @@ async function getMovieArrDetails(moviesArr) {
   return movies;
 }
 
+function getMovieSearchArrDetails(moviesArr) {
+  const movies = moviesArr.map(movie => {
+    const { id, title, vote_average, release_date, popularity } = movie;
+    
+    return ({
+      id, 
+      title, 
+      vote_average: vote_average.toFixed(1), 
+      popularity, 
+      year: new Date(release_date).getFullYear()
+    })
+  })
+
+  return movies;
+}
+
 exports.getMovieDetails = getMovieDetails;
 exports.getMovieArrDetails = getMovieArrDetails;
 exports.getTMDbRecommendedMovies = getTMDbRecommendedMovies;
 exports.getTMDbData = getTMDbData;
+exports.getMovieSearchArrDetails = getMovieSearchArrDetails;
