@@ -12,13 +12,15 @@ export default function SideNav() {
 
   const { pathname } = useLocation();
 
-  if(pathname === '/login' || pathname === '/register') {
+  if (pathname === '/login' || pathname === '/register') {
     return null;
   }
-  
+
   return (
     <div className="side-nav center">
-      <SearchIcon className="search-btn icon-btn" />
+      <Link to={`/search`}>
+        <SearchIcon className="search-btn icon-btn" />
+      </Link>
       <Link to={isAuthenticated ? `/${user.username}/watchlist` : `/login`}>
         <AddIcon className="watchlist-btn icon-btn" />
       </Link>
