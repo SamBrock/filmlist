@@ -3,9 +3,10 @@ const mongoose = require('mongoose');
 const config = require('config');
 const cors = require('cors');
 
-const movies = require('./routes/api/movies');
-const user = require('./routes/api/user');
 const auth = require('./routes/api/auth');
+const movies = require('./routes/api/movies');
+const search = require('./routes/api/search');
+const user = require('./routes/api/user');
 
 const app = express();
 
@@ -28,6 +29,7 @@ mongoose.connect(db)
 // Use routes
 app.use('/api/auth', auth);
 app.use('/api/movies', movies);
+app.use('/api/search', search);
 app.use('/api', user);
 
 const port = process.env.PORT || 3001;

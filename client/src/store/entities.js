@@ -8,6 +8,7 @@ import watchlistReducer from './watchlist';
 import seenReducer from './seen';
 import notificationReducer from './notification';
 import loadingBarReducer from './loadingBar';
+import searchReducer from './search';
 
 export default combineReducers({
   auth: authReducer,
@@ -17,5 +18,6 @@ export default combineReducers({
   watchlist: watchlistReducer,
   seen: seenReducer,
   notification: notificationReducer,
-  loadingbar: loadingBarReducer
+  loadingbar: loadingBarReducer,
+  search: searchReducer
 })
