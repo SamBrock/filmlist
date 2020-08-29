@@ -1,7 +1,11 @@
 .movie-details-container {
 
   .movie-container {
-    padding: 5em 52px 0;
+    padding: 83px 52px 0;
+
+    @include media('>=large-desktop') {
+      font-size: 1.2em;
+    }
 
     @include media('<=tablet') {
       padding: 32px;
