@@ -35,7 +35,7 @@ export default function Carousel(props) {
         </div>
       </div>
       <div className="movie-credits-list">
-        <OwlCarousel className="owl-theme" margin={24} dots={false} slideBy={3} ref={carousel} items={width >= 375 ? 2 : 3} >
+        <OwlCarousel className="owl-theme" margin={24} dots={false} slideBy={3} ref={carousel} items={width <= 375 ? 2 : 3} >
           {props.cast.map(member => (
             <div className="movie-credit">
               <div className="movie-credit-img">
