@@ -41,6 +41,7 @@ export default function RegisterPage() {
     if (document.getElementById('password').value === document.getElementById('repeatPassword').value) return true; else return false;
   }
 
+  document.title = `Register - FILMLIST`;
   return (
     <motion.div exit={{ opacity: 1 }} className="grid-page-container">
       {width > 768 ? <BackdropImg backdropPath={registerBackdrops[backdropsIndex].backdropPath} /> : ''}
@@ -62,7 +63,7 @@ export default function RegisterPage() {
       </div>
       <div className={`backdrop-info ${width > 768 ? '' : 'hide'}`}>
         <div><span className="backdrop-movie-title">{registerBackdrops[backdropsIndex].movie}</span>, {registerBackdrops[backdropsIndex].year}</div>
-        <div>{registerBackdrops[backdropsIndex].director}</div>
+        <div>Dir: {registerBackdrops[backdropsIndex].director}</div>
       </div>
     </motion.div>
   )

@@ -35,6 +35,7 @@ export default function LoginPage() {
     dispatch(loginUser(email, password));
   }
 
+  document.title = `Log in - FILMLIST`;
   return (
     <motion.div exit={{ opacity: 1 }} className="grid-page-container">
       {width > 768 ? <BackdropImg backdropPath={loginBackdrops[backdropsIndex].backdropPath} /> : ''}
@@ -54,7 +55,7 @@ export default function LoginPage() {
       </div>
       <div className={`backdrop-info ${width > 768 ? '' : 'hide'}`}>
         <div><span className="backdrop-movie-title">{loginBackdrops[backdropsIndex].movie}</span>, {loginBackdrops[backdropsIndex].year}</div>
-        <div>{loginBackdrops[backdropsIndex].director}</div>
+        <div>Dir: {loginBackdrops[backdropsIndex].director}</div>
       </div>
 
     </motion.div>
