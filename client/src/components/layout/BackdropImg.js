@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useWindowSize, usePageYOffset } from '../../hooks/window-hooks';
 import { motion } from 'framer-motion'
 import ProgressiveImage from 'react-progressive-image';
-
-const transition = { ease: [0.43, 0.13, 0.23, 0.96] }
+import { transition } from '../../transitions/transitions';
 
 export default function BackdropImg({ backdropPath }) {
   const pageYOffset = usePageYOffset();

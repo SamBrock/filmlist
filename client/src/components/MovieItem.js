@@ -6,8 +6,7 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import MovieItemButtons from './MovieItemButtons';
 import { motion } from 'framer-motion';
 import { useWindowSize } from '../hooks/window-hooks';
-
-const transition = { duration: 0.3, ease: [0.43, 0.13, 0.23, 0.96] }
+import { transition } from "../transitions/transitions"
 
 export default function MovieItem({ movie, rating, like, page, isUserAuth}) {
   const [show, setShow] = useState(null);
@@ -37,7 +36,7 @@ export default function MovieItem({ movie, rating, like, page, isUserAuth}) {
     if (!show && posterAnimate) movieItemAnimations.map(animation => animation.reverse());
   }, [show])
 
-  const posterIMG = 'https://image.tmdb.org/t/p/w300_and_h450_bestv2/' + movie.poster_path;
+  const posterImg = 'https://image.tmdb.org/t/p/w300_and_h450_bestv2/' + movie.poster_path;
   const backdropImg = 'https://image.tmdb.org/t/p/w500/' + movie.backdrop_path;
 
   const handleMouseEnter = () => {
@@ -50,12 +49,12 @@ export default function MovieItem({ movie, rating, like, page, isUserAuth}) {
       <Link to={show ? `/movie/${movie.id}` : '#'}>
         <div style={imgLoaded ? {} : { display: 'none' }} className={`movie ${hide ? 'hide-movie' : null}`} onClick={() => setShow(true)} onMouseEnter={() => handleMouseEnter()} onMouseLeave={() => setShow(false)}>
           <div className="movie-poster-container">
-            <img className="movie-poster" src={posterIMG} alt="movie poster" ref={element => moviePoster = element} onLoad={() => setImgLoaded(true)} />
+            <img className="movie-poster" src={posterImg} alt="movie poster" ref={element => moviePoster = element} onLoad={() => setImgLoaded(true)} />
           </div>
           <div className="movie-info-container">
             <div className="movie-backdrop-container">
               <div className="blur"></div>
-              <img className="movie-backdrop" src={backdropImg} alt="movie backdrop" ref={element => movieBackdrop = element} />
+              <img className="movie-backdrop" src={backdropImg ? backdropImg : posterImg} alt="movie backdrop" ref={element => movieBackdrop = element} />
             </div>
             {isUserAuth ? <MovieItemButtons className={!show ? 'disable' : ''} movie={movie} page={page} show={show} setHide={setHide} setShow={setShow} /> : ''}
             <div className="movie-info-text" ref={element => movieInfo = element}>

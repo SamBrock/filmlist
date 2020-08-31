@@ -1,20 +1,26 @@
-import Highway from '@dogstudio/highway';
-import { TimelineLite } from "gsap/TimelineLite";
+export const transition = { ease: [0.43, 0.13, 0.23, 0.96] }
 
-class Fade extends Highway.Transition {
-    in({ from, to, done }) {
-        const tl = new TimelineLite();
-        tl.to(from, 2, {
-            scaleX: 1.5,
-            scaley: 1.5,
-            onComplete: function () {
-                done();
-            }
-        });
+export const movieDetailsVariant = {
+  hidden: {
+    y: 0
+  },
+  show: {
+    y: 0,
+    transition: {
+      staggerChildren: 0.1,
+      staggerDirection: 1
     }
-    out({ from, done, to }) {
-
-    }
+  }
 }
 
-export default Fade;
+export const movieDetailsChildren = {
+  hidden: {
+    opacity: 0,
+    y: 20
+  },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ...transition }
+  }
+}
