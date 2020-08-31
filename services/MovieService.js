@@ -96,7 +96,7 @@ function getMovieDetails(movie) {
   return movie;
 }
 
-async function getMovieArrDetails(moviesArr) {
+function getMovieArrDetails(moviesArr) {
   const movies = moviesArr.map(movie => {
     const { id, title, vote_average, release_date, backdrop_path, poster_path, popularity, rating, like } = movie;
     
@@ -118,12 +118,14 @@ async function getMovieArrDetails(moviesArr) {
 
 function getMovieSearchArrDetails(moviesArr) {
   const movies = moviesArr.map(movie => {
-    const { id, title, vote_average, release_date, popularity } = movie;
+    const { id, title, vote_average, release_date, backdrop_path, poster_path, popularity } = movie;
     
     return ({
       id, 
       title, 
-      vote_average: vote_average.toFixed(1), 
+      vote_average: vote_average.toFixed(1),
+      backdrop_path, 
+      poster_path,  
       popularity, 
       year: new Date(release_date).getFullYear()
     })
