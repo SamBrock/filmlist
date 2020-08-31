@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { apiRequest } from './api';
-import moment from 'moment';
+import { errorsRecieved } from "./error";
 
 const slice = createSlice({
   name: 'movies',
@@ -38,6 +38,16 @@ const { moviesRequested, moviesReceived, moviesRequestFailed, moreMoviesReceived
 export const loadMovies = (pageNumber, limit) => (dispatch, getState) => {
   dispatch(apiRequest({
     url: `/api/${getState().entities.auth.user.username}?page=${pageNumber}&limit=${limit}`,
+    onStart: pageNumber != 1 ? moreMoviesRequested.type : moviesRequested.type,
+    onSuccess: pageNumber != 1 ? moreMoviesReceived.type : moviesReceived.type,
+    onError: errorsRecieved.type,
+    onFail: moviesRequestFailed.type
+  }))
+};
+
+export const loadDefaultMovies = (pageNumber, limit) => (dispatch, getState) => {
+  dispatch(apiRequest({
+    url: `/api/movies/default?page=${pageNumber}&limit=${limit}`,
     onStart: pageNumber != 1 ? moreMoviesRequested.type : moviesRequested.type,
     onSuccess: pageNumber != 1 ? moreMoviesReceived.type : moviesReceived.type,
     onError: moviesRequestFailed.type
