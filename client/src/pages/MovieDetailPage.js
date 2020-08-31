@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { loadMovie, getMovieDetails, loading } from '../store/movie';
 import { start, complete } from '../store/loadingBar';
@@ -6,38 +6,14 @@ import MovieButtons from '../components/MovieButtons';
 import Carousel from '../components/layout/Carousel';
 import { motion } from 'framer-motion';
 import BackdropImg from '../components/layout/BackdropImg';
-import Footer from '../components/layout/Footer';
-
-const transition = { ease: [0.43, 0.13, 0.23, 0.96] }
-const transition2 = { duration: 0.4, ease: [0.43, 0.13, 0.23, 0.96] }
-
-const movieDetailsVariant = {
-  hidden: {
-    y: 0
-  },
-  show: {
-    y: 0,
-    transition: {
-      staggerChildren: 0.1,
-      staggerDirection: 1
-    }
-  }
-}
-
-const movieDetailsChildren = {
-  hidden: {
-    opacity: 0,
-    y: 20
-  },
-  show: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.6, ...transition }
-  }
-}
+import { getIsAuthenticated } from '../store/auth';
+import { Link } from 'react-router-dom';
+import { movieDetailsVariant, movieDetailsChildren } from '../transitions/transitions'
 
 export default function MovieDetailPage({ match }) {
   const dispatch = useDispatch();
+
+  const isAuthenticated = useSelector(getIsAuthenticated);
 
   const movieId = parseInt(match.params.id);
   useEffect(() => {
@@ -71,7 +47,7 @@ export default function MovieDetailPage({ match }) {
             <span>R</span>
           </motion.div>
           <motion.div variants={movieDetailsChildren}>
-            <MovieButtons filmId={movie.id} title={movie.title} ui={{ watchlist: movie.watchlist, rating: movie.rating, like: movie.like }} />
+            {isAuthenticated ? <MovieButtons filmId={movie.id} title={movie.title} ui={{ watchlist: movie.watchlist, rating: movie.rating, like: movie.like }} /> : <div className="login-prompt">Rate, like or add this film to your watchlist, <Link to={`/login`}>Log in</Link>.</div>}
           </motion.div>
           <motion.div variants={movieDetailsChildren}>
             <div className="movie-overview">
