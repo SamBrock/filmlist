@@ -12,6 +12,22 @@ const api_key = config.get('TMDb.api_key');
 
 const router = express.Router();
 
+// @route   GET api/movies/default
+// @desc    Get list of popular movies for useres not authenticated
+// @access  Public
+router.get('/default', async (req, res) => {
+  try {
+    const url = `/movie/upcoming?api_key=${api_key}`;
+    const response = await axios.get(baseURL + url);
+
+    const movies = MovieService.getMovieArrDetails(response.data.results)
+
+    res.send(movies);
+  } catch (error) {
+    res.status(400).send(error);
+  }
+});
+
 // @route   GET api/movies/id
 // @desc    Get movie details by id
 // @access  Public
