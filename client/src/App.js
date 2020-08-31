@@ -19,6 +19,7 @@ import SideNav from './components/layout/SideNav';
 
 import { AnimatePresence } from 'framer-motion';
 import './styles/main.scss'
+import FavoriteMovies from './pages/FavoriteMovies';
 
 const store = configureStore();
 
@@ -41,6 +42,7 @@ export default function App() {
               <Route path="/register" component={RegisterPage}></Route>
               <Route path="/login" component={LoginPage}></Route>
               <Route path="/search" component={SearchPage}></Route>
+              <Route path="/favorite-films" component={FavoriteMovies}></Route>
               <Route path="/:username/watchlist" component={WatchlistPage}></Route>
               <Route path="/:username/seen" component={SeenPage}></Route>
               <Route exact path="/" component={MoviesPage} />
