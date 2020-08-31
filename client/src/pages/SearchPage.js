@@ -19,23 +19,26 @@ export default function SearchPage() {
     }, 300));
   }, [query])
 
+  document.title = `Search - FILMLIST`;
   return (
-    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="search-container">
-      <div className="search-form">
-        <input type="text" name="search" placeholder="Search..." onKeyUp={(e) => setQuery(e.target.value)} />
-      </div>
-      <div className="search-results">
-        {movies.map(movie => (
-          <Link to={`/movie/${movie.id}`}>
-            <div className="result">
-              <span className="movie-title">{movie.title}</span>
-              <span className="movie-year">{movie.year}</span>
-              <span className="movie-vote-average">{movie.vote_average}</span>
-            </div>
-          </Link>
-        ))}
-      </div>
+    <div className="search-container">
+      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="search-form-container">
+        <div className="search-form">
+          <input type="text" name="search" placeholder="Search..." onKeyUp={(e) => setQuery(e.target.value)} />
+        </div>
+        <div className="search-results">
+          {movies.map(movie => (
+            <Link to={`/movie/${movie.id}`}>
+              <div className="result">
+                <span className="movie-title">{movie.title}</span>
+                <span className="movie-year">{movie.year}</span>
+                <span className="movie-vote-average">{movie.vote_average}</span>
+              </div>
+            </Link>
+          ))}
+        </div>
 
-    </motion.div>
+      </motion.div>
+    </div>
   )
 }
