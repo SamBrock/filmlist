@@ -1,0 +1,48 @@
+.favorite-movies-container {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  margin: 0 calc(6em + 50px) 0 calc(6em + 50px);
+
+  .favorite-movies-list-container {
+    height: calc(100vh - 1px);
+    padding: 83px 32px;
+    border-right: 1px $grey solid;
+    box-sizing: border-box;
+    overflow: hidden;
+
+    .favorite-movies-list {
+      display: grid;
+      grid-template-columns: repeat(2, auto);
+
+      .add-favorite-movie {
+        margin: 18px;
+        position: relative;
+
+        img {
+          transition: all ease .2s;
+          display: block;
+          width: 100%;
+          border-radius: 0px;
+          height: 100%;
+          object-fit: cover;
+        }
+
+        .placeholder-img {
+          user-select: none;
+        }
+
+        .top-btns {
+          opacity: 0;
+
+          .not-interested-btn {
+            cursor: pointer;
+          }
+        }
+      }
+    }
+  }
+
+  .done-btn {
+    margin: 104px 0;
+  }
+}
