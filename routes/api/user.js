@@ -1,14 +1,9 @@
 const express = require('express');
-const axios = require('axios');
-const config = require('config');
 const _ = require('lodash');
 
 const User = require('../../models/user');
 const auth = require('../../middleware/auth');
 const MovieService = require('../../services/MovieService');
-
-const baseURL = config.get('TMDb.baseURL');
-const api_key = config.get('TMDb.api_key');
 
 const router = express.Router();
 
@@ -24,6 +19,8 @@ router.get('/:username', async (req, res) => {
   const endIndex = page * limit;
 
   const likes = user.seen.filter(s => s.like === true);
+  if(likes.length < 3 ) return res.status(400).send({ id: 'MOVIES_ERROR', msg: 'No liked movies.' })
+
   const randomNums = randomLikesIndex(likes.length);
   const randomLikedMovies = _.at(likes, randomNums);
 
