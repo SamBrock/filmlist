@@ -32,3 +32,4 @@ export const clearErrors = () => dispatch => {
 // Selectors
 export const getRegisterError = state => state.entities.error.id === 'REGISTER_ERROR' ? state.entities.error.msg : null;
 export const getLoginError = state => state.entities.error.id === 'LOGIN_ERROR' ? state.entities.error.msg : null;
+export const getMoviesError = state => state.entities.error.id === 'MOVIES_ERROR' ? true : null;
