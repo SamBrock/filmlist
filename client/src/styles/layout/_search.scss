@@ -1,5 +1,8 @@
 .search-container {
   margin: 0 calc(6em + 50px) 0 calc(6em + 50px);
+}
+
+.search-form-container {
   border-left: 1px $grey solid;
   border-right: 1px $grey solid;
   height: calc(100vh - 1px);
@@ -22,7 +25,7 @@
   .search-results {
     .result {
       margin: 32px 0;
-       
+
       .movie-title {
         @include movieItemTitleTxt();
         margin: 0 16px 0 0;

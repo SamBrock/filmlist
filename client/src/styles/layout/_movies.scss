@@ -1,4 +1,4 @@
-.movies-container {
+.movies-container, .favorite-movies-list {
   .movie {
     position: relative;
     cursor: pointer;
@@ -55,93 +55,12 @@
         }
       }
 
-      .top-btns {
-        position: absolute;
-        top: 18px;
-        left: 18px;
-        right: 18px;
-
-        @include media('<=tablet') {
-          bottom: 12px;
-          left: 12px;
-          right: 12px;
-        }
-
-        .seen-btn,
-        .not-interested-btn {
-          color: $white;
-          position: absolute;
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          transition: color ease-in .2s;
-
-          &:hover {
-            color: $orange1;
-          }
-
-          .icon-txt {
-            margin: 0 0 0 3px;
-          }
-        }
-
-        .seen-btn {
-          left: 0px;
-        }
-
-        .not-interested-btn {
-          right: -8px;
-        }
-
-      }
-
       .movie-add-watchlist {
         position: absolute;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
         margin: 0 auto;
-
-        .add-icon {
-          height: 120px;
-          width: 120px;
-          background-image: url('../../images/add-outline.svg');
-          background-size: 100% 100%;
-
-
-          @include media('<=phone') {
-            height: 70px;
-            width: 70px;
-          }
-
-          @include media('>=phone') {
-            &.active {
-              animation-name: addWatchlist;
-              animation-duration: .5s;
-              animation-fill-mode: forwards;
-              animation-timing-function: ease-in-out;
-
-              @keyframes addWatchlist {
-                0% {
-                  opacity: 1;
-                  height: 155px;
-                  width: 155px;
-                  background-image: url('../../images/add-outline-orange.svg');
-                  margin-bottom: 36px;
-
-                }
-
-                100% {
-                  opacity: 0;
-                  height: 170px;
-                  width: 170px;
-                  background-image: url('../../images/add-outline-orange.svg');
-                  margin-bottom: 30px;
-                }
-              }
-            }
-          }
-        }
       }
 
       .movie-info-text {
@@ -212,9 +131,7 @@
       .like-icon {
         height: 18px;
       }
-
     }
-
   }
 }
 
@@ -251,4 +168,85 @@
 
     }
   }
+}
+
+.add-icon {
+  height: 120px;
+  width: 120px;
+  background-image: url('../../images/add-outline.svg');
+  background-size: 100% 100%;
+
+
+  @include media('<=phone') {
+    height: 70px;
+    width: 70px;
+  }
+
+  @include media('>=phone') {
+    &.active {
+      animation-name: addWatchlist;
+      animation-duration: .5s;
+      animation-fill-mode: forwards;
+      animation-timing-function: ease-in-out;
+
+      @keyframes addWatchlist {
+        0% {
+          opacity: 1;
+          height: 155px;
+          width: 155px;
+          background-image: url('../../images/add-outline-orange.svg');
+          margin-bottom: 36px;
+
+        }
+
+        100% {
+          opacity: 0;
+          height: 170px;
+          width: 170px;
+          background-image: url('../../images/add-outline-orange.svg');
+          margin-bottom: 30px;
+        }
+      }
+    }
+  }
+}
+
+.top-btns {
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  right: 18px;
+
+  @include media('<=tablet') {
+    bottom: 12px;
+    left: 12px;
+    right: 12px;
+  }
+
+  .seen-btn,
+  .not-interested-btn {
+    color: $white;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: color ease-in .2s;
+
+    &:hover {
+      color: $orange1;
+    }
+
+    .icon-txt {
+      margin: 0 0 0 3px;
+    }
+  }
+
+  .seen-btn {
+    left: 0px;
+  }
+
+  .not-interested-btn {
+    right: -8px;
+  }
+
 }
