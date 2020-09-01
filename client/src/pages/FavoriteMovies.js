@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { search, getSearchResults } from '../store/search';
 import { motion } from 'framer-motion';
-import MovieItem from '../components/MovieItem';
 import AddFavoriteMovie from '../components/AddFavoriteMovie';
 import { Link } from 'react-router-dom';
 import { addMovieLike } from '../store/movie';
@@ -52,8 +51,12 @@ export default function FavoriteMovies() {
 
   document.title = `Favorite Films - FILMLIST`;
   return (
-    <div className="favorite-movies-container">
-      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="search-form-container">
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="favorite-movies-grid">
+      <div className="favorite-movies-header">
+        <h1>Add your favorite films</h1>
+        <p>This will help us find films that you may also be interested in.</p>
+      </div>
+      <div  className="search-form-container">
         <div className="search-form">
           <input type="text" name="search" placeholder="Search..." onKeyUp={(e) => setQuery(e.target.value)} disabled={disableSearch} />
         </div>
@@ -69,7 +72,7 @@ export default function FavoriteMovies() {
           ))}
         </div>
         {favMovies.length > 3 ? <div className="done-btn"><Link to={`/`} className="btn-primary" onClick={() => handleDone()}>Done</Link></div> : ''}
-      </motion.div>
+      </div>
       <div className="favorite-movies-list-container">
         <div className="favorite-movies-list">
           <AddFavoriteMovie id={favMovies[0] ? favMovies[0].id : null} posterPath={favMovies[0] ? favMovies[0].poster_path : null} setFavMovies={setFavMovies} favMovies={favMovies} />
@@ -78,6 +81,6 @@ export default function FavoriteMovies() {
           <AddFavoriteMovie id={favMovies[3] ? favMovies[3].id : null} posterPath={favMovies[3] ? favMovies[3].poster_path : null} setFavMovies={setFavMovies} favMovies={favMovies} />
         </div>
       </div>
-    </div>
+    </motion.div>
   )
 }
