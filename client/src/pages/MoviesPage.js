@@ -8,6 +8,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import { motion } from 'framer-motion';
 import { Redirect } from 'react-router-dom';
 import { getMoviesError } from '../store/error';
+import { transition } from '../transitions/transitions';
 
 export default function Movies() {
   const [pageNumber, setPageNumber] = useState(1);
@@ -18,16 +19,16 @@ export default function Movies() {
   const dispatch = useDispatch();
 
   const isAuthenticated = useSelector(getIsAuthenticated);
-  
+
   useEffect(() => {
     if (isAuthenticated) dispatch(loadMovies(pageNumber, limit));
     if (isAuthenticated === false) dispatch(loadDefaultMovies());
   }, [isAuthenticated, pageNumber])
-  
+
   const movies = useSelector(getMovies);
 
   const moviesError = useSelector(getMoviesError);
-  
+
   useEffect(() => {
     setCount(count => count + movies.length);
     if (count > 60) {
@@ -35,7 +36,7 @@ export default function Movies() {
       setCount(0);
     }
   }, [movies])
-  
+
   const isMoreLoading = useSelector(moreLoading);
 
   const isLoading = useSelector(loading);
@@ -49,10 +50,10 @@ export default function Movies() {
   document.title = `FILMLIST`
   dispatch(complete());
 
-  if (moviesError) { return <Redirect to={`/favorite-films`} /> }
+  if (moviesError) { return <motion.div exit={{ opacity: 0 }} transition={transition}><Redirect to={`/favorite-films`} /></motion.div> }
   if (isAuthenticated) {
     return (
-      <main>
+      <motion.div exit={{ opacity: 0 }} transition={transition} >
         <InfiniteScroll dataLength={movies.length} next={() => setPageNumber(page => page + 1)} hasMore={hasMore} >
           <div className="movies-container movies" data-router-view="movie">
             {movies.map((movie) => (
@@ -66,7 +67,7 @@ export default function Movies() {
             <div className="load-more-bar"></div>
           </div>
         </div>
-      </main>
+      </motion.div>
     )
   } else {
     return (

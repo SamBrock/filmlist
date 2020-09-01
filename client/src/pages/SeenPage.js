@@ -6,6 +6,8 @@ import { start, complete } from '../store/loadingBar';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { getIsAuthenticated, getUser } from '../store/auth';
 import useIsUserAuth from '../hooks/useIsUserAuth';
+import {motion} from 'framer-motion';
+import { transition } from '../transitions/transitions';
 
 export default function SeenPage({ match }) {
   const [pageNumber, setPageNumber] = useState(1);
@@ -33,7 +35,7 @@ export default function SeenPage({ match }) {
   document.title = `${username}'s Seen - FILMLIST`;
   dispatch(complete());
   return (
-    <main>
+    <motion.div exit={{ opacity: 0 }} transition={transition}>
       <InfiniteScroll dataLength={movies.length} next={() => setPageNumber(page => page + 1)} hasMore={true} endMessage={<p style={{ textAlign: 'center' }}> <b>Yay! You have seen it all</b> </p>} >
         <div className="movies-container seen" data-router-view="movie">
           {movies.map((movie) => (
@@ -46,6 +48,6 @@ export default function SeenPage({ match }) {
           <div className="load-more-bar"></div>
         </div>
       </div>
-    </main>
+    </motion.div>
   )
 }

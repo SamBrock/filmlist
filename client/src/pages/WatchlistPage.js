@@ -5,6 +5,8 @@ import MovieItem from '../components/MovieItem';
 import { start, complete } from '../store/loadingBar';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import useIsUserAuth from '../hooks/useIsUserAuth';
+import { motion } from 'framer-motion';
+import { transition } from '../transitions/transitions';
 
 export default function WatchlistPage({ match }) {
   const [pageNumber, setPageNumber] = useState(1);
@@ -32,7 +34,7 @@ export default function WatchlistPage({ match }) {
   document.title = `${username}'s Watchlist - FILMLIST`;
   dispatch(complete());
   return (
-    <main>
+    <motion.div exit={{ opacity: 0 }} transition={transition}>
       <InfiniteScroll dataLength={movies.length} next={() => setPageNumber(page => page + 1)} hasMore={true}>
         <div className="movies-container watchlist" data-router-view="movie">
           {movies.map((movie) => (
@@ -45,6 +47,6 @@ export default function WatchlistPage({ match }) {
           <div className="load-more-bar"></div>
         </div>
       </div>
-    </main>
+    </motion.div>
   )
 }
