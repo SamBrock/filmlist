@@ -78,6 +78,11 @@ router.post('/:username/watchlist', auth, async (req, res) => {
   if (!verifyUser) return res.status(403).send('Forbidden. Not autorized as that user.');
 
   const user = await User.findOne({ username: req.params.username });
+  
+  const index = user.watchlist.map(w => w.filmId).indexOf(req.body.filmId);
+  console.log(index);
+  if (index > -1) return res.status(400).send({ id: 'WATCHLIST_ERROR', msg: `'${req.body.title}' already in your watchlist.` });
+  
   user.watchlist.push({ filmId: req.body.filmId });
   await user.save();
 
@@ -147,6 +152,10 @@ router.delete('/:username/likes', auth, async (req, res) => {
   if (!verifyUser) return res.status(403).send('Forbidden. Not autorized as that user.');
 
   const user = await User.findOne({ username: req.params.username });
+  
+  const likes = user.seen.filter(m => m.like === true);
+  if(likes.length <= 4) return res.status(405).send({ id: 'LIKE_ERROR', msg: 'You must have at least 4 liked movies.' });
+
   const index = user.seen.map(l => l.filmId).indexOf(req.body.filmId);
   if (index == -1) return res.status(400).send('Failed to delete. Film is already not liked.');
 
@@ -186,6 +195,10 @@ router.delete('/:username/seen', auth, async (req, res) => {
 
   const user = await User.findOne({ username: req.params.username });
   const index = user.seen.map(s => s.filmId).indexOf(req.body.filmId);
+
+  const likes = user.seen.filter(m => m.like === true);
+  if(likes.length <= 4 && user.seen[index].like === true) return res.status(405).send({ id: 'LIKE_ERROR', msg: 'You must have at least 4 liked movies.' });
+
   if (index == -1) return res.status(400).send('Failed to delete. Film is not in seen.');
   user.seen.splice(index, 1);
 
