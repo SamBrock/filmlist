@@ -9,13 +9,18 @@ export default function ProfileButton({ username }) {
 
   const dispatch = useDispatch();
 
+  let timeout;
+  const handleMouseLeave = () => {
+    timeout = setTimeout(() => setHover(false), 500)
+  }
+
   return (
     <Fragment>
-      <div className="profile-btn-container" onMouseOver={() => setHover(true)} onMouseLeave={() => setTimeout(() => setHover(false), 500)}>
+      <div className="profile-btn-container" onMouseOver={() => setHover(true)} onMouseLeave={() => handleMouseLeave()}>
         <div className="profile-btn">
           {usernameLetter}
         </div>
-        <div className="profile-dropdown" style={!hover ? { display: 'none' } : {}}>
+        <div className="profile-dropdown" style={!hover ? { display: 'none' } : {}} onMouseOver={() => {setHover(true); clearTimeout(timeout)}} onMouseLeave={() => setHover(false)}>
           <ul>
             <li><a onClick={() => dispatch(logoutUser())}>Logout</a></li>
           </ul>
