@@ -25,7 +25,7 @@ export default function BackdropImg({ backdropPath }) {
     return (
       <div className={`backdrop-container l-grid-col`} style={{ height: backdropHeight }}>
         <ProgressiveImage src={"https://image.tmdb.org/t/p/original" + backdropPath} placeholder={"https://image.tmdb.org/t/p/w780" + backdropPath}>
-          {src => <motion.img initial={{ scale: 1.1, opacity: .3 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 1.1, opacity: .3 }} transition={transition} src={src} alt={`movie backdrop`} style={{ marginTop: pageYOffset }} />}
+          {src => <motion.img initial={{ scale: 1.1, opacity: .3 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 1.1, opacity: 0 }} transition={transition} src={src} alt={`movie backdrop`} style={{ marginTop: pageYOffset }} />}
         </ProgressiveImage>
       </div >
     )
@@ -34,7 +34,7 @@ export default function BackdropImg({ backdropPath }) {
   return (
     <div className="backdrop-container l-grid-col" style={{ width: `${backdropWidth}px` }}>
       <ProgressiveImage src={"https://image.tmdb.org/t/p/original" + backdropPath} placeholder={"https://image.tmdb.org/t/p/w780" + backdropPath}>
-        {src => <motion.img initial={{ scale: 1.1, opacity: .3 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 1.1, opacity: .3 }} transition={transition} src={src} alt={`movie backdrop`} />}
+        {src => <motion.img initial={{ scale: 1.1, opacity: .3 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 1.1, opacity: 0 }} transition={transition} src={src} alt={`movie backdrop`} />}
       </ProgressiveImage>
     </div >
   )
