@@ -87,6 +87,7 @@ export const deleteMovieLike = (filmId) => (dispatch, getState) => {
     url: `/api/${getState().entities.auth.user.username}/likes`,
     method: 'delete',
     data: { filmId },
+    onError: notificationsRecieved.type,
     headers: tokenConfig(getState).headers
   }))
 }
@@ -107,6 +108,7 @@ export const deleteMovieSeen = (filmId, title) => (dispatch, getState) => {
     method: 'delete',
     data: { filmId, title },
     onSuccess: notificationsRecieved.type,
+    onError: notificationsRecieved.type,
     headers: tokenConfig(getState).headers
   }))
 }

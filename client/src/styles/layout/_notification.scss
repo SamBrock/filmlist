@@ -21,4 +21,8 @@
   &.DELETE {
     background: $orange1;
   }
+
+  &.LIKE_ERROR {
+    background: red;
+  }
 }
