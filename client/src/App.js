@@ -36,7 +36,7 @@ export default function App() {
         <SideNav />
         <Notification />
         <Route render={({ location }) => (
-          <AnimatePresence initial={true} exitBeforeEnter>
+          <AnimatePresence initial={false} exitBeforeEnter>
             <Switch location={location} key={location.pathname}>
               <Route path="/movie/:id" component={MovieDetailPage}></Route>
               <Route path="/register" component={RegisterPage}></Route>
