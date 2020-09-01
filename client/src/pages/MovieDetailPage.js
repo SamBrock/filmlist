@@ -37,7 +37,7 @@ export default function MovieDetailPage({ match }) {
       <BackdropImg backdropPath={movie.backdrop_path} />
       <div className="movie-details-container grid-2-col-backdrop">
         <div id="backdrop-placeholder"></div>
-        <motion.div variants={movieDetailsVariant} initial="hidden" animate="show" className="movie-container content-col">
+        <motion.div variants={movieDetailsVariant} initial="hidden" animate="show" exit={{ opacity: 0 }} className="movie-container content-col">
           <motion.div variants={movieDetailsChildren} className="movie-title">
             <h1>{movie.title}</h1>
           </motion.div>
