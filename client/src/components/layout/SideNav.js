@@ -5,6 +5,7 @@ import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
 import { Link, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { getIsAuthenticated, getUser } from '../../store/auth';
+import { motion } from 'framer-motion';
 
 export default function SideNav() {
   const isAuthenticated = useSelector(getIsAuthenticated);
@@ -13,11 +14,17 @@ export default function SideNav() {
   const { pathname } = useLocation();
 
   if (pathname === '/login' || pathname === '/register') {
-    return null;
+    return (
+      <motion.div initial={{ opacity: 1 }} animate={{ opacity: 0 }} exit={{ opacity: 0 }} className="side-nav center">
+        <SearchIcon className="search-btn icon-btn" />
+        <AddIcon className="watchlist-btn icon-btn" />
+        <VisibilityOutlinedIcon className="likes-btn icon-btn" />
+      </motion.div>
+    )
   }
 
   return (
-    <div className="side-nav center">
+    <motion.div animate={{ opacity: 1 }} className="side-nav center">
       <Link to={`/search`}>
         <SearchIcon className="search-btn icon-btn" />
       </Link>
@@ -27,6 +34,6 @@ export default function SideNav() {
       <Link to={isAuthenticated ? `/${user.username}/seen` : `/login`}>
         <VisibilityOutlinedIcon className="likes-btn icon-btn" />
       </Link>
-    </div>
+    </motion.div>
   )
 }
