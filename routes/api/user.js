@@ -20,16 +20,17 @@ router.get('/:username', async (req, res) => {
 
   const likes = user.seen.filter(s => s.like === true);
   if(likes.length < 3 ) return res.status(400).send({ id: 'MOVIES_ERROR', msg: 'No liked movies.' })
-
+  
   const randomNums = randomLikesIndex(likes.length);
   const randomLikedMovies = _.at(likes, randomNums);
 
   let movies = await MovieService.getTMDbRecommendedMovies(randomLikedMovies);
   movies = _.differenceBy(movies, user.seen.map(s => ({ id: s.filmId })), 'id');
+  movies = _.differenceBy(movies, user.watchlist.map(w => ({ id: w.filmId })), 'id');
 
   movies = movies.slice(startIndex, endIndex);
 
-  movies = await MovieService.getMovieArrDetails(movies);
+  movies = MovieService.getMovieArrDetails(movies);
 
   res.send(movies);
 });
@@ -47,7 +48,7 @@ router.get('/:username/watchlist', async (req, res) => {
 
   const userWatchlist = user.watchlist.reverse().slice(startIndex, endIndex);
   const tmdbData = await MovieService.getTMDbData(userWatchlist);
-  const watchlist = await MovieService.getMovieArrDetails(tmdbData);
+  const watchlist = MovieService.getMovieArrDetails(tmdbData);
 
   res.send(watchlist);
 })
@@ -65,7 +66,7 @@ router.get('/:username/seen', async (req, res) => {
 
   const userSeen = user.seen.reverse().slice(startIndex, endIndex);
   const tmdbData = await MovieService.getTMDbData(userSeen);
-  const seen = await MovieService.getMovieArrDetails(tmdbData);
+  const seen = MovieService.getMovieArrDetails(tmdbData);
 
   res.send(seen);
 })
@@ -80,7 +81,6 @@ router.post('/:username/watchlist', auth, async (req, res) => {
   const user = await User.findOne({ username: req.params.username });
   
   const index = user.watchlist.map(w => w.filmId).indexOf(req.body.filmId);
-  console.log(index);
   if (index > -1) return res.status(400).send({ id: 'WATCHLIST_ERROR', msg: `'${req.body.title}' already in your watchlist.` });
   
   user.watchlist.push({ filmId: req.body.filmId });
