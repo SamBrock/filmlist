@@ -1,5 +1,21 @@
 .search-container {
   margin: 0 calc(6em + 50px) 0 calc(6em + 50px);
+
+  @include media('<=desktop') {
+    margin: 0 0 0 calc(6em + 50px);
+  }
+
+  @include media('<=small-desktop') {
+    margin: 0 0 0 83px;
+  }
+
+  @include media('<=tablet') {
+    margin: 124px 32px;
+  }
+
+  @include media('<=tablet') {
+    margin: 124px 18px;
+  }
 }
 
 .search-form-container {
@@ -7,7 +23,15 @@
   border-right: 1px $grey solid;
   height: calc(100vh - 1px);
   box-sizing: border-box;
-  padding: 230px 52px;
+  padding: 220px 74px 0px 52px;
+
+  @include media('<=tablet') {
+    padding: 0;
+  }
+
+  @include media('<=small-desktop') {
+    border: none;
+  }
 
   .search-form {
     input {
@@ -15,16 +39,20 @@
       border: none;
       font-size: 2em;
       color: $white;
+      border: 1px $grey solid;
+      width: 100%;
+      padding: 12px 12px;
 
       &:focus {
         outline: none;
+        border: 1px $blue1 solid;
       }
     }
   }
 
   .search-results {
     .result {
-      margin: 32px 0;
+      margin: 32px 12px;
 
       .movie-title {
         @include movieItemTitleTxt();
