@@ -33,6 +33,14 @@ export default function WatchlistPage({ match }) {
 
   document.title = `${username}'s Watchlist - FILMLIST`;
   dispatch(complete());
+
+  if (movies.length <= 0) {
+    return (
+      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={transition} className="empty-msg">
+        Your watchlist is empty.
+      </motion.div>
+    )
+  }
   return (
     <motion.div exit={{ opacity: 0 }} transition={transition}>
       <InfiniteScroll dataLength={movies.length} next={() => setPageNumber(page => page + 1)} hasMore={true}>
