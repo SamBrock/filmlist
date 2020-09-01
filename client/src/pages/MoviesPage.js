@@ -9,6 +9,7 @@ import { motion } from 'framer-motion';
 import { Redirect } from 'react-router-dom';
 import { getMoviesError } from '../store/error';
 import { transition } from '../transitions/transitions';
+import _ from 'lodash';
 
 export default function Movies() {
   const [pageNumber, setPageNumber] = useState(1);
@@ -26,6 +27,7 @@ export default function Movies() {
   }, [isAuthenticated, pageNumber])
 
   const movies = useSelector(getMovies);
+  const uniqueMovies = _.uniqBy(movies, 'id');
 
   const moviesError = useSelector(getMoviesError);
 
@@ -56,7 +58,7 @@ export default function Movies() {
       <motion.div exit={{ opacity: 0 }} transition={transition} >
         <InfiniteScroll dataLength={movies.length} next={() => setPageNumber(page => page + 1)} hasMore={hasMore} >
           <div className="movies-container movies" data-router-view="movie">
-            {movies.map((movie) => (
+            {uniqueMovies.map((movie) => (
               <MovieItem key={movie.id} movie={movie} page="movies" isUserAuth={true} />
             ))}
           </div>
