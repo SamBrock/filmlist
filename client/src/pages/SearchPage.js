@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { search, getSearchResults } from '../store/search';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, motionValue } from 'framer-motion';
 
 export default function SearchPage() {
   const [query, setQuery] = useState('');
@@ -17,7 +17,7 @@ export default function SearchPage() {
     setSearchTimeout(setTimeout(() => {
       dispatch(search(query))
     }, 300));
-  }, [query, dispatch, searchTimeout])
+  }, [query, dispatch])
 
   document.title = `Search - FILMLIST`;
   return (
@@ -28,7 +28,7 @@ export default function SearchPage() {
         </div>
         <div className="search-results">
           {movies.map(movie => (
-            <Link to={`/movie/${movie.id}`}>
+            <Link to={`/movie/${movie.id}`} key={movie.id}>
               <div className="result">
                 <span className="movie-title">{movie.title}</span>
                 <span className="movie-year">{movie.year}</span>
@@ -37,7 +37,6 @@ export default function SearchPage() {
             </Link>
           ))}
         </div>
-
       </motion.div>
     </div>
   )

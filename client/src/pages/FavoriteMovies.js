@@ -22,7 +22,7 @@ export default function FavoriteMovies() {
     setSearchTimeout(setTimeout(() => {
       dispatch(search(query))
     }, 300));
-  }, [query, dispatch, searchTimeout])
+  }, [query, dispatch])
 
   useEffect(() => {
     if (favMovies.length > 3) {
@@ -63,7 +63,7 @@ export default function FavoriteMovies() {
         </div>
         <div className="search-results">
           {movies.map(movie => (
-            <a data-movie-id={movie.id} onClick={(e) => handleAdd(e)}>
+            <a data-movie-id={movie.id} onClick={(e) => handleAdd(e)} key={movie.id}>
               <div className="result">
                 <span className="movie-title">{movie.title}</span>
                 <span className="movie-year">{movie.year}</span>
