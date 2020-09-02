@@ -17,7 +17,7 @@ export default function SearchPage() {
     setSearchTimeout(setTimeout(() => {
       dispatch(search(query))
     }, 300));
-  }, [query])
+  }, [query, dispatch, searchTimeout])
 
   document.title = `Search - FILMLIST`;
   return (

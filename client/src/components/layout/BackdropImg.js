@@ -13,12 +13,12 @@ export default function BackdropImg({ backdropPath }) {
   useEffect(() => {
     if (pageYOffset === 0) return setBackdropHeight(height);
     setBackdropHeight(height - pageYOffset);
-  })
+  }, [setBackdropHeight, pageYOffset, height])
 
   useEffect(() => {
     const element = document.getElementById('backdrop-placeholder');
     if (element) setBackdropWidth(element.getBoundingClientRect().width);
-  }, [width, height])
+  }, [width, height, setBackdropWidth])
 
   // For tablet and smaller resolutions
   if (width <= 768) {

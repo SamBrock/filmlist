@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useState, useEffect } from 'react';
+import { useLayoutEffect, useState, useEffect } from 'react';
 
 export function useWindowSize() {
   const [size, setSize] = useState([0, 0]);
@@ -17,7 +17,7 @@ export function useHasScrolled() {
   const [hasScrolled, setHasScrolled] = useState(false);
 
   const handleScroll = () => {
-    setHasScrolled(window.pageYOffset != 0) 
+    setHasScrolled(window.pageYOffset !== 0) 
   };
 
   useEffect(() => {

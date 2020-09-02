@@ -17,21 +17,21 @@ export default function AddFavoriteMovie({ id, posterPath, setFavMovies, favMovi
   if (!dim && topBtns) topBtns.reverse();
 
   const handleRemove = () => {
-    const movies = favMovies.filter(m => m.id != id);
+    const movies = favMovies.filter(m => m.id !== id);
     setFavMovies(movies);
   }
 
   if (!posterPath) {
     return (
       <div className="add-favorite-movie">
-        <img className="placeholder-img"  src={Placeholder} />
+        <img className="placeholder-img"  src={Placeholder}  alt="Favorite movie placeholder" />
         <div className="top-btns" ref={el => movieTopBtns = el}></div>
       </div>
     )
   } else {
     return (
       <div className="add-favorite-movie" onMouseOver={() => setDim(true)} onMouseLeave={() => setDim(false)}>
-        <img src={`https://image.tmdb.org/t/p/w300_and_h450_bestv2${posterPath}`} style={dim ? { filter: 'brightness(50%)' } : {}}></img>
+        <img src={`https://image.tmdb.org/t/p/w300_and_h450_bestv2${posterPath}`} style={dim ? { filter: 'brightness(50%)' } : {}} alt="Favorite movie" ></img>
         <div className="top-btns" ref={el => movieTopBtns = el}>
           <div className="not-interested-btn" onClick={() => handleRemove()}><ClearIcon /></div>
         </div>

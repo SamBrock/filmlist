@@ -1,4 +1,4 @@
-import React, { useEffect, useState, Fragment } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { loadMovies, loadDefaultMovies, getMovies, loading, moreLoading } from '../store/movies';
 import MovieItem from '../components/MovieItem'
@@ -24,7 +24,7 @@ export default function Movies() {
   useEffect(() => {
     if (isAuthenticated) dispatch(loadMovies(pageNumber, limit));
     if (isAuthenticated === false) dispatch(loadDefaultMovies());
-  }, [isAuthenticated, pageNumber])
+  }, [isAuthenticated, pageNumber, dispatch])
 
   const movies = useSelector(getMovies);
   const uniqueMovies = _.uniqBy(movies, 'id');

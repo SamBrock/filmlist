@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, Fragment } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { TweenMax } from "gsap";
 import { useDispatch } from 'react-redux';
 import { addMovieWatchlist, addMovieSeen, deleteMovieSeen, addMovieNotInterested, deleteMovieNotInterested, deleteMovieWatchlist } from '../store/movie';
@@ -37,7 +37,7 @@ export default function MovieItemButtons({ match, movie, page, show, setHide, se
 
   const handleWatchlist = (e, watchlist) => {
     setWatchlist(watchlist);
-    if (page != 'movies') setHide(!watchlist);
+    if (page !== 'movies') setHide(!watchlist);
     setAddedToWatchlist(watchlist);
     watchlist ? dispatch(addMovieWatchlist(movie.id, movie.title)) : dispatch(deleteMovieWatchlist(movie.id, movie.title));
     e.preventDefault();

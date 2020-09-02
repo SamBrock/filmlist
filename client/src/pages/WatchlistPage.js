@@ -1,4 +1,4 @@
-import React, { useEffect, useState, Fragment } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { loadWatchlist, getWatchlist, loading, moreLoading } from '../store/watchlist';
 import MovieItem from '../components/MovieItem';
@@ -10,14 +10,14 @@ import { transition } from '../transitions/transitions';
 
 export default function WatchlistPage({ match }) {
   const [pageNumber, setPageNumber] = useState(1);
-  const [limit, setLimit] = useState(18);
+  const limit = 18;
 
   const dispatch = useDispatch();
 
   const username = match.params.username;
   useEffect(() => {
     dispatch(loadWatchlist(username, pageNumber, limit));
-  }, [username, pageNumber])
+  }, [username, pageNumber, dispatch])
 
   const movies = useSelector(getWatchlist);
 

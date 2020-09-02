@@ -1,24 +1,23 @@
-import React, { useEffect, useState, useRef, Fragment } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { loadSeen, getSeen, loading, moreLoading } from '../store/seen';
 import MovieItem from '../components/MovieItem';
 import { start, complete } from '../store/loadingBar';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { getIsAuthenticated, getUser } from '../store/auth';
 import useIsUserAuth from '../hooks/useIsUserAuth';
 import {motion} from 'framer-motion';
 import { transition } from '../transitions/transitions';
 
 export default function SeenPage({ match }) {
   const [pageNumber, setPageNumber] = useState(1);
-  const [limit, setLimit] = useState(18);
+  const limit = 18;
 
   const dispatch = useDispatch();
 
   const username = match.params.username;
   useEffect(() => {
     dispatch(loadSeen(username, pageNumber, limit));
-  }, [username, pageNumber])
+  }, [username, pageNumber, dispatch])
   
   const isUserAuth = useIsUserAuth(username);
 

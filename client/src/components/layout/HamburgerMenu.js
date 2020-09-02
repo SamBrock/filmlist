@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { Fragment, useState } from 'react';
 import MenuIcon from '@material-ui/icons/Menu';
 import ClearIcon from '@material-ui/icons/Clear';
 import Footer from '../layout/Footer';
@@ -13,7 +13,6 @@ export default function HamburgerMenu() {
 
   const isAuthenticated = useSelector(getIsAuthenticated);
   const user = useSelector(getUser);
-  const isLoading = useSelector(loading);
 
   const links = (
     isAuthenticated ? (

@@ -31,9 +31,11 @@
       margin: 0;
       list-style: none;
       
-      li a{
+      li .link{
         padding: 10px 12px;
         display: inline-block;
+        font-weight: 500;
+        cursor: pointer;
       }
     }
   }

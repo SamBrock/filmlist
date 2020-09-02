@@ -20,9 +20,9 @@ export default function ProfileButton({ username }) {
         <div className="profile-btn">
           {usernameLetter}
         </div>
-        <div className="profile-dropdown" style={!hover ? { display: 'none' } : {}} onMouseOver={() => {setHover(true); clearTimeout(timeout)}} onMouseLeave={() => setHover(false)}>
+        <div className="profile-dropdown" style={!hover ? { display: 'none' } : {}} onMouseOver={() => { setHover(true); clearTimeout(timeout) }} onMouseLeave={() => setHover(false)}>
           <ul>
-            <li><a onClick={() => dispatch(logoutUser())}>Logout</a></li>
+            <li><div className="link" onClick={() => dispatch(logoutUser())}>Logout</div></li>
           </ul>
         </div>
       </div>

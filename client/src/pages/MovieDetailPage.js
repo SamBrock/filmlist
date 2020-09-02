@@ -18,7 +18,7 @@ export default function MovieDetailPage({ match }) {
   const movieId = parseInt(match.params.id);
   useEffect(() => {
     dispatch(loadMovie(movieId));
-  }, [movieId])
+  }, [movieId, dispatch])
 
   const movie = useSelector(getMovieDetails);
 

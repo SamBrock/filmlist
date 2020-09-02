@@ -34,11 +34,11 @@ export default function RegisterPage() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    verifyPassword ? dispatch(registerUser(username, email, password)) : registerError = 'Passwords do not match'
+    verifyPassword() ? dispatch(registerUser(username, email, password)) : registerError = 'Passwords do not match';
   }
 
   const verifyPassword = () => {
-    if (document.getElementById('password').value === document.getElementById('repeatPassword').value) return true; else return false;
+    return document.getElementById('password').value === document.getElementById('repeatPassword').value;
   }
 
   document.title = `Register - FILMLIST`;

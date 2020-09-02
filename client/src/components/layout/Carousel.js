@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import OwlCarousel from 'react-owl-carousel';
 import 'owl.carousel/dist/assets/owl.carousel.css';
 import 'owl.carousel/dist/assets/owl.theme.default.css';
@@ -40,7 +40,7 @@ export default function Carousel(props) {
             <div className="movie-credit">
               <div className="movie-credit-img">
                 {member.profile_path !== null ?
-                  <img src={`https://image.tmdb.org/t/p/w138_and_h175_face${member.profile_path}`} /> :
+                  <img src={`https://image.tmdb.org/t/p/w138_and_h175_face${member.profile_path}`} alt={`${member.name} profile`} /> :
                   <div className="no-profile"></div>}
               </div>
               <div className="movie-credit-name">{member.name}</div>

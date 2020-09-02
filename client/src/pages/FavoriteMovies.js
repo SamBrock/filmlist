@@ -5,12 +5,12 @@ import { motion } from 'framer-motion';
 import AddFavoriteMovie from '../components/AddFavoriteMovie';
 import { Link } from 'react-router-dom';
 import { addMovieLike } from '../store/movie';
+import { clearErrors } from '../store/error';
 
 export default function FavoriteMovies() {
   const [favMovies, setFavMovies] = useState([]);
   const [query, setQuery] = useState('');
   const [searchTimeout, setSearchTimeout] = useState('');
-  const [error, setError] = useState('');
   const [disableSearch, setDisableSearch] = useState(false);
 
   const dispatch = useDispatch()
@@ -22,7 +22,7 @@ export default function FavoriteMovies() {
     setSearchTimeout(setTimeout(() => {
       dispatch(search(query))
     }, 300));
-  }, [query])
+  }, [query, dispatch, searchTimeout])
 
   useEffect(() => {
     if (favMovies.length > 3) {
@@ -47,6 +47,7 @@ export default function FavoriteMovies() {
 
   const handleDone = () => {
     favMovies.forEach(m => dispatch(addMovieLike(m.id)));
+    dispatch(clearErrors());
   }
 
   document.title = `Favorite Films - FILMLIST`;

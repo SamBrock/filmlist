@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from 'react'
+import React, { Fragment } from 'react'
 import Logo from '../../images/filmlist-f.svg'
 import { Link, useLocation } from 'react-router-dom'
 import { useSelector } from 'react-redux'
