@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getRegisterError } from '../store/error';
 import { getIsAuthenticated, registerUser } from '../store/auth';
 import { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import BackdropImg from '../components/layout/BackdropImg';
 import { motion } from 'framer-motion';
 import { registerBackdrops } from '../components/layout/backdrops'
@@ -27,10 +27,6 @@ export default function RegisterPage() {
   let registerError = useSelector(getRegisterError);
 
   const isAuthenticated = useSelector(getIsAuthenticated);
-  useEffect(() => {
-    if (isAuthenticated) return window.location.replace('http://localhost:3000/');
-  }, [isAuthenticated])
-
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -42,6 +38,8 @@ export default function RegisterPage() {
   }
 
   document.title = `Register - FILMLIST`;
+
+  if (isAuthenticated) return (<motion.div exit={{opacity: 0}}><Redirect to={`/`}></Redirect></motion.div>);
   return (
     <motion.div exit={{ opacity: 1 }} className="grid-page-container">
       {width > 768 ? <BackdropImg backdropPath={registerBackdrops[backdropsIndex].backdropPath} /> : ''}

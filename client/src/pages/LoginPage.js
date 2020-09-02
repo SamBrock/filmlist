@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getLoginError } from '../store/error';
 import { loginUser, getIsAuthenticated } from '../store/auth';
 import { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import BackdropImg from '../components/layout/BackdropImg';
 import { motion } from 'framer-motion';
 import { loginBackdrops } from '../components/layout/backdrops'
@@ -26,16 +26,14 @@ export default function LoginPage() {
   const loginError = useSelector(getLoginError);
   const isAuthenticated = useSelector(getIsAuthenticated);
 
-  useEffect(() => {
-    if (isAuthenticated) return window.location.replace('http://localhost:3000/');
-  }, [isAuthenticated])
-
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(loginUser(email, password));
   }
-
+  
   document.title = `Log in - FILMLIST`;
+
+  if (isAuthenticated) return (<motion.div exit={{opacity: 0}}><Redirect to={`/`}></Redirect></motion.div>);
   return (
     <motion.div exit={{ opacity: 1 }} className="grid-page-container">
       {width > 768 ? <BackdropImg backdropPath={loginBackdrops[backdropsIndex].backdropPath} /> : ''}
