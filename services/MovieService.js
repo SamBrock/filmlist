@@ -4,9 +4,8 @@ const axios = require('axios');
 const _ = require('lodash');
 const mongoose = require('mongoose');
 
-const baseURL = config.get('TMDb.baseURL');
-const api_key = config.get('TMDb.api_key');
-
+const baseURL = process.env.BASE_URL || config.get('TMDb.baseURL');
+const api_key = process.env.API_KEY || config.get('TMDb.api_key');
 
 async function getTMDbData(userArr) {
   const arr = [];

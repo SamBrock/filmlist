@@ -7,8 +7,8 @@ const User = require('../../models/user');
 const MovieService = require('../../services/MovieService');
 const user = require('../../middleware/user');
 
-const baseURL = config.get('TMDb.baseURL');
-const api_key = config.get('TMDb.api_key');
+const baseURL = process.env.BASE_URL || config.get('TMDb.baseURL');
+const api_key = process.env.API_KEY || config.get('TMDb.api_key');
 
 const router = express.Router();
 

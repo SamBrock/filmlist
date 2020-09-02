@@ -4,6 +4,8 @@ const config = require('config');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
+const jwtPrivateKey = process.env.JWT_PRIVATE_KEY || config.get('jwtPrivateKey');
+
 const watchlistSchema = new Schema({
   filmId: {
     type: Number,
@@ -61,7 +63,7 @@ userSchema.methods.validPassword = async function (password) {
 };
 
 userSchema.methods.generateAuthToken = function () {
-  const token = jwt.sign({ id: this.id, username: this.username }, config.get('jwtPrivateKey'));
+  const token = jwt.sign({ id: this.id, username: this.username }, jwtPrivateKey);
   return token;
 };
 
