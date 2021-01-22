@@ -1,5 +1,5 @@
 .DS_STORE
-node_modules
+node_modules/
 scripts/flow/*/.flowconfig
 .flowconfig
 *~
@@ -35,3 +35,7 @@ packages/react-devtools-extensions/firefox/*.pem
 packages/react-devtools-extensions/shared/build
 packages/react-devtools-inline/dist
 packages/react-devtools-shell/dist
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
