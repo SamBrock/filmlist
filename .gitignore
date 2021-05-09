@@ -39,3 +39,5 @@ packages/react-devtools-shell/dist
 .elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
+
+myapp.zip
