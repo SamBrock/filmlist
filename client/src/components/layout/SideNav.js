@@ -1,39 +1,25 @@
 import React from 'react';
-import SearchIcon from '@material-ui/icons/Search';
-import AddIcon from '@material-ui/icons/Add';
-import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
 import { Link, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { getIsAuthenticated, getUser } from '../../store/auth';
 import { motion } from 'framer-motion';
+import styled from 'styled-components';
+
+const StyledSideNavDiv = styled(motion.div)`
+  width: 41.969px;
+`;
 
 export default function SideNav() {
   const isAuthenticated = useSelector(getIsAuthenticated);
   const user = useSelector(getUser);
 
-  const { pathname } = useLocation();
-
-  if (pathname === '/login' || pathname === '/register') {
-    return (
-      <motion.div initial={{ opacity: 1 }} animate={{ opacity: 0 }} exit={{ opacity: 0 }} className="side-nav center">
-        <SearchIcon className="search-btn icon-btn" />
-        <AddIcon className="watchlist-btn icon-btn" />
-        <VisibilityOutlinedIcon className="likes-btn icon-btn" />
-      </motion.div>
-    )
-  }
+  const pathname = useLocation();
 
   return (
-    <motion.div animate={{ opacity: 1 }} className="side-nav center">
-      <Link to={`/search`}>
-        <SearchIcon className="search-btn icon-btn" />
-      </Link>
-      <Link to={isAuthenticated ? `/${user.username}/watchlist` : `/login`}>
-        <AddIcon className="watchlist-btn icon-btn" />
-      </Link>
-      <Link to={isAuthenticated ? `/${user.username}/seen` : `/login`}>
-        <VisibilityOutlinedIcon className="likes-btn icon-btn" />
-      </Link>
-    </motion.div>
+    <StyledSideNavDiv animate={{ opacity: 1 }} className="fixed left-6 top-0 flex flex-col h-screen pt-20 text-center z-40">
+      <Link className="block mt-16 pt-16 pb-16 text-white hover:text-primary transition" to={isAuthenticated ? `/${user.username}/watchlist` : `/login`}><span className="material-icons font-bold">search</span></Link>
+      <Link className="block pt-16 pb-16 text-white hover:text-primary transition" to={isAuthenticated ? `/${user.username}/watchlist` : `/login`}><span className="material-icons font-bold">add</span></Link>
+      <Link className="block pt-16 pb-16 text-white hover:text-primary transition" to={isAuthenticated ? `/${user.username}/seen` : `/login`}><span className="material-icons-outlined font-bold">check</span></Link>
+    </StyledSideNavDiv>
   )
 }

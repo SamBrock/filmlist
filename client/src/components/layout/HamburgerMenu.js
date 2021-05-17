@@ -1,10 +1,11 @@
 import React, { Fragment, useState } from 'react';
 import MenuIcon from '@material-ui/icons/Menu';
 import ClearIcon from '@material-ui/icons/Clear';
-import Footer from '../layout/Footer';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { getIsAuthenticated, getUser, logoutUser, loading } from '../../store/auth';
+
+import Footer from '../layout/Footer';
+import { getIsAuthenticated, getUser, logoutUser } from '../../store/auth';
 
 export default function HamburgerMenu() {
   const [show, setShow] = useState(false);

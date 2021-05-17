@@ -1,48 +1,48 @@
-import { apiRequest } from "./api";
+import { createSlice } from '@reduxjs/toolkit';
 
-const { createSlice } = require("@reduxjs/toolkit");
+import { apiRequest } from "./api";
 
 const slice = createSlice({
   name: 'seen',
   initialState: {
     data: [],
     loading: false,
-    moreLoading: false
+    pageNum: 1,
   },
   reducers: {
-    seenRequested: (seen, action) => {
+    initialRequested: (seen, action) => {
+      seen.data = [];
+      seen.pageNum = 2;
       seen.loading = true;
     },
+    seenRequested: (seen, action) => {
+      seen.loading = true;
+      seen.pageNum = seen.pageNum + 1;
+    },
     seenReceived: (seen, action) => {
-      seen.data = action.payload;
+      seen.data = [...seen.data, ...action.payload];
       seen.loading = false;
     },
     seenRequestFailed: (seen, action) => {
       seen.loading = false;
     },
-    moreSeenRequested: (seen, action) => {
-      seen.moreLoading = true;
-    },
-    moreSeenReceived: (seen, action) => {
-      seen.moreLoading = false;
-      seen.data = [...seen.data, ...action.payload];
-    }
   }
 });
 
 export default slice.reducer;
 
-const { seenReceived, seenRequested, seenRequestFailed, moreSeenRequested, moreSeenReceived } = slice.actions;
+const { initialRequested, seenReceived, seenRequested, seenRequestFailed } = slice.actions;
 
-export const loadSeen = (username, pageNumber, limit) => dispatch => {
+export const loadSeen = (username, initial = false) => (dispatch, getState) => {
+  const limit = 20;
+
   dispatch(apiRequest({
-    url: `/api/${username}/seen?page=${pageNumber}&limit=${limit}`,
-    onStart: pageNumber != 1 ? moreSeenRequested.type : seenRequested.type,
-    onSuccess: pageNumber != 1 ? moreSeenReceived.type : seenReceived.type,
+    url: initial ? `/api/${username}/seen?page=1&limit=${limit}` : `/api/${username}/seen?page=${getState().entities.seen.pageNum}&limit=${limit}`,
+    onStart: initial ? initialRequested.type : seenRequested.type,
+    onSuccess: seenReceived.type,
     onError: seenRequestFailed.type
   }))
-}
+};
 
 export const getSeen = state => state.entities.seen.data;
 export const loading = state => state.entities.seen.loading;
-export const moreLoading = state => state.entities.seen.moreLoading;

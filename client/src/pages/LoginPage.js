@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getLoginError } from '../store/error';
 import { loginUser, getIsAuthenticated } from '../store/auth';
@@ -9,19 +9,20 @@ import { motion } from 'framer-motion';
 import { loginBackdrops } from '../components/layout/backdrops'
 import Footer from '../components/layout/Footer';
 import { useWindowSize } from '../hooks/window-hooks';
+import BackdropTemplate from './templates/BackdropTemplate';
 
 export default function LoginPage() {
   const [width, height] = useWindowSize();
   const [backdropsIndex, setBackdropsIndex] = useState(0);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
   useEffect(() => {
     // Select random backdrop
     setBackdropsIndex(Math.floor(Math.random() * loginBackdrops.length))
   }, [])
 
   const dispatch = useDispatch();
-
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
 
   const loginError = useSelector(getLoginError);
   const isAuthenticated = useSelector(getIsAuthenticated);
@@ -30,32 +31,34 @@ export default function LoginPage() {
     e.preventDefault();
     dispatch(loginUser(email, password));
   }
-  
-  document.title = `Log in - FILMLIST`;
 
-  if (isAuthenticated) return (<motion.div exit={{opacity: 0}}><Redirect to={`/`}></Redirect></motion.div>);
+  if (isAuthenticated) return <motion.div exit={{ opacity: 0 }}><Redirect to={`/`}></Redirect></motion.div>;
+
   return (
-    <motion.div exit={{ opacity: 1 }} className="grid-page-container">
-      {width > 768 ? <BackdropImg backdropPath={loginBackdrops[backdropsIndex].backdropPath} /> : ''}
-      <div className="grid-2-col-backdrop ">
-        <div id="backdrop-placeholder"></div>
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="content-col form-container">
-          <div className="form">
-            <h1>Log in</h1>
-            <span className="form-error">{loginError}</span>
-            <input className="form-control fc-email" type="text" name="email" placeholder="Email" onChange={(e) => setEmail(e.target.value)}></input>
-            <input className="form-control fc-lock" id="password" type="password" name="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)}></input>
-            <input className="btn-primary" type="submit" value="Log in" onClick={(e) => handleSubmit(e)} />
-            <span className="register-now text-center">Don't have an account yet? <Link to='/register'>Register now</Link></span>
+    <BackdropTemplate backdropPath={loginBackdrops[backdropsIndex].backdropPath}>
+      <div className="flex flex-col h-screen p-12 px-14 justify-center">
+        <motion.div className="my-auto" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+          <div className="my-auto">
+            <h1 className="text-heading font-extrabold mb-8">Log in</h1>
+            <form className="flex flex-col mt-3" onSubmit={(e) => handleSubmit(e)}>
+              <label className="flex flex-col leading-10 font-semibold" htmlFor="email">
+                Email <input className="mb-3" type="text" name="email" id="email" placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
+              </label>
+              <label className="flex flex-col leading-10 font-semibold" htmlFor="password">
+                Password <input className="mb-3" id="password" type="password" name="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
+              </label>
+              <span className="text-red font-medium">{loginError}</span>
+              <input className="btn mt-6" type="submit" value="Log in" onClick={(e) => handleSubmit(e)} />
+            </form>
+            <div className="mt-12 text-center">
+              <span className="text-opacity-1">Don't have an account yet? <Link className="font-semibold ml-1" to='/register'>Register now</Link></span>
+            </div>
           </div>
-          <Footer />
         </motion.div>
+        <div className="mt-20">
+          <Footer />
+        </div>
       </div>
-      <div className={`backdrop-info ${width > 768 ? '' : 'hide'}`}>
-        <div><span className="backdrop-movie-title">{loginBackdrops[backdropsIndex].movie}</span>, {loginBackdrops[backdropsIndex].year}</div>
-        <div>Dir: {loginBackdrops[backdropsIndex].director}</div>
-      </div>
-
-    </motion.div>
+    </BackdropTemplate>
   )
 }

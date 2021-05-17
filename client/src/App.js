@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-import LoadingBar from './components/layout/LoadingBar';
-import Header from './components/layout/Header';
-import Notification from './components/layout/Notification';
+import { Provider } from 'react-redux'
+import { AnimatePresence } from 'framer-motion';
 
+import LoadingBar from './components/layout/LoadingBar';
+import Notification from './components/layout/Notification';
 import MoviesPage from '../src/pages/MoviesPage'
 import LoginPage from '../src/pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
@@ -11,15 +12,13 @@ import MovieDetailPage from '../src/pages/MovieDetailPage';
 import WatchlistPage from '../src/pages/WatchlistPage';
 import SeenPage from './pages/SeenPage';
 import SearchPage from './pages/SearchPage';
-
-import { Provider } from 'react-redux'
-import configureStore from './store/configureStore';
-import { loadUser } from './store/auth';
-import SideNav from './components/layout/SideNav';
-
-import { AnimatePresence } from 'framer-motion';
-import './styles/main.scss'
 import FavoriteMovies from './pages/FavoriteMovies';
+
+import configureStore from './store/configureStore';
+
+import GlobalStyle from './styles/GlobalStyles';
+import Layout from './components/Layout';
+import { loadUser } from './store/auth';
 
 const store = configureStore();
 
@@ -31,24 +30,25 @@ export default function App() {
   return (
     <Router>
       <Provider store={store}>
+        <GlobalStyle />
         <LoadingBar />
-        <Header />
-        <SideNav />
+        <Layout>
+          <Route render={({ location }) => (
+            <AnimatePresence initial={false} exitBeforeEnter>
+              <Switch location={location} key={location.pathname}>
+                <Route path="/movie/:id" component={MovieDetailPage} />
+                <Route path="/register" component={RegisterPage} />
+                <Route path="/login" component={LoginPage} />
+                <Route path="/search" component={SearchPage} />
+                <Route path="/favorite-films" component={FavoriteMovies} />
+                <Route path="/:username/watchlist" component={WatchlistPage} />
+                <Route path="/:username/seen" component={SeenPage} />
+                <Route exact path="/" component={MoviesPage} />
+              </Switch>
+            </AnimatePresence>
+          )} />
+        </Layout>
         <Notification />
-        <Route render={({ location }) => (
-          <AnimatePresence initial={false} exitBeforeEnter>
-            <Switch location={location} key={location.pathname}>
-              <Route path="/movie/:id" component={MovieDetailPage}></Route>
-              <Route path="/register" component={RegisterPage}></Route>
-              <Route path="/login" component={LoginPage}></Route>
-              <Route path="/search" component={SearchPage}></Route>
-              <Route path="/favorite-films" component={FavoriteMovies}></Route>
-              <Route path="/:username/watchlist" component={WatchlistPage}></Route>
-              <Route path="/:username/seen" component={SeenPage}></Route>
-              <Route exact path="/" component={MoviesPage} />
-            </Switch>
-          </AnimatePresence>
-        )} />
       </Provider>
     </Router>
   )

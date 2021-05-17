@@ -21,7 +21,7 @@ export default function SearchPage() {
 
   document.title = `Search - FILMLIST`;
   return (
-    <div className="search-container">
+    <div className="search-container mt-96">
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="search-form-container">
         <div className="search-form">
           <input type="text" name="search" placeholder="Search..." onKeyUp={(e) => setQuery(e.target.value)} />

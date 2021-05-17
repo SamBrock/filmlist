@@ -11,8 +11,8 @@ export default function Notification() {
   const notification = useSelector(getNotification);
 
   useEffect(() => {
-    if (visible) TweenMax.fromTo(notificationContainer.current, .5, { opacity: 0, y: 10 }, { opacity: 1, y: 0 })
-    if (!visible) TweenMax.fromTo(notificationContainer.current, .5, { opacity: 1, y: 0 }, { opacity: 0, y: 10 })
+    // if (visible) TweenMax.fromTo(notificationContainer.current, .5, { opacity: 0, y: 10 }, { opacity: 1, y: 0 })
+    // if (!visible) TweenMax.fromTo(notificationContainer.current, .5, { opacity: 1, y: 0 }, { opacity: 0, y: 10 })
   }, [visible])
 
   useEffect(() => {
@@ -25,7 +25,7 @@ export default function Notification() {
   }, [notification])
 
   return (
-    <div className={`notification ${notification.id}`} ref={notificationContainer}>
+    <div className={`fixed z-50 bg-primary text-black p-3 bottom-6 left-6 ${notification.id}`} ref={notificationContainer}>
       <span>{notification.msg}</span>
     </div>
   )

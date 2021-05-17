@@ -1,17 +1,18 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { TweenMax } from "gsap";
 import { Link } from 'react-router-dom';
-import Rating from '@material-ui/lab/Rating';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import MovieItemButtons from './MovieItemButtons';
 import { motion } from 'framer-motion';
-import { useWindowSize } from '../hooks/window-hooks';
-import { transition } from "../transitions/transitions"
 
-export default function MovieItem({ movie, rating, like, page, isUserAuth}) {
+import { useWindowSize } from '../hooks/window-hooks';
+import { transition } from "../transitions"
+import MovieItemButtons from './MovieItemButtons';
+import StarRating from './StarRating';
+
+export default function MovieItem({ movie, page, showButtons }) {
   const [show, setShow] = useState(null);
   const [hide, setHide] = useState(null);
   const [imgLoaded, setImgLoaded] = useState(false);
+  const [disable, setDisable] = useState(false);
 
   const [width] = useWindowSize();
 
@@ -32,9 +33,9 @@ export default function MovieItem({ movie, rating, like, page, isUserAuth}) {
   const movieItemAnimations = [posterAnimate, backdropAnimate, infoAnimate];
 
   useEffect(() => {
-    if (show) movieItemAnimations.map(animation => animation.play());
+    if (show && !disable) movieItemAnimations.map(animation => animation.play());
     if (!show && posterAnimate) movieItemAnimations.map(animation => animation.reverse());
-  }, [show])
+  }, [show, disable]);
 
   const posterImg = 'https://image.tmdb.org/t/p/w300_and_h450_bestv2/' + movie.poster_path;
   const backdropImg = 'https://image.tmdb.org/t/p/w500/' + movie.backdrop_path;
@@ -45,36 +46,44 @@ export default function MovieItem({ movie, rating, like, page, isUserAuth}) {
   }
 
   return (
-    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 1 }} transition={transition}>
+    <div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 1 }} transition={transition}>
       <Link to={show ? `/movie/${movie.id}` : '#'}>
-        <div style={imgLoaded ? {} : { display: 'none' }} className={`movie ${hide ? 'hide-movie' : null}`} onClick={() => setShow(true)} onMouseEnter={() => handleMouseEnter()} onMouseLeave={() => setShow(false)}>
-          <div className="movie-poster-container">
-            <img className="movie-poster" src={posterImg} alt="movie poster" ref={element => moviePoster = element} onLoad={() => setImgLoaded(true)} />
+        <div style={imgLoaded ? {} : { display: 'none' }} className={`relative cursor-pointer z-10 ${disable ? 'opacity-10' : ''} ${hide ? 'hide-movie' : null}`} onClick={() => setShow(true)} onMouseEnter={() => handleMouseEnter()} onMouseLeave={() => setShow(false)}>
+          <div className="max-w-full my-0 mx-auto h-full w-full top-0 left-0 overflow-hidden">
+            <img className=" block w-full h-full object-cover" src={posterImg} alt="movie poster" ref={element => moviePoster = element} onLoad={() => setImgLoaded(true)} />
           </div>
-          <div className="movie-info-container">
-            <div className="movie-backdrop-container">
-              <div className="blur"></div>
-              <img className="movie-backdrop" src={backdropImg ? backdropImg : posterImg} alt="movie backdrop" ref={element => movieBackdrop = element} />
+          <div className="max-w-full my-0 mx-auto h-full absolute top-0 left-0">
+            <div className="w-full h-full overflow-hidden relative">
+              <div className="absolute top-0 blur w-full h-full z-30"></div>
+              <img className="blur w-full h-full opacity-0 object-cover scale-default filter" src={backdropImg ? backdropImg : posterImg} alt={movie.title} ref={element => movieBackdrop = element} />
             </div>
-            {isUserAuth ? <MovieItemButtons className={!show ? 'disable' : ''} movie={movie} page={page} show={show} setHide={setHide} setShow={setShow} /> : ''}
-            <div className="movie-info-text" ref={element => movieInfo = element}>
-              <div className="movie-title">{movie.title}</div>
-              <div className="movie-subinfo">
-                <div className="movie-year">{movie.year}</div>
-                <div className="movie-average-vote" >{movie.vote_average}</div>
+            {
+              !disable || showButtons ? (
+                <MovieItemButtons show={show} page={page} id={movie.id} title={movie.title} disable={setDisable} />
+              ) : null
+            }
+            <div className="absolute bottom-6 left-6 right-6 opacity-0" ref={element => movieInfo = element}>
+              <div className="font-bold text-xxl">{movie.title}</div>
+              <div className="flex justify-between items-center mt-1">
+                <div className="text-sm font-medium text-opacity-2 py-1">{movie.year}</div>
+                <div className="font-semibold text-primary border-primary-opacity text-sm py-0.5 px-2" >{movie.vote_average}</div>
               </div>
             </div>
           </div>
         </div>
-        <div style={imgLoaded ? {} : { display: 'none' }} className="user-seen">
-          <div className="user-seen-ui rating">
-            {rating ? (<Rating className="seen-icon" name="hover-feedback" value={rating} precision={0.5} readOnly />) : null}
-          </div>
-          <div className="user-seen-ui like">
-            {like ? (<FavoriteIcon className="like-icon" />) : null}
-          </div>
-        </div>
+        {
+          page === 'seen' && (
+            <div style={imgLoaded ? {} : { display: 'none' }} className="mt-2 flex justify-between items-center">
+              <StarRating rating={movie.rating} readOnly={true} />
+              {
+                movie.like && (
+                  <span className="material-icons text-lg ml-3 text-opacity-primary">favorite</span>
+                )
+              }
+            </div>
+          )
+        }
       </Link >
-    </motion.div>
+    </div>
   )
 }

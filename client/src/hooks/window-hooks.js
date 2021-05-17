@@ -48,3 +48,7 @@ export function usePageYOffset() {
 
   return pageYOffset;
 }
+
+export function useReloadPageData() {
+  return window.history.state.__scrollY ? true : false
+}

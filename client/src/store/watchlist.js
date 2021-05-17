@@ -1,48 +1,48 @@
-import { apiRequest } from "./api";
-
-const { createSlice } = require("@reduxjs/toolkit");
+import { createSlice } from '@reduxjs/toolkit';
+import { apiRequest } from './api';
 
 const slice = createSlice({
   name: 'watchlsit',
   initialState: {
     data: [],
     loading: false,
-    moreLoading: false
+    pageNum: 1,
+    count: null,
   },
   reducers: {
-    watchlistRequested: (watchlist, action) => {
+    initialRequested: (watchlist, action) => {
+      watchlist.data = [];
+      watchlist.pageNum = 2;
       watchlist.loading = true;
     },
+    watchlistRequested: (watchlist, action) => {
+      watchlist.loading = true;
+      watchlist.pageNum = watchlist.pageNum + 1;
+    },
     watchlistReceived: (watchlist, action) => {
+      watchlist.data = [...watchlist.data, ...action.payload];
       watchlist.loading = false;
-      watchlist.data = action.payload;
     },
     watchlistRequestFailed: (watchlist, action) => {
       watchlist.loading = false;
-    },
-    moreWatchlistRequested: (watchlist, action) => {
-      watchlist.moreLoading = true;
-    },
-    moreWatchlistReceived: (watchlist, action) => {
-      watchlist.moreLoading = false;
-      watchlist.data = [...watchlist.data, ...action.payload];
     }
   }
 });
 
 export default slice.reducer;
 
-const { watchlistReceived, watchlistRequested, watchlistRequestFailed, moreWatchlistReceived, moreWatchlistRequested } = slice.actions;
+const { initialRequested, watchlistReceived, watchlistRequested, watchlistRequestFailed } = slice.actions;
 
-export const loadWatchlist = (username, pageNumber, limit) => dispatch => {
+export const loadWatchlist = (username, initial = false) => (dispatch, getState) => {
+  const limit = 20;
+
   dispatch(apiRequest({
-    url: `/api/${username}/watchlist?page=${pageNumber}&limit=${limit}`,
-    onStart: pageNumber != 1 ? moreWatchlistRequested.type : watchlistRequested.type,
-    onSuccess: pageNumber != 1 ? moreWatchlistReceived.type : watchlistReceived.type,
+    url: initial ? `/api/${username}/watchlist?page=1&limit=${limit}` : `/api/${username}/watchlist?page=${getState().entities.watchlist.pageNum}&limit=${limit}`,
+    onStart: initial ? initialRequested.type : watchlistRequested.type,
+    onSuccess: watchlistReceived.type,
     onError: watchlistRequestFailed.type
   }))
 }
 
 export const getWatchlist = state => state.entities.watchlist.data;
 export const loading = state => state.entities.watchlist.loading;
-export const moreLoading = state => state.entities.watchlist.moreLoading;

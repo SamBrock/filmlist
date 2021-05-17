@@ -1,60 +1,77 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { apiRequest } from './api';
-import { errorsRecieved } from "./error";
+import { errorsRecieved } from './error';
 
 const slice = createSlice({
   name: 'movies',
   initialState: {
     data: [],
     loading: false,
-    moreLoading: false
+    moreLoading: false,
+    default: false,
+    pageNum: 1,
   },
   reducers: {
-    moviesRequested: (movies, action) => {
+    defaultMoviesRequested: (movies, action) => {
+      movies.loading = true;
+      movies.default = true;
+    },
+    defaultMoviesReceived: (movies, action) => {
+      movies.loading = false;
+      movies.data = action.payload;
+    },
+    initialRequested: (movies, action) => {
+      movies.data = [];
+      movies.pageNum = 2;
       movies.loading = true;
     },
+    moviesRequested: (movies, action) => {
+      movies.loading = true;
+      movies.pageNum = movies.pageNum + 1;
+      if (movies.default) movies.data = [];
+      movies.default = false;
+    },
     moviesReceived: (movies, action) => {
-      movies.data = action.payload;
       movies.loading = false;
+      movies.data = [...movies.data, ...action.payload];
     },
     moviesRequestFailed: (movies, action) => {
       movies.loading = false;
     },
-    moreMoviesRequested: (movies, action) => {
-      movies.moreLoading = true;
-    },
-    moreMoviesReceived: (movies, action) => {
-      movies.moreLoading = false;
-      movies.data = [...movies.data, ...action.payload];
-    }
   }
 })
 
 export default slice.reducer;
 
-const { moviesRequested, moviesReceived, moviesRequestFailed, moreMoviesReceived, moreMoviesRequested } = slice.actions;
+const { initialRequested, moviesRequested, moviesReceived, moviesRequestFailed, defaultMoviesRequested, defaultMoviesReceived } = slice.actions;
 
 // Action Creators
-export const loadMovies = (pageNumber, limit) => (dispatch, getState) => {
+export const loadMovies = (initial = false) => (dispatch, getState) => {
+  const limit = 20;
+
   dispatch(apiRequest({
-    url: `/api/${getState().entities.auth.user.username}?page=${pageNumber}&limit=${limit}`,
-    onStart: pageNumber != 1 ? moreMoviesRequested.type : moviesRequested.type,
-    onSuccess: pageNumber != 1 ? moreMoviesReceived.type : moviesReceived.type,
+    url: initial ? `/api/${getState().entities.auth.user.username}?page=1&limit=${limit}` :
+      `/api/${getState().entities.auth.user.username}?page=${getState().entities.movies.pageNum}&limit=${limit}`,
+    onStart: initial ? initialRequested.type : moviesRequested.type,
+    onSuccess: moviesReceived.type,
     onError: errorsRecieved.type,
     onFail: moviesRequestFailed.type
   }))
 };
 
-export const loadDefaultMovies = (pageNumber, limit) => (dispatch, getState) => {
+export const loadDefaultMovies = () => (dispatch, getState) => {
+  const limit = 20;
+
   dispatch(apiRequest({
-    url: `/api/movies/default?page=${pageNumber}&limit=${limit}`,
-    onStart: pageNumber != 1 ? moreMoviesRequested.type : moviesRequested.type,
-    onSuccess: pageNumber != 1 ? moreMoviesReceived.type : moviesReceived.type,
-    onError: moviesRequestFailed.type
+    url: `/api/movies/default?page=${getState().entities.movies.pageNum}&limit=${limit}`,
+    onStart: defaultMoviesRequested.type,
+    onSuccess: defaultMoviesReceived.type,
+    onError: errorsRecieved.type,
+    onFail: moviesRequestFailed.type
   }))
-};
+}
+
 
 // Selectors
 export const getMovies = state => state.entities.movies.data;
 export const loading = state => state.entities.movies.loading;
-export const moreLoading = state => state.entities.movies.moreLoading;
