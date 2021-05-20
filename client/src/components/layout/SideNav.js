@@ -18,7 +18,7 @@ export default function SideNav() {
 
   return (
     <StyledSideNavDiv animate={{ opacity: 1 }} className="fixed left-6 top-0 flex flex-col h-screen pt-20 text-center z-40">
-      <Link className="block mt-16 pt-16 pb-16 text-white hover:text-primary transition" to={isAuthenticated ? `/${user.username}/watchlist` : `/login`}><span className="material-icons font-bold">search</span></Link>
+      <Link className="block mt-16 pt-16 pb-16 text-white hover:text-primary transition" to={`/search`}><span className="material-icons font-bold">search</span></Link>
       <Link className="block pt-16 pb-16 text-white hover:text-primary transition" to={isAuthenticated ? `/${user.username}/watchlist` : `/login`}><span className="material-icons font-bold">add</span></Link>
       <Link className="block pt-16 pb-16 text-white hover:text-primary transition" to={isAuthenticated ? `/${user.username}/seen` : `/login`}><span className="material-icons-outlined font-bold">check</span></Link>
     </StyledSideNavDiv>

@@ -10,14 +10,14 @@ import MovieItem from '../components/MovieItem';
 import Head from '../components/Head';
 
 export default function SeenPage({ match }) {
+  const { action } = useHistory();
+  
   const loadedMovies = useSelector(getSeen);
-  const [movies, setMovies] = useState(loadedMovies);
+  const [movies, setMovies] = useState(action === 'POP' ? loadedMovies : []);
 
   const dispatch = useDispatch();
 
   const seenLoading = useSelector(loading);
-
-  const { action } = useHistory();
 
   const username = match.params.username;
   const isUserAuth = useIsUserAuth(username);

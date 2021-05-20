@@ -10,19 +10,19 @@ import MovieItem from '../components/MovieItem';
 import Head from '../components/Head';
 
 export default function WatchlistPage({ match }) {
+  const { action } = useHistory();
+  
   const loadedMovies = useSelector(getWatchlist);
-  const [movies, setMovies] = useState(loadedMovies);
-
+  const [movies, setMovies] = useState(action === 'POP' ? loadedMovies : []);
+  
   const dispatch = useDispatch();
-
+  
   const username = match.params.username;
   const isUserAuth = useIsUserAuth(username);
-
-  const { action } = useHistory();
-
+  
   useEffect(() => {
     if (action === 'POP' && movies.length !== 0) return;
-
+    
     dispatch(start());
     dispatch(loadWatchlist(username, true));
   }, [username, action]);

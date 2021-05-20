@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { search, getSearchResults } from '../store/search';
 import { Link } from 'react-router-dom';
 import { motion, motionValue } from 'framer-motion';
+
+import { search, getSearchResults } from '../store/search';
 
 export default function SearchPage() {
   const [query, setQuery] = useState('');
@@ -19,7 +20,6 @@ export default function SearchPage() {
     }, 300));
   }, [query, dispatch])
 
-  document.title = `Search - FILMLIST`;
   return (
     <div className="search-container mt-96">
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="search-form-container">

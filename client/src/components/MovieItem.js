@@ -1,3 +1,4 @@
+import { findLastIndex } from 'lodash';
 import React, { useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom';
 import { useSpring, animated } from 'react-spring';
@@ -24,9 +25,9 @@ export default function MovieItem({ movie, page, showButtons }) {
 
   const animations = [
     { spring: posterAnimate, in: { opacity: 0 }, out: { opacity: 1 } },
-    { spring: posterImgAnimate, in: { transform: `scale(1.1)`, filter: `blur(2px)` }, out: { transform: `scale(1)`, filter: `blur(0px)` } },
+    { spring: posterImgAnimate, in: { transform: `scale(1.1)`, filter: `blur(2px)` }, out: { transform: `scale(1.001)`, filter: `blur(0px)` } },
     { spring: backdropAnimate, in: { opacity: 1 }, out: { opacity: 0 } },
-    { spring: backdropImgAnimate, in: { transform: `scale(1)`, filter: `blur(2px) brightness(50%)` }, out: { transform: `scale(1.1)`, filter: `blur(4px) brightness(50%)` } },
+    { spring: backdropImgAnimate, in: { transform: `scale(1.02)`, filter: `blur(2px) brightness(50%)` }, out: { transform: `scale(1.1)`, filter: `blur(4px) brightness(50%)` } },
     { spring: infoAnimate, in: { opacity: 1 }, out: { opacity: 0 } },
   ];
 
@@ -63,7 +64,7 @@ export default function MovieItem({ movie, page, showButtons }) {
             <div className="absolute top-0 blur w-full h-full z-30"></div>
             <animated.img style={backdropImgAnimateStyles} className="blur w-full h-full object-cover brightness-50" src={movie.backdrop_path ? tmdbImageUrl.backdrop + movie.backdrop_path : tmdbImageUrl.backdrop + movie.poster_path} alt={movie.title} onLoad={() => setImgLoaded(true)} />
           </div>
-          <MovieItemButtons show={show} page={page} id={movie.id} title={movie.title} />
+          <MovieItemButtons show={show} page={page} id={movie.id} title={movie.title} disable={action ? true : false} />
           <animated.div style={infoAnimateStyles} className="absolute bottom-6 left-6 right-6">
             <div className="font-bold text-xxl">{movie.title}</div>
             <div className="flex justify-between items-center mt-1">

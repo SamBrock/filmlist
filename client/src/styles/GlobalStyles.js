@@ -176,6 +176,10 @@ const GlobalStyle = createGlobalStyle`
     border: 1px var(--opacity-primary) solid;
   }
 
+  .border-transparent {
+    border: 1px transparent solid;
+  }
+
   .border-opacity {
     border: 1px var(--opacity-1) solid;
   }

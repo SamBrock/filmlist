@@ -25,7 +25,7 @@ export default function Movies() {
 
   useEffect(() => {
     if (isAuthenticated === null) return;
-    if (action === 'POP' && movies.length !== 0) return;
+    if (action === 'POP' || movies.length !== 0) return;
 
     dispatch(start());
     isAuthenticated ? dispatch(loadMovies()) : dispatch(loadDefaultMovies())
