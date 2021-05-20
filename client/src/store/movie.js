@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 import { apiRequest } from './api';
 import { tokenConfig } from './auth';
-import { userMoviesActioned } from './movies';
+import { userMoviesActioned, userMoviesActionedCleared } from './movies';
 import { notificationsRecieved } from './notification';
 import { userSeenActioned } from './seen';
 import { userWatchlistActioned } from './watchlist';
@@ -70,6 +70,7 @@ export const deleteMovieWatchlist = (filmId, title) => (dispatch, getState) => {
   }));
 
   dispatch({ type: userWatchlistActioned.type, payload: { movieId: filmId, actionId: 4 } });
+  dispatch({ type: userMoviesActionedCleared.type, payload: { movieId: filmId } });
 }
 
 export const addMovieRating = (filmId, rating) => (dispatch, getState) => {
@@ -79,6 +80,8 @@ export const addMovieRating = (filmId, rating) => (dispatch, getState) => {
     data: { filmId, rating },
     headers: tokenConfig(getState).headers
   }))
+
+  dispatch({ type: userMoviesActioned.type, payload: { movieId: filmId, actionId: 2 } });
 }
 
 export const addMovieLike = (filmId) => (dispatch, getState) => {
@@ -88,6 +91,8 @@ export const addMovieLike = (filmId) => (dispatch, getState) => {
     data: { filmId },
     headers: tokenConfig(getState).headers
   }))
+
+  dispatch({ type: userMoviesActioned.type, payload: { movieId: filmId, actionId: 2 } });
 }
 
 export const deleteMovieLike = (filmId) => (dispatch, getState) => {
@@ -97,7 +102,7 @@ export const deleteMovieLike = (filmId) => (dispatch, getState) => {
     data: { filmId },
     onError: notificationsRecieved.type,
     headers: tokenConfig(getState).headers
-  }))
+  }));
 }
 
 export const addMovieSeen = (filmId, title) => (dispatch, getState) => {
@@ -123,6 +128,7 @@ export const deleteMovieSeen = (filmId, title) => (dispatch, getState) => {
   }))
 
   dispatch({ type: userSeenActioned.type, payload: { movieId: filmId, actionId: 4 } });
+  dispatch({ type: userMoviesActionedCleared.type, payload: { movieId: filmId } });
 }
 
 export const addMovieNotInterested = (filmId, title) => (dispatch, getState) => {

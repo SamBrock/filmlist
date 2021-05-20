@@ -47,13 +47,23 @@ const slice = createSlice({
         }
       });
     },
+    userMoviesActionedCleared: (movies, action) => {
+      movies.data = movies.data.map(m => {
+        if (m.id === action.payload.movieId) {
+          delete m.userAction;
+          return m;
+        } else {
+          return m;
+        }
+      });
+    },
   }
 })
 
 export default slice.reducer;
 
 const { initialRequested, moviesRequested, moviesReceived, moviesRequestFailed, defaultMoviesRequested, defaultMoviesReceived } = slice.actions;
-export const { userMoviesActioned } = slice.actions;
+export const { userMoviesActioned, userMoviesActionedCleared } = slice.actions;
 
 // Action Creators
 export const loadMovies = (initial = false) => (dispatch, getState) => {
