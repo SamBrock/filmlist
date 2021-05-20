@@ -1,9 +1,9 @@
-import React, { Fragment, useEffect } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 
-import { transitions } from '../config';
+import { tmdbImageUrl, transitions } from '../config';
 import { loadMovie, getMovieDetails, loading } from '../store/movie';
 import { start, complete } from '../store/loadingBar';
 import BackdropTemplate from './templates/BackdropTemplate';
@@ -12,27 +12,29 @@ import MovieButtons from '../components/MovieButtons';
 import Head from '../components/Head';
 
 export default function MovieDetailPage({ match }) {
+  const loadedMovie = useSelector(getMovieDetails);
+  const [movie, setMovie] = useState(loadedMovie);
+
   const dispatch = useDispatch();
 
-  const movieId = parseInt(match.params.id);
-  useEffect(() => {
-    dispatch(loadMovie(movieId));
-  }, [movieId, dispatch])
-
-  const movie = useSelector(getMovieDetails);
-
   const isLoading = useSelector(loading);
-
   const isAuthenticated = useSelector(getIsAuthenticated);
 
-  if (isLoading) {
-    dispatch(start());
-    return null;
-  }
+  const movieId = parseInt(match.params.id);
 
+  useEffect(() => {
+    dispatch(loadMovie(movieId));
+  }, [movieId, dispatch]);
+
+  useEffect(() => {
+    if (!loadedMovie) return;
+    setMovie(loadedMovie);
+  }, [loadedMovie]);
+
+  if (isLoading) dispatch(start());
+  
+  if (!movie || movie.id !== movieId) return <div></div>;
   dispatch(complete());
-
-  if(!movie) return <div></div>;
 
   return (
     <Fragment>
@@ -74,6 +76,20 @@ export default function MovieDetailPage({ match }) {
             </div>
           </motion.div>
           <motion.div variants={transitions.movieDetailsChildren}>
+            <h3 className="uppercase text-md text-orange1 font-semibold text-opacity-2 tracking-wider condensed">Cast</h3>
+            <div className="grid grid-cols-2 gap-2">
+              {movie.credits.cast.map(member => (
+                <div className="flex items-center">
+                  <div className="h-20 mr-3">
+                    <img className="h-full" src={tmdbImageUrl.profile + member.profile_path} alt="" />
+                  </div>
+                  <div className="flex flex-col mb-2">
+                    <div className="font-semibold">{member.name}</div>
+                    <div className="text-opacity-2">{member.character}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
           </motion.div>
         </motion.div>
       </BackdropTemplate>

@@ -10,19 +10,13 @@ import { userWatchlistActioned } from './watchlist';
 const slice = createSlice({
   name: 'movie',
   initialState: {
-    data: {
-      genres: [],
-      credits: {
-        crew: [],
-        cast: []
-      }
-    },
+    data: false,
     loading: false
   },
   reducers: {
     movieRequested: (movie, action) => {
       movie.loading = true;
-      movie.data = {};
+      movie.data = false;
     },
     movieReceived: (movie, action) => {
       movie.data = action.payload;
