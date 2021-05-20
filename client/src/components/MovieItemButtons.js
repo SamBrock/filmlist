@@ -20,7 +20,7 @@ export default function MovieItemButtons({ page, id, title, show, disable }) {
   useEffect(() => {
     topButtonAnimate.start({ opacity: show ? 1 : 0, transform: show ? `blur(0px)` : `blur(5px)` });
     addButtonAnimate.start({ opacity: show ? 1 : 0, filter: show ? `blur(0px)` : `blur(5px)` })
-  }, [show]);
+  }, [show, topButtonAnimate, addButtonAnimate]);
 
   if(disable) return <div></div>;
 
