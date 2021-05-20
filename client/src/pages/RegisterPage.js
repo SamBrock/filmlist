@@ -3,9 +3,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { motion } from 'framer-motion';
 import { Link, Redirect } from 'react-router-dom';
 
+import { backdrops } from '../config';
 import { getRegisterError } from '../store/error';
 import { getIsAuthenticated, registerUser } from '../store/auth';
-import { registerBackdrops } from '../components/layout/backdrops'
 import Footer from '../components/layout/Footer';
 import BackdropTemplate from './templates/BackdropTemplate';
 
@@ -14,7 +14,7 @@ export default function RegisterPage() {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [confirmPassword, setConfirmPassword] = useState();
-  const [backdropIndex] = useState(Math.floor(Math.random() * registerBackdrops.length));
+  const [backdropIndex] = useState(Math.floor(Math.random() * backdrops.register.length));
 
   const dispatch = useDispatch();
 
@@ -32,7 +32,7 @@ export default function RegisterPage() {
   if (isAuthenticated) return <motion.div exit={{ opacity: 0 }}><Redirect to={`/`} /></motion.div>;
 
   return (
-    <BackdropTemplate backdropPath={registerBackdrops[backdropIndex].backdropPath}>
+    <BackdropTemplate backdropPath={backdrops.register[backdropIndex].backdropPath}>
       <div className="flex flex-col h-screen p-12 px-14 justify-center">
         <motion.div className="my-auto" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
           <h1 className="text-heading font-extrabold mb-8">Register</h1>

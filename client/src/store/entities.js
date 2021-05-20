@@ -17,7 +17,7 @@ export default combineReducers({
   movie: movieReducer,
   watchlist: watchlistReducer,
   seen: seenReducer,
-  notification: notificationReducer,
+  notifications: notificationReducer,
   loadingbar: loadingBarReducer,
   search: searchReducer
 })

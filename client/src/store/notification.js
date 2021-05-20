@@ -1,19 +1,16 @@
-const { createSlice } = require("@reduxjs/toolkit");
+import { createSlice } from '@reduxjs/toolkit';
 
 const slice = createSlice({
   name: 'notifications',
   initialState: {
-    id: null,
-    msg: ''
+    data: [],
   },
   reducers: {
-    notificationsRecieved: (notification, action) => {
-      notification.id = action.payload.id;
-      notification.msg = action.payload.msg;
+    notificationsRecieved: (notifications, action) => {
+      notifications.data = [...notifications.data, { id: action.payload.id, msg: action.payload.msg }]
     },
-    notificationsDeleted: (notification, action) => {
-      notification.id = null;
-      notification.msg = {};
+    notificationsDeleted: (notifications, action) => {
+      notifications.data = []
     }
   }
 })
@@ -32,4 +29,4 @@ export const addNotification = (id, msg) => dispatch => {
 }
 
 // Selectors
-export const getNotification = state => state.entities.notification; 
+export const getNotifications = state => state.entities.notifications.data;

@@ -1,6 +1,7 @@
 import React, { useRef } from 'react'
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
+
 import BackdropImg from '../../components/layout/BackdropImg';
 
 const StyledMoviePageContainer = styled(motion.div)`

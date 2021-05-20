@@ -1,26 +1,18 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
+import { Link, Redirect } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
+import { motion } from 'framer-motion';
+
+import { backdrops } from '../config';
 import { getLoginError } from '../store/error';
 import { loginUser, getIsAuthenticated } from '../store/auth';
-import { useEffect } from 'react';
-import { Link, Redirect } from 'react-router-dom';
-import BackdropImg from '../components/layout/BackdropImg';
-import { motion } from 'framer-motion';
-import { loginBackdrops } from '../components/layout/backdrops'
 import Footer from '../components/layout/Footer';
-import { useWindowSize } from '../hooks/window-hooks';
 import BackdropTemplate from './templates/BackdropTemplate';
 
 export default function LoginPage() {
-  const [width, height] = useWindowSize();
-  const [backdropsIndex, setBackdropsIndex] = useState(0);
+  const [backdropsIndex] = useState(Math.floor(Math.random() * backdrops.login.length));
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  useEffect(() => {
-    // Select random backdrop
-    setBackdropsIndex(Math.floor(Math.random() * loginBackdrops.length))
-  }, [])
 
   const dispatch = useDispatch();
 
@@ -35,7 +27,7 @@ export default function LoginPage() {
   if (isAuthenticated) return <motion.div exit={{ opacity: 0 }}><Redirect to={`/`}></Redirect></motion.div>;
 
   return (
-    <BackdropTemplate backdropPath={loginBackdrops[backdropsIndex].backdropPath}>
+    <BackdropTemplate backdropPath={backdrops.login[backdropsIndex].backdropPath}>
       <div className="flex flex-col h-screen p-12 px-14 justify-center">
         <motion.div className="my-auto" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
           <div className="my-auto">

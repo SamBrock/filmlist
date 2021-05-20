@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+
 import { apiRequest } from './api';
 
 const slice = createSlice({
@@ -25,6 +26,15 @@ const slice = createSlice({
     },
     watchlistRequestFailed: (watchlist, action) => {
       watchlist.loading = false;
+    },
+    userWatchlistActioned: (watchlist, action) => {
+      watchlist.data = watchlist.data.map(m => {
+        if (m.id === action.payload.movieId) {
+          return { ...m, userAction: action.payload.actionId };
+        } else {
+          return m;
+        }
+      });
     }
   }
 });
@@ -32,6 +42,7 @@ const slice = createSlice({
 export default slice.reducer;
 
 const { initialRequested, watchlistReceived, watchlistRequested, watchlistRequestFailed } = slice.actions;
+export const { userWatchlistActioned } = slice.actions;
 
 export const loadWatchlist = (username, initial = false) => (dispatch, getState) => {
   const limit = 20;

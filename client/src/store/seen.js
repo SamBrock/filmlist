@@ -26,12 +26,22 @@ const slice = createSlice({
     seenRequestFailed: (seen, action) => {
       seen.loading = false;
     },
+    userSeenActioned: (seen, action) => {
+      seen.data = seen.data.map(m => {
+        if (m.id === action.payload.movieId) {
+          return { ...m, userAction: action.payload.actionId };
+        } else {
+          return m;
+        }
+      });
+    }
   }
 });
 
 export default slice.reducer;
 
 const { initialRequested, seenReceived, seenRequested, seenRequestFailed } = slice.actions;
+export const { userSeenActioned } = slice.actions;
 
 export const loadSeen = (username, initial = false) => (dispatch, getState) => {
   const limit = 20;

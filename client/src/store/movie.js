@@ -1,7 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
+
 import { apiRequest } from './api';
 import { tokenConfig } from './auth';
+import { userMoviesActioned } from './movies';
 import { notificationsRecieved } from './notification';
+import { userSeenActioned } from './seen';
+import { userWatchlistActioned } from './watchlist';
 
 const slice = createSlice({
   name: 'movie',
@@ -51,7 +55,9 @@ export const addMovieWatchlist = (filmId, title) => (dispatch, getState) => {
     data: { filmId, title },
     onSuccess: notificationsRecieved.type,
     headers: tokenConfig(getState).headers
-  }))
+  }));
+
+  dispatch({ type: userMoviesActioned.type, payload: { movieId: filmId, actionId: 1 } });
 }
 
 export const deleteMovieWatchlist = (filmId, title) => (dispatch, getState) => {
@@ -61,7 +67,9 @@ export const deleteMovieWatchlist = (filmId, title) => (dispatch, getState) => {
     data: { filmId, title },
     onSuccess: notificationsRecieved.type,
     headers: tokenConfig(getState).headers
-  }))
+  }));
+
+  dispatch({ type: userWatchlistActioned.type, payload: { movieId: filmId, actionId: 4 } });
 }
 
 export const addMovieRating = (filmId, rating) => (dispatch, getState) => {
@@ -100,6 +108,8 @@ export const addMovieSeen = (filmId, title) => (dispatch, getState) => {
     onSuccess: notificationsRecieved.type,
     headers: tokenConfig(getState).headers
   }))
+
+  dispatch({ type: userMoviesActioned.type, payload: { movieId: filmId, actionId: 2 } });
 }
 
 export const deleteMovieSeen = (filmId, title) => (dispatch, getState) => {
@@ -111,6 +121,8 @@ export const deleteMovieSeen = (filmId, title) => (dispatch, getState) => {
     onError: notificationsRecieved.type,
     headers: tokenConfig(getState).headers
   }))
+
+  dispatch({ type: userSeenActioned.type, payload: { movieId: filmId, actionId: 4 } });
 }
 
 export const addMovieNotInterested = (filmId, title) => (dispatch, getState) => {
@@ -121,6 +133,8 @@ export const addMovieNotInterested = (filmId, title) => (dispatch, getState) => 
     onSuccess: notificationsRecieved.type,
     headers: tokenConfig(getState).headers
   }))
+
+  dispatch({ type: userMoviesActioned.type, payload: { movieId: filmId, actionId: 3 } });
 }
 
 export const deleteMovieNotInterested = (filmId, title) => (dispatch, getState) => {
