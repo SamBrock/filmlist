@@ -6,6 +6,7 @@ module.exports = {
   tmdbImageUrl: {
     poster: 'https://image.tmdb.org/t/p/w300_and_h450_bestv2/',
     backdrop: 'https://image.tmdb.org/t/p/w500/',
+    profile: 'https://www.themoviedb.org/t/p/w138_and_h175_face/',
   },
 
   springConfig: { velocity: 0, clamp: true, tension: 150 },
