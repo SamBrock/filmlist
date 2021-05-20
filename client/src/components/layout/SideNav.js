@@ -1,9 +1,10 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { getIsAuthenticated, getUser } from '../../store/auth';
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
+
+import { getIsAuthenticated, getUser } from '../../store/auth';
 
 const StyledSideNavDiv = styled(motion.div)`
   width: 41.969px;

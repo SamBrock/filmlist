@@ -1,8 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react'
 import ClipLoader from 'react-spinners/ClipLoader';
 
-export default function InfiniteScroll({ children, loadMore }) {
+export default function InfiniteScroll({ children, loadMore, loading }) {
   const [active, setActive] = useState(false);
+  
   const loader = useRef(null);
 
   useEffect(() => {
@@ -21,10 +22,13 @@ export default function InfiniteScroll({ children, loadMore }) {
     if (target.isIntersecting) loadMore();
   }
 
+  console.log(loading);
+
   return (
     <div>
       {children}
-      <div className="loading mt-6 flex w-full border justify-center" ref={loader}><ClipLoader color='#fffff' size={35} /></div>
+      <div className="mt-6 mb-3" ref={loader} />
+      {loading && (<div className="loading mb-6 flex w-full border justify-center" ><ClipLoader color='#fffff' size={35} /></div>)}
     </div>
   )
 }

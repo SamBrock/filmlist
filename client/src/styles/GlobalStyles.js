@@ -176,6 +176,14 @@ const GlobalStyle = createGlobalStyle`
     border: 1px var(--opacity-primary) solid;
   }
 
+  .border-opacity {
+    border: 1px var(--opacity-1) solid;
+  }
+
+  .border-default {
+    border: 1.2px var(--grey) dashed;
+  }
+
   .z-100 {
     z-index: 100;
   }

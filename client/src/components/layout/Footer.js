@@ -1,5 +1,6 @@
-import React from 'react'
-import FullLogoGrey from '../../images/filmlist-grey.svg'
+import React from 'react';
+
+import FullLogoGrey from '../../images/filmlist-grey.svg';
 
 export default function Footer() {
   return (
