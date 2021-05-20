@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 
@@ -42,7 +42,7 @@ export default function WatchlistBtnMain({ id, title, watchlist, setWatchlist })
   }
 
   return (
-    <StyledButtonContainerDiv className="relative w-1/2 h-1/2 items-center flex">
+    <StyledButtonContainerDiv className="relative w-1/2 h-auto items-center flex">
       {!watchlist ?
         <button className="z-50 w-full h-full" aria-label="add to watchlist" onClick={(e) => handleWatchlist(e, true)}>
           <img src={Add} alt="" />

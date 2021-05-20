@@ -22,6 +22,8 @@ export default function MovieItemButtons({ page, id, title, show, disable }) {
     addButtonAnimate.start({ opacity: show ? 1 : 0, filter: show ? `blur(0px)` : `blur(5px)` })
   }, [show]);
 
+  if(disable) return <div></div>;
+
   if (page === 'movies') return (
     <div className={`${show ? '' : 'hidden'}`}>
       <animated.div style={topButtonAnimateStyles} className="z-50 absolute top-6 left-6">
