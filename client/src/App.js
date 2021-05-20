@@ -3,21 +3,14 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import { AnimatePresence } from 'framer-motion';
 
+import { MoviesPage, MovieDetailPage, RegisterPage, WatchlistPage, SeenPage, SearchPage, FavoriteMovies, LoginPage } from './pages';
 import LoadingBar from './components/layout/LoadingBar';
-import Notification from './components/layout/Notification';
-import MoviesPage from '../src/pages/MoviesPage'
-import LoginPage from '../src/pages/LoginPage';
-import RegisterPage from './pages/RegisterPage';
-import MovieDetailPage from '../src/pages/MovieDetailPage';
-import WatchlistPage from '../src/pages/WatchlistPage';
-import SeenPage from './pages/SeenPage';
-import SearchPage from './pages/SearchPage';
-import FavoriteMovies from './pages/FavoriteMovies';
+import NotificationList from './components/NotificationList';
 
 import configureStore from './store/configureStore';
 
-import GlobalStyle from './styles/GlobalStyles';
 import Layout from './components/Layout';
+import GlobalStyle from './styles/GlobalStyles';
 import { loadUser } from './store/auth';
 
 const store = configureStore();
@@ -48,7 +41,7 @@ export default function App() {
             </AnimatePresence>
           )} />
         </Layout>
-        <Notification />
+        <NotificationList />
       </Provider>
     </Router>
   )
