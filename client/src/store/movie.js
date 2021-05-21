@@ -34,7 +34,7 @@ const { movieRequested, movieReceived, movieRequestFailed } = slice.actions;
 
 export const loadMovie = (filmId) => (dispatch, getState) => {
   dispatch(apiRequest({
-    url: `/api/movies/details/${filmId}`,
+    url: `/api/movies/${filmId}`,
     onStart: movieRequested.type,
     onSuccess: movieReceived.type,
     onError: movieRequestFailed.type,

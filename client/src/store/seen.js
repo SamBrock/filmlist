@@ -44,7 +44,7 @@ const { initialRequested, seenReceived, seenRequested, seenRequestFailed } = sli
 export const { userSeenActioned } = slice.actions;
 
 export const loadSeen = (username, initial = false) => (dispatch, getState) => {
-  const limit = 20;
+  const limit = 40;
 
   dispatch(apiRequest({
     url: initial ? `/api/${username}/seen?page=1&limit=${limit}` : `/api/${username}/seen?page=${getState().entities.seen.pageNum}&limit=${limit}`,

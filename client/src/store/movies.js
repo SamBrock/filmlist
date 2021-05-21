@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import _ from 'lodash';
 import { apiRequest } from './api';
 import { errorsRecieved } from './error';
 
@@ -10,6 +11,7 @@ const slice = createSlice({
     moreLoading: false,
     default: false,
     pageNum: 1,
+    basedOn: []
   },
   reducers: {
     defaultMoviesRequested: (movies, action) => {
@@ -33,7 +35,8 @@ const slice = createSlice({
     },
     moviesReceived: (movies, action) => {
       movies.loading = false;
-      movies.data = [...movies.data, ...action.payload];
+      movies.data = _.uniqBy([...movies.data, ...action.payload.results], 'id');
+      movies.basedOn = [...movies.basedOn, ...action.payload.basedOn];
     },
     moviesRequestFailed: (movies, action) => {
       movies.loading = false;
@@ -41,7 +44,7 @@ const slice = createSlice({
     userMoviesActioned: (movies, action) => {
       movies.data = movies.data.map(m => {
         if (m.id === action.payload.movieId) {
-          return {...m, userAction: action.payload.actionId};
+          return { ...m, userAction: action.payload.actionId };
         } else {
           return m;
         }
@@ -67,15 +70,18 @@ export const { userMoviesActioned, userMoviesActionedCleared } = slice.actions;
 
 // Action Creators
 export const loadMovies = (initial = false) => (dispatch, getState) => {
-  const limit = 20;
+  const limit = 40;
 
   dispatch(apiRequest({
     url: initial ? `/api/${getState().entities.auth.user.username}?page=1&limit=${limit}` :
       `/api/${getState().entities.auth.user.username}?page=${getState().entities.movies.pageNum}&limit=${limit}`,
+    method: 'POST',
+    data: { basedOn: getState().entities.movies.basedOn },
     onStart: initial ? initialRequested.type : moviesRequested.type,
     onSuccess: moviesReceived.type,
     onError: errorsRecieved.type,
-    onFail: moviesRequestFailed.type
+    onFail: moviesRequestFailed.type,
+    headers: { 'Content-Type': 'application/json' }
   }))
 };
 
