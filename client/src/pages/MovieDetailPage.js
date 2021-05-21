@@ -32,7 +32,7 @@ export default function MovieDetailPage({ match }) {
   }, [loadedMovie]);
 
   if (isLoading) dispatch(start());
-  
+
   if (!movie || movie.id !== movieId) return <div></div>;
   dispatch(complete());
 
@@ -44,9 +44,12 @@ export default function MovieDetailPage({ match }) {
           <motion.div variants={transitions.movieDetailsChildren}>
             <h1 className="text-heading font-extrabold mb-4">{movie.title}</h1>
           </motion.div>
-          <motion.div variants={transitions.movieDetailsChildren} className="mb-6">
+          <motion.div variants={transitions.movieDetailsChildren} className="flex mb-6">
             <span className="text-md font-medium text-opacity-2 mr-3">{movie.year}</span>
-            <span className="text-md font-medium text-opacity-2 mr-3">{movie.runtime}</span>
+            <div className="text-md font-medium text-opacity-2 mr-3">
+              {movie.runtime.hours && (<span className="mr-1">{movie.runtime.hours}h</span>)}
+              <span>{movie.runtime.minutes}m</span>
+            </div>
             <span className="text-md font-medium text-opacity-2 mr-3">R</span>
           </motion.div>
           <motion.div variants={transitions.movieDetailsChildren} className="mb-6">
