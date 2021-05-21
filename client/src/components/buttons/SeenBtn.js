@@ -15,10 +15,10 @@ export default function SeenBtn({ id, title, seen, setSeen, hide }) {
 
   return (
     !seen ?
-      <button className="font-bold text-opacity-2 z-50" aria-label="add to watchlist" disableFocusRipple={true} disableRipple={true} onClick={(e) => handleSeen(e, true)}>
+      <button className="font-bold text-opacity-2 z-50" aria-label="add to watchlist" onClick={(e) => handleSeen(e, true)}>
         <span className="material-icons">check</span>
       </button> :
-      <button className="font-bold text-opacity-2 z-50" aria-label="remove from watchlist z-50" disableFocusRipple={true} disableRipple={true} onClick={(e) => handleSeen(e, false)}>
+      <button className="font-bold text-opacity-2 z-50" aria-label="remove from watchlist z-50" onClick={(e) => handleSeen(e, false)}>
         <span className="material-icons">undo</span>
       </button>
   )
