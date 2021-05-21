@@ -1,11 +1,11 @@
 const express = require('express');
 const _ = require('lodash');
-const Joi = require('@hapi/joi');
 
 const router = express.Router();
 
 const User = require('../../models/user');
 const auth = require('../../middleware/auth');
+const { validateUser } = require('../../utils');
 
 // @route   POST api/users
 // @desc    Register users
@@ -29,7 +29,6 @@ router.post('/register', async (req, res) => {
   }
 
   const token = user.generateAuthToken();
-  // return res.header('x-auth-token', token).send(_.pick(user, ['username', ['email']]));
   return res.status(200).send({ token, user: { id: user._id, username: user.username, email: user.email } })
 })
 
@@ -64,13 +63,3 @@ router.get('/user', auth, async (req, res) => {
 
 module.exports = router;
 
-// Validate register inputs
-function validateUser(user) {
-  const schema = Joi.object().keys({
-    email: Joi.string().email({ minDomainSegments: 2 }).required(),
-    username: Joi.string().alphanum().min(3).max(32).required(),
-    password: Joi.string().min(8).max(32).required(),
-  })
-
-  return schema.validate(user);
-}

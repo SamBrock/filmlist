@@ -3,36 +3,35 @@ const _ = require('lodash');
 
 const User = require('../../models/user');
 const auth = require('../../middleware/auth');
-const MovieService = require('../../services/MovieService');
+const TMDbService = require('../../services/TMDbService');
+const { verifyUserRequest, getMovieArrDetails } = require('../../utils');
 
 const router = express.Router();
 
 // @route   GET api/username
 // @desc    Get recommended movies for user
 // @access  Public
-router.get('/:username', async (req, res) => {
+router.post('/:username', async (req, res) => {
   let user = await User.findOne({ username: req.params.username });
   if (!user) return res.status(404).send('User does not exist.');
 
-  const { page, limit } = req.query;
-  const startIndex = (page - 1) * limit;
-  const endIndex = page * limit;
+  const { limit } = req.query;
+  const { basedOn } = req.body;
 
   const likes = user.seen.filter(s => s.like === true);
-  if(likes.length < 3 ) return res.status(400).send({ id: 'MOVIES_ERROR', msg: 'No liked movies.' })
-  
-  const randomNums = randomLikesIndex(likes.length);
-  const randomLikedMovies = _.at(likes, randomNums);
+  if (likes.length < 3) return res.status(400).send({ id: 'MOVIES_ERROR', msg: 'No liked movies.' })
 
-  let movies = await MovieService.getTMDbRecommendedMovies(randomLikedMovies);
-  movies = _.differenceBy(movies, user.seen.map(s => ({ id: s.filmId })), 'id');
-  movies = _.differenceBy(movies, user.watchlist.map(w => ({ id: w.filmId })), 'id');
+  const randomLikes = _.sampleSize(_.difference(likes.map(m => m.filmId), basedOn), likes.length >= 6 ? 6 : 3);
 
-  movies = movies.slice(startIndex, endIndex);
+  const remove = [...user.seen, ...user.watchlist, ...user.notInterested].map(m => ({ id: m.filmId }));
 
-  movies = MovieService.getMovieArrDetails(movies);
+  let movies = await TMDbService.getRecommendationsArr(randomLikes);
+  movies = _.differenceBy(movies, remove, 'id');
+  movies = _.uniqBy(movies, 'id');
+  movies = movies.slice(0, limit);
+  movies = getMovieArrDetails(movies);
 
-  res.send(movies);
+  res.send({ basedOn: randomLikes, results: movies });
 });
 
 // @route   GET api/username/watchlist
@@ -47,8 +46,8 @@ router.get('/:username/watchlist', async (req, res) => {
   const endIndex = page * limit;
 
   const userWatchlist = user.watchlist.reverse().slice(startIndex, endIndex);
-  const tmdbData = await MovieService.getTMDbData(userWatchlist);
-  const watchlist = MovieService.getMovieArrDetails(tmdbData);
+  const tmdbData = await TMDbService.getDataArr(userWatchlist.map(m => m.filmId));
+  const watchlist = getMovieArrDetails(tmdbData);
 
   res.send(watchlist);
 })
@@ -65,10 +64,10 @@ router.get('/:username/seen', async (req, res) => {
   const endIndex = page * limit;
 
   const userSeen = user.seen.reverse().slice(startIndex, endIndex);
-  const tmdbData = await MovieService.getTMDbData(userSeen);
-  const seen = MovieService.getMovieArrDetails(tmdbData);
+  const tmdbData = await TMDbService.getDataArr(userSeen.map(m => m.filmId));
+  const seen = getMovieArrDetails(tmdbData);
 
-  res.send(seen);
+  res.send(seen.map((m, i) => ({ ...m, rating: userSeen[i].rating, like: userSeen[i].like })));
 })
 
 // @route   POST api/username/watchlist
@@ -79,10 +78,10 @@ router.post('/:username/watchlist', auth, async (req, res) => {
   if (!verifyUser) return res.status(403).send('Forbidden. Not autorized as that user.');
 
   const user = await User.findOne({ username: req.params.username });
-  
+
   const index = user.watchlist.map(w => w.filmId).indexOf(req.body.filmId);
   if (index > -1) return res.status(400).send({ id: 'WATCHLIST_ERROR', msg: `'${req.body.title}' already in your watchlist.` });
-  
+
   user.watchlist.push({ filmId: req.body.filmId });
   await user.save();
 
@@ -152,9 +151,9 @@ router.delete('/:username/likes', auth, async (req, res) => {
   if (!verifyUser) return res.status(403).send('Forbidden. Not autorized as that user.');
 
   const user = await User.findOne({ username: req.params.username });
-  
+
   const likes = user.seen.filter(m => m.like === true);
-  if(likes.length <= 4) return res.status(405).send({ id: 'LIKE_ERROR', msg: 'You must have at least 4 liked movies.' });
+  if (likes.length <= 4) return res.status(405).send({ id: 'LIKE_ERROR', msg: 'You must have at least 4 liked movies.' });
 
   const index = user.seen.map(l => l.filmId).indexOf(req.body.filmId);
   if (index == -1) return res.status(400).send('Failed to delete. Film is already not liked.');
@@ -197,7 +196,7 @@ router.delete('/:username/seen', auth, async (req, res) => {
   const index = user.seen.map(s => s.filmId).indexOf(req.body.filmId);
 
   const likes = user.seen.filter(m => m.like === true);
-  if(likes.length <= 4 && user.seen[index].like === true) return res.status(405).send({ id: 'LIKE_ERROR', msg: 'You must have at least 4 liked movies.' });
+  if (likes.length <= 4 && user.seen[index].like === true) return res.status(405).send({ id: 'LIKE_ERROR', msg: 'You must have at least 4 liked movies.' });
 
   if (index == -1) return res.status(400).send('Failed to delete. Film is not in seen.');
   user.seen.splice(index, 1);
@@ -255,20 +254,6 @@ router.delete('/:username/not-interested', auth, async (req, res) => {
   res.status(200).send({ id: 'DELETE', msg: `'${req.body.title}' was removed from your not interested.` });
 })
 
-function verifyUserRequest(req) {
-  if (req.params.username != req.user.username) return false;
-  return true;
-}
 
-function randomLikesIndex(max) {
-  const arr = [];
-
-  while (arr.length < max) {
-    const r = Math.floor(Math.random() * max);
-    if (arr.indexOf(r) === -1) arr.push(r);
-  }
-
-  return arr;
-}
 
 module.exports = router;

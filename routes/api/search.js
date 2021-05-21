@@ -1,11 +1,10 @@
 const express = require('express');
 const axios = require('axios');
-const config = require('config');
 
-const MovieService = require('../../services/MovieService');
+const MovieService = require('../../services/TMDbService');
 
-const baseURL = process.env.BASE_URL || config.get('TMDb.baseURL');
-const api_key = process.env.API_KEY || config.get('TMDb.api_key');
+const baseURL = process.env.BASE_URL;
+const api_key = process.env.API_KEY;
 
 const router = express.Router();
 

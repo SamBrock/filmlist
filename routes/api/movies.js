@@ -1,14 +1,12 @@
 const express = require('express');
 const axios = require('axios');
-const config = require('config');
-const _ = require('lodash');
 
 const User = require('../../models/user');
-const MovieService = require('../../services/MovieService');
 const user = require('../../middleware/user');
+const { getMovieArrDetails, getMovieDetails } = require('../../utils');
 
-const baseURL = process.env.BASE_URL || config.get('TMDb.baseURL');
-const api_key = process.env.API_KEY || config.get('TMDb.api_key');
+const baseURL = process.env.BASE_URL;
+const api_key = process.env.API_KEY;
 
 const router = express.Router();
 
@@ -18,9 +16,9 @@ const router = express.Router();
 router.get('/default', async (req, res) => {
   try {
     const url = `/movie/upcoming?api_key=${api_key}`;
-    const response = await axios.get(baseURL + url);
+    const { data } = await axios.get(baseURL + url);
 
-    const movies = MovieService.getMovieArrDetails(response.data.results)
+    const movies = getMovieArrDetails(data.results)
 
     res.send(movies);
   } catch (error) {
@@ -31,12 +29,12 @@ router.get('/default', async (req, res) => {
 // @route   GET api/movies/id
 // @desc    Get movie details by id
 // @access  Public
-router.get('/details/:id', user, async (req, res) => {
+router.get('/:id', user, async (req, res) => {
   try {
     const url = `/movie/${req.params.id}?api_key=${api_key}&append_to_response=credits`;
-    const response = await axios.get(baseURL + url);
+    const { data } = await axios.get(baseURL + url);
 
-    const movie = MovieService.getMovieDetails(response.data);
+    const movie = getMovieDetails(data);
 
     if (req.user) {
       let user = await User.findOne({ username: req.user.username });
@@ -56,5 +54,6 @@ router.get('/details/:id', user, async (req, res) => {
     res.status(400).send(error);
   }
 });
+
 
 module.exports = router;
