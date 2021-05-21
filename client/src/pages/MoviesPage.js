@@ -12,6 +12,8 @@ import MovieList from '../components/MovieList';
 import MovieItem from '../components/MovieItem';
 
 export default function Movies() {
+  const { action } = useHistory();
+
   const loadedMovies = useSelector(getMovies);
   const [movies, setMovies] = useState(loadedMovies);
 
@@ -21,16 +23,13 @@ export default function Movies() {
   const isAuthenticated = useSelector(getIsAuthenticated);
   const moviesError = useSelector(getMoviesError);
 
-  const { action } = useHistory();
-
   useEffect(() => {
     if (isAuthenticated === null) return;
-    if (action === 'POP' || movies.length !== 0) return;
+    if (action === 'POP' && movies.length !== 0) return;
 
     dispatch(start());
     isAuthenticated ? dispatch(loadMovies()) : dispatch(loadDefaultMovies())
   }, [isAuthenticated]);
-
 
   useEffect(() => {
     setMovies(loadedMovies);
@@ -40,7 +39,7 @@ export default function Movies() {
   if (moviesError) { return <motion.div exit={{ opacity: 0 }} transition={transitions.default}><Redirect to={`/favorite-films`} /></motion.div> }
 
   return (
-    <MovieList movies={movies} loadNext={() => isAuthenticated ? dispatch(loadMovies()) : dispatch(loadDefaultMovies())} loading={moviesLoading}>
+    <MovieList length={movies.length} loadNext={() => isAuthenticated ? dispatch(loadMovies()) : dispatch(loadDefaultMovies())} loading={moviesLoading}>
       {movies.map((movie, i) => <MovieItem key={movie.id} movie={movie} page="movies" index={i} />)}
     </MovieList>
   )

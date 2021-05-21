@@ -7,11 +7,11 @@ import { start, complete } from '../store/loadingBar';
 import useIsUserAuth from '../hooks/useIsUserAuth';
 import MovieList from '../components/MovieList';
 import MovieItem from '../components/MovieItem';
-import Head from '../components/Head';
+import Head from '../components/Head';;
 
 export default function SeenPage({ match }) {
   const { action } = useHistory();
-  
+
   const loadedMovies = useSelector(getSeen);
   const [movies, setMovies] = useState(action === 'POP' ? loadedMovies : []);
 
@@ -38,12 +38,10 @@ export default function SeenPage({ match }) {
     if (!seenLoading) dispatch(loadSeen(username));
   }
 
-  if (movies.length === 0) return <div></div>;
-
   return (
     <>
       <Head title={`${username}'s Seen`} />
-      <MovieList loadNext={handleLoadMore} cols={6} loading={seenLoading} >
+      <MovieList length={movies.length} loadNext={handleLoadMore} cols={6} loading={seenLoading} >
         {movies.map((movie, i) => <MovieItem key={movie.id} movie={movie} page="seen" showButtons={isUserAuth} index={i} />)}
       </MovieList>
     </>

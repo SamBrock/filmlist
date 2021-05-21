@@ -35,7 +35,7 @@ export default function WatchlistPage({ match }) {
   return (
     <>
     <Head title={`${username}'s Watchlist`} />
-      <MovieList movies={movies} loadNext={() => dispatch(loadWatchlist(username))} cols={6} >
+      <MovieList length={movies.length} loadNext={() => dispatch(loadWatchlist(username))} cols={6} >
         {movies.map((movie, i) => <MovieItem key={movie.id} movie={movie} page="watchlist" showButtons={isUserAuth} />)}
       </MovieList>
     </>

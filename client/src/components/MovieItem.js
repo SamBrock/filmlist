@@ -1,7 +1,7 @@
 import { findLastIndex } from 'lodash';
 import React, { useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom';
-import { useSpring, animated } from 'react-spring';
+import { useSpring, animated } from '@react-spring/web';
 import slugify from 'slugify';
 
 import { userActions, springConfig, tmdbImageUrl } from '../config';
