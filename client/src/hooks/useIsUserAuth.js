@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux';
+
 import { getIsAuthenticated, getUser } from '../store/auth';
 
 export default function useIsUserAuth(paramUsername) {

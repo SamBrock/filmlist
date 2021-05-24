@@ -40,7 +40,7 @@ export default function LoginPage() {
                 Password <input className="mb-3" id="password" type="password" name="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
               </label>
               <span className="text-red font-medium">{loginError}</span>
-              <input className="bg-primary text-black font-semibold mt-6" type="submit" value="Log in" onClick={(e) => handleSubmit(e)} />
+              <input className="bg-primary text-black font-semibold mt-6 cursor-pointer" type="submit" value="Log in" onClick={(e) => handleSubmit(e)} />
             </form>
             <div className="mt-6 sm:mt-12 text-center">
               <span className="text-opacity-1">Don't have an account yet? <Link className="font-semibold ml-1" to='/register'>Register now</Link></span>

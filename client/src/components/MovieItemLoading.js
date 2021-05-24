@@ -25,7 +25,7 @@ export default function LoadingMovieItem({ showUserRating }) {
   return (
     <div>
       <StyledAnimatedLoadingItemDiv className="w-full h-full bg-grey" style={{ height }} ref={divRef} />
-      {showUserRating && (<StyledAnimatedLoadingItemDiv className="bg-grey h-5 w-1/2 mt-2" />)}
+      {(showUserRating && height) && (<StyledAnimatedLoadingItemDiv className="bg-grey h-5 w-1/2 mt-2" />)}
     </div>
   );
 }

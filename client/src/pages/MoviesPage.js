@@ -26,7 +26,8 @@ export default function Movies() {
 
   useEffect(() => {
     if (isAuthenticated === null) return;
-    if (action === 'POP' && movies.length !== 0) return;
+    if (action === 'POP') return;
+    if (movies.length !== 0) return;
 
     dispatch(start());
     isAuthenticated ? dispatch(loadMovies()) : dispatch(loadDefaultMovies())
@@ -43,7 +44,7 @@ export default function Movies() {
     <>
       <Head bodyAttributes={movies.length === 0 ? 'overflow-y-hidden' : ''} />
       <MovieList length={movies.length} loadNext={() => isAuthenticated ? dispatch(loadMovies()) : dispatch(loadDefaultMovies())} loading={moviesLoading}>
-        {movies.map((movie, i) => <MovieItem key={movie.id} movie={movie} page="movies" index={i} />)}
+        {movies.map((movie, i) => <MovieItem key={movie.id} movie={movie} page="movies" index={i} showButtons={isAuthenticated} />)}
       </MovieList>
     </>
   )

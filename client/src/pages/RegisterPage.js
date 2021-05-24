@@ -50,7 +50,7 @@ export default function RegisterPage() {
               Confirm Password<input className="mb-3" id="confirmPassword" type="password" name="confirm-password" placeholder="Confirm password" onChange={(e) => setConfirmPassword(e.target.value)}></input>
             </label>
             <span className="text-red font-medium">{registerError}</span>
-            <input className="bg-primary text-black font-semibold mt-6 mt-6" type="submit" value="Register" onClick={(e) => handleSubmit(e)} />
+            <input className="bg-primary text-black font-semibold mt-6 cursor-pointer" type="submit" value="Register" onClick={(e) => handleSubmit(e)} />
           </form>
           <div className="mt-6 sm:mt-12 text-center">
             <span className="text-opacity-1">Already have an account? <Link className="font-semibold ml-1 tex" to='/login'>Log in</Link></span>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useSpring, animated } from '@react-spring/web';
 import slugify from 'slugify';
@@ -7,13 +7,12 @@ import { isMobile, isTablet } from "react-device-detect";
 import { userActions, springConfig, tmdbImageUrl } from '../config';
 import MovieItemButtons from './MovieItemButtons';
 import StarRating from './StarRating';
-import { useWindowSize } from '../hooks/window-hooks';
-import { breakpoints } from '../styles/mixins';
 
 export default function MovieItem({ movie, page, showButtons }) {
   const [action, setAction] = useState(false);
-  const [show, setShow] = useState(null);
+  const [show, setShow] = useState();
   const [imgLoaded, setImgLoaded] = useState(false);
+  const [buttonsActive] = useState(showButtons);
 
   const divRef = useRef();
 
@@ -64,7 +63,7 @@ export default function MovieItem({ movie, page, showButtons }) {
             <div className="absolute top-0 blur w-full h-full z-30"></div>
             <animated.img style={backdropImgAnimateStyles} className="blur w-full h-full object-cover brightness-50" src={movie.backdrop_path ? tmdbImageUrl.backdrop + movie.backdrop_path : tmdbImageUrl.backdrop + movie.poster_path} alt={movie.title} onLoad={() => setImgLoaded(true)} />
           </div>
-          <MovieItemButtons show={show} page={page} id={movie.id} title={movie.title} disable={action ? true : false} />
+          {buttonsActive && (<MovieItemButtons show={show} page={page} id={movie.id} title={movie.title} disable={action ? true : false} />)}
           <animated.div style={infoAnimateStyles} className="absolute bottom-6 left-6 right-6">
             <div className="font-bold text-xl">{movie.title}</div>
             <div className="flex justify-between items-center mt-1">
@@ -82,8 +81,8 @@ export default function MovieItem({ movie, page, showButtons }) {
           {page === 'seen' && (<div className="flex sm:hidden items-center ml-auto py-0.5"> <StarRating className="text-sm" rating={movie.rating} readOnly={true} /> { movie.like && (<span className="material-icons ml-2 text-sm text-opacity-primary">favorite</span>)} </div>)}
         </div>
       </div>
-      {(isMobile || isTablet) && ( <div style={infoAnimateStyles} className="hidden sm:block mt-2 mb-4"> <div className="font-bold text-md">{movie.title}</div> <div className="flex items-center mt-1"> <div className="text-sm font-medium text-opacity-2 mr-3 py-0.5">{movie.year}</div> <div className="font-semibold text-primary border-primary-opacity text-xs py-0.5 px-1" >{movie.vote_average}</div> {page === 'seen' && (<div className="flex sm:hidden items-center ml-auto py-0.5"> <StarRating className="text-sm" rating={movie.rating} readOnly={true} /> { movie.like && (<span className="material-icons ml-2 text-sm text-opacity-primary">favorite</span>)} </div>)} </div> </div> )}
-      { page === 'seen' && ( <div className={`hidden sm:flex justify-between items-center mt-2 ${imgLoaded ? 'flex' : 'hidden'}`}> <StarRating rating={movie.rating} readOnly={true} /> { movie.like && (<span className="material-icons text-lg ml-3 text-opacity-primary">favorite</span>)} </div> ) }
+      {(isMobile || isTablet) && (<div style={infoAnimateStyles} className="hidden sm:block mt-2 mb-4"> <div className="font-bold text-md">{movie.title}</div> <div className="flex items-center mt-1"> <div className="text-sm font-medium text-opacity-2 mr-3 py-0.5">{movie.year}</div> <div className="font-semibold text-primary border-primary-opacity text-xs py-0.5 px-1" >{movie.vote_average}</div> {page === 'seen' && (<div className="flex sm:hidden items-center ml-auto py-0.5"> <StarRating className="text-sm" rating={movie.rating} readOnly={true} /> { movie.like && (<span className="material-icons ml-2 text-sm text-opacity-primary">favorite</span>)} </div>)} </div> </div>)}
+      { (page === 'seen' && imgLoaded) && (<div className={`flex hidden sm:flex justify-between items-center mt-2`}> <StarRating rating={movie.rating} readOnly={true} /> { movie.like && (<span className="material-icons text-lg ml-3 text-opacity-primary">favorite</span>)} </div>)}
     </Link >
   )
 }
