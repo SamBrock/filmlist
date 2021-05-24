@@ -10,6 +10,7 @@ import { start, complete } from '../store/loadingBar';
 import { getMoviesError } from '../store/error';
 import MovieList from '../components/MovieList';
 import MovieItem from '../components/MovieItem';
+import Head from '../components/Head';
 
 export default function Movies() {
   const { action } = useHistory();
@@ -39,8 +40,11 @@ export default function Movies() {
   if (moviesError) { return <motion.div exit={{ opacity: 0 }} transition={transitions.default}><Redirect to={`/favorite-films`} /></motion.div> }
 
   return (
-    <MovieList length={movies.length} loadNext={() => isAuthenticated ? dispatch(loadMovies()) : dispatch(loadDefaultMovies())} loading={moviesLoading}>
-      {movies.map((movie, i) => <MovieItem key={movie.id} movie={movie} page="movies" index={i} />)}
-    </MovieList>
+    <>
+      <Head bodyAttributes={movies.length === 0 ? 'overflow-y-hidden' : ''} />
+      <MovieList length={movies.length} loadNext={() => isAuthenticated ? dispatch(loadMovies()) : dispatch(loadDefaultMovies())} loading={moviesLoading}>
+        {movies.map((movie, i) => <MovieItem key={movie.id} movie={movie} page="movies" index={i} />)}
+      </MovieList>
+    </>
   )
 }

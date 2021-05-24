@@ -14,7 +14,7 @@ export default function Layout({ children }) {
     <StyledLayoutContainer>
       <Head />
       <Header />
-      <SideNav />
+      {/* <SideNav /> */}
       {children}
     </StyledLayoutContainer>
   )

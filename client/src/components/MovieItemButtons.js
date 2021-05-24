@@ -4,8 +4,7 @@ import { useSpring, animated } from 'react-spring'
 import WatchlistBtn from './buttons/WatchlistBtnMain';
 import NotInterestedBtn from './buttons/NotInterestedBtn';
 import SeenBtn from './buttons/SeenBtn';
-import WatchlistRemoveBtn from './buttons/WatchlistRemoveBtn';
-import SeenRemoveBtn from './buttons/SeenRemoveBtn';
+import RemoveBtn from './buttons/RemoveBtn';
 
 export default function MovieItemButtons({ page, id, title, show, disable }) {
   const [notInterested, setNotInterested] = useState(false);
@@ -22,7 +21,7 @@ export default function MovieItemButtons({ page, id, title, show, disable }) {
     addButtonAnimate.start({ opacity: show ? 1 : 0, filter: show ? `blur(0px)` : `blur(5px)` })
   }, [show, topButtonAnimate, addButtonAnimate]);
 
-  if(disable) return <div></div>;
+  if (disable) return <div></div>;
 
   if (page === 'movies') return (
     <div className={`${show ? '' : 'hidden'}`}>
@@ -41,7 +40,7 @@ export default function MovieItemButtons({ page, id, title, show, disable }) {
   if (page === 'watchlist') return (
     <div className={`${show ? '' : 'hidden'}`}>
       <div className="z-50 absolute top-6 right-6">
-        <WatchlistRemoveBtn id={id} title={title} />
+        <RemoveBtn id={id} title={title} removeFrom="watchlist" />
       </div>
     </div>
   )
@@ -49,7 +48,7 @@ export default function MovieItemButtons({ page, id, title, show, disable }) {
   if (page === 'seen') return (
     <div className={`${show ? '' : 'hidden'}`}>
       <div className="z-50 absolute top-6 right-6">
-        <SeenRemoveBtn id={id} title={title} />
+        <RemoveBtn id={id} title={title} removeFrom="seen" />
       </div>
     </div>
   )

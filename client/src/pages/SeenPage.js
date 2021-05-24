@@ -40,8 +40,8 @@ export default function SeenPage({ match }) {
 
   return (
     <>
-      <Head title={`${username}'s Seen`} />
-      <MovieList length={movies.length} loadNext={handleLoadMore} cols={6} loading={seenLoading} >
+      <Head title={`${username}'s Seen`} bodyAttributes={movies.length === 0 ? 'overflow-y-hidden' : ''} />
+      <MovieList showUserRating={true} length={movies.length} loadNext={handleLoadMore} cols={6} loading={seenLoading} >
         {movies.map((movie, i) => <MovieItem key={movie.id} movie={movie} page="seen" showButtons={isUserAuth} index={i} />)}
       </MovieList>
     </>

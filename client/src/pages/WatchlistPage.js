@@ -11,18 +11,18 @@ import Head from '../components/Head';
 
 export default function WatchlistPage({ match }) {
   const { action } = useHistory();
-  
+
   const loadedMovies = useSelector(getWatchlist);
   const [movies, setMovies] = useState(action === 'POP' ? loadedMovies : []);
-  
+
   const dispatch = useDispatch();
-  
+
   const username = match.params.username;
   const isUserAuth = useIsUserAuth(username);
-  
+
   useEffect(() => {
     if (action === 'POP' && movies.length !== 0) return;
-    
+
     dispatch(start());
     dispatch(loadWatchlist(username, true));
   }, [username, action]);
@@ -34,7 +34,7 @@ export default function WatchlistPage({ match }) {
 
   return (
     <>
-    <Head title={`${username}'s Watchlist`} />
+      <Head title={`${username}'s Watchlist`} bodyAttributes={movies.length === 0 ? 'overflow-y-hidden' : ''} />
       <MovieList length={movies.length} loadNext={() => dispatch(loadWatchlist(username))} cols={6} >
         {movies.map((movie, i) => <MovieItem key={movie.id} movie={movie} page="watchlist" showButtons={isUserAuth} />)}
       </MovieList>

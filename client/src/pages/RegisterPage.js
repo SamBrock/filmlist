@@ -33,9 +33,9 @@ export default function RegisterPage() {
 
   return (
     <BackdropTemplate backdropPath={backdrops.register[backdropIndex].backdropPath}>
-      <div className="flex flex-col h-screen p-12 px-14 justify-center">
+      <div className="flex flex-col h-screen p-6 sm:p-12 px-3 sm:px-6 md:px-12  mt-12 sm:mt-0 justify-start sm:justify-center">
         <motion.div className="my-auto" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-          <h1 className="text-heading font-extrabold mb-8">Register</h1>
+          <h1 className="text-heading font-extrabold mb-3 sm:mb-8">Register</h1>
           <form className="flex flex-col mt-3" onSubmit={(e) => handleSubmit(e)}>
             <label className="flex flex-col leading-10 font-semibold" htmlFor="email">
               Email<input className="mb-3" id="email" type="text" name="email" placeholder="Email" onChange={(e) => setEmail(e.target.value)}></input>
@@ -50,9 +50,9 @@ export default function RegisterPage() {
               Confirm Password<input className="mb-3" id="confirmPassword" type="password" name="confirm-password" placeholder="Confirm password" onChange={(e) => setConfirmPassword(e.target.value)}></input>
             </label>
             <span className="text-red font-medium">{registerError}</span>
-            <input className="btn mt-6" type="submit" value="Register" onClick={(e) => handleSubmit(e)} />
+            <input className="bg-primary text-black font-semibold mt-6 mt-6" type="submit" value="Register" onClick={(e) => handleSubmit(e)} />
           </form>
-          <div className="mt-12 text-center">
+          <div className="mt-6 sm:mt-12 text-center">
             <span className="text-opacity-1">Already have an account? <Link className="font-semibold ml-1 tex" to='/login'>Log in</Link></span>
           </div>
         </motion.div>

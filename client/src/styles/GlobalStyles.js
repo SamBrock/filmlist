@@ -1,12 +1,15 @@
 import { createGlobalStyle } from 'styled-components';
+import Color from 'color';
 
 import './tailwind.css';
+
+const primary = '#F2A20C';
 
 const GlobalStyle = createGlobalStyle`
   :root {
     --black: #0a0a0a;
     --white: #f4f0f0;
-    --primary: #fe9223;
+    --primary: ${primary};
     --red: #ed4337;
     --grey: #2a2a2a;
     --opacity-1: rgba(242, 242, 242, .4);
@@ -14,7 +17,7 @@ const GlobalStyle = createGlobalStyle`
     --opacity-3: rgba(242, 242, 242, .04);
     --opacity-4: rgba(242, 242, 242, .1);
     --opacity-5: rgba(0, 0, 0, .7);
-    --opacity-primary: rgba(254, 146, 35, .4);
+    --opacity-primary: ${Color(primary).alpha(0.5)};
     --font-sans: 'Barlow', sans-serif;
     --fz-xxs: 10px;
     --fz-xs: 12px;
@@ -22,8 +25,8 @@ const GlobalStyle = createGlobalStyle`
     --fz-md: 16px;
     --fz-lg: 18px;
     --fz-xl: 20px;
-    --fz-xxl: 22px;
-    --fz-heading: 52px;
+    --fz-xxl: 28px;
+    --fz-heading: clamp(2.7rem, 4vw, 3.3rem); 
     --easing: cubic-bezier(0.43, 0.13, 0.23, 0.96);
     --transition: all 0.25s cubic-bezier(0.43, 0.13, 0.23, 0.96);
   }
@@ -88,7 +91,9 @@ const GlobalStyle = createGlobalStyle`
   }
 
   h1 {
-    line-height: 3.4rem;
+    /* line-height: 3.4rem; */
+    padding: 0;
+    margin: 0;
   }
 
   input {
@@ -111,18 +116,16 @@ const GlobalStyle = createGlobalStyle`
     background: none;
     border: none;
     cursor: pointer;
+    color: var(--white);
+    font-family: var(--font-sans);
     
     &:focus {
       outline: none;
     }
   }
 
-  .btn {
-    background: var(--primary);
-    cursor: pointer;
-    font-weight: 600;
-    color: var(--black);
-    box-shadow: 0 0 4px var(--primary);
+  .border-primary {
+    border: 1px var(--primary) solid;
   }
 
   .scale-default {
@@ -195,6 +198,22 @@ const GlobalStyle = createGlobalStyle`
   .transition {
     transition: var(--transition);
   }
+
+  .border-default-bottom {
+    border-bottom: 1px var(--grey) solid;
+  }
+
+  .line-height-full {
+    line-height: 100%;
+  }
+
+  .border-blue {
+    border: 1px blue solid;
+  }
+
+  .fancy-font {
+    font-family: 'Domine', serif;  
+    }
 `;
 
 export default GlobalStyle;

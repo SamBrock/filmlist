@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import ProgressiveImage from 'react-progressive-image';
 
-import { transitions } from '../../config';
+import { tmdbImageUrl, transitions } from '../../config';
 import { useWindowSize, usePageYOffset } from '../../hooks/window-hooks';
 
-export default function BackdropImg({ backdropPath, backdropRef }) {
+export default function BackdropImg({ backdropPath, backdropRef, className }) {
   const pageYOffset = usePageYOffset();
   const [backdropWidth, setBackdropWidth] = useState(0);
   const [backdropHeight, setBackdropHeight] = useState(0);
@@ -19,22 +19,11 @@ export default function BackdropImg({ backdropPath, backdropRef }) {
   useEffect(() => {
     if (!backdropRef.current) return;
     setBackdropWidth(backdropRef.current.offsetWidth)
-  }, [width, height, setBackdropWidth, backdropRef])
-
-  // For tablet and smaller resolutions
-  // if (width <= 768) {
-  //   return (
-  //     <div className={`backdrop-container l-grid-col`} style={{ height: backdropHeight }}>
-  //       <ProgressiveImage src={"https://image.tmdb.org/t/p/original" + backdropPath} placeholder={"https://image.tmdb.org/t/p/w780" + backdropPath}>
-  //         {src => <motion.img initial={{ scale: 1.1, opacity: .3 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 1.1, opacity: 0 }} src={src} alt={`movie backdrop`} style={{ marginTop: pageYOffset }} />}
-  //       </ProgressiveImage>
-  //     </div >
-  //   )
-  // }
+  }, [width, height, setBackdropWidth, backdropRef]);
 
   return (
-  <div className="fixed h-screen overflow-hidden top-0 left-0" style={{ width: `${backdropWidth}px` }}>
-      <ProgressiveImage src={"https://image.tmdb.org/t/p/original" + backdropPath} placeholder={"https://image.tmdb.org/t/p/w780" + backdropPath}>
+    <div className={`${className} object-cover md:fixed h-full md:h-screen overflow-hidden top-0 left-0`} style={{ width: `${backdropWidth}px` }}>
+      <ProgressiveImage src={tmdbImageUrl.backdropLarge + backdropPath} placeholder={tmdbImageUrl.backdrop + backdropPath}>
         {src => <motion.img className="object-cover overflow-hidden w-full h-full filter" initial={{ scale: 1.1, opacity: .3 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 1.1, opacity: 0 }} transition={transitions.default} src={src} alt={`movie backdrop`} />}
       </ProgressiveImage>
     </div >

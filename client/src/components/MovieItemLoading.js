@@ -14,7 +14,7 @@ const StyledAnimatedLoadingItemDiv = styled.div`
   animation-timing-function: var(--easing);
 `;
 
-export default function LoadingMovieItem() {
+export default function LoadingMovieItem({ showUserRating }) {
   const [height, setHeight] = useState();
   const divRef = useRef();
 
@@ -22,5 +22,10 @@ export default function LoadingMovieItem() {
     if (divRef.current) setHeight((divRef.current.offsetWidth / 100) * 150);
   }, [divRef]);
 
-  return <StyledAnimatedLoadingItemDiv className="w-full h-full bg-grey" style={{ height }} ref={divRef} />;
+  return (
+    <div>
+      <StyledAnimatedLoadingItemDiv className="w-full h-full bg-grey" style={{ height }} ref={divRef} />
+      {showUserRating && (<StyledAnimatedLoadingItemDiv className="bg-grey h-5 w-1/2 mt-2" />)}
+    </div>
+  );
 }

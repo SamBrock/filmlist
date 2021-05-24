@@ -45,7 +45,7 @@ const { initialRequested, watchlistReceived, watchlistRequested, watchlistReques
 export const { userWatchlistActioned } = slice.actions;
 
 export const loadWatchlist = (username, initial = false) => (dispatch, getState) => {
-  const limit = 20;
+  const limit = 40;
 
   dispatch(apiRequest({
     url: initial ? `/api/${username}/watchlist?page=1&limit=${limit}` : `/api/${username}/watchlist?page=${getState().entities.watchlist.pageNum}&limit=${limit}`,

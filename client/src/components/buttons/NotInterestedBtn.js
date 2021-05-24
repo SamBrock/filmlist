@@ -17,10 +17,10 @@ export default function NotInterestedBtn({ id, title, notInterested, setNotInter
 
   return (
     !notInterested ?
-      <button className="font-bold text-opacity-2" aria-label="add to watchlist" disableFocusRipple={true} disableRipple={true} onClick={(e) => handleInterested(e, true)}>
+      <button className="font-bold text-opacity-2" aria-label="add to watchlist" onClick={(e) => handleInterested(e, true)}>
         <span className="material-icons">not_interested</span>
       </button> :
-      <button className="font-bold text-opacity-2" aria-label="remove from watchlist" disableFocusRipple={true} disableRipple={true} onClick={(e) => handleInterested(e, false)}>
+      <button className="font-bold text-opacity-2" aria-label="remove from watchlist" onClick={(e) => handleInterested(e, false)}>
         <span className="material-icons">undo</span>
       </button>
   )
