@@ -7,7 +7,7 @@ import { start, complete } from '../store/loadingBar';
 import useIsUserAuth from '../hooks/useIsUserAuth';
 import MovieList from '../components/MovieList';
 import MovieItem from '../components/MovieItem';
-import Head from '../components/Head';;
+import Head from '../components/Head';
 
 export default function SeenPage({ match }) {
   const { action } = useHistory();

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useSpring, animated } from '@react-spring/web';
 import slugify from 'slugify';
-import { isMobile, isTablet } from "react-device-detect";
+import { isMobile, isTablet } from 'react-device-detect';
 
 import { userActions, springConfig, tmdbImageUrl } from '../config';
 import MovieItemButtons from './MovieItemButtons';
@@ -16,8 +16,8 @@ export default function MovieItem({ movie, page, showButtons }) {
 
   const divRef = useRef();
 
-  const [posterAnimateStyles, posterAnimate] = useSpring(() => ({ config: springConfig }));
-  const [backdropAnimateStyles, backdropAnimate] = useSpring(() => ({ config: springConfig }));
+  const [posterAnimateStyles, posterAnimate] = useSpring(() => ({ opacity: 1, config: springConfig }));
+  const [backdropAnimateStyles, backdropAnimate] = useSpring(() => ({ opacity: 0, config: springConfig }));
   const [posterImgAnimateStyles, posterImgAnimate] = useSpring(() => ({ config: springConfig }));
   const [backdropImgAnimateStyles, backdropImgAnimate] = useSpring(() => ({ config: springConfig }));
   const [infoAnimateStyles, infoAnimate] = useSpring(() => ({ config: springConfig }));
@@ -60,7 +60,6 @@ export default function MovieItem({ movie, page, showButtons }) {
         </animated.div>
         <animated.div style={backdropAnimateStyles} className="hidden sm:block max-w-full my-0 mx-auto h-full absolute top-0 left-0">
           <div className="w-full h-full overflow-hidden relative">
-            <div className="absolute top-0 blur w-full h-full z-30"></div>
             <animated.img style={backdropImgAnimateStyles} className="blur w-full h-full object-cover brightness-50" src={movie.backdrop_path ? tmdbImageUrl.backdrop + movie.backdrop_path : tmdbImageUrl.backdrop + movie.poster_path} alt={movie.title} onLoad={() => setImgLoaded(true)} />
           </div>
           {buttonsActive && (<MovieItemButtons show={show} page={page} id={movie.id} title={movie.title} disable={action ? true : false} />)}

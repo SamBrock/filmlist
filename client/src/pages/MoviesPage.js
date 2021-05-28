@@ -26,7 +26,7 @@ export default function Movies() {
 
   useEffect(() => {
     if (isAuthenticated === null) return;
-    if (action === 'POP') return;
+    if (action === 'POP' && movies.length !== 0) return;
     if (movies.length !== 0) return;
 
     dispatch(start());

@@ -36,7 +36,7 @@ const mixins = {
       grid-template-rows: 40vh 1fr;
     }
   `,
-  
+
   buttonSize: css`
     font-size: 2em;
     @media (min-width: ${breakpoints.md}) { font-size: 2.4em; }
