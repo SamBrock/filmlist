@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 import { apiRequest } from './api';
 import { tokenConfig } from './auth';
+import { errorsRecieved } from './error';
 import { userMoviesActioned, userMoviesActionedCleared } from './movies';
 import { notificationsRecieved } from './notification';
 import { userSeenActioned } from './seen';
@@ -37,7 +38,8 @@ export const loadMovie = (filmId) => (dispatch, getState) => {
     url: `/api/movies/${filmId}`,
     onStart: movieRequested.type,
     onSuccess: movieReceived.type,
-    onError: movieRequestFailed.type,
+    onFail: movieRequestFailed.type,
+    onError: errorsRecieved.type,
     headers: tokenConfig(getState).headers
   }))
 }

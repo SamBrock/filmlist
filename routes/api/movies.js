@@ -51,7 +51,7 @@ router.get('/:id', user, async (req, res) => {
 
     res.send(movie);
   } catch (error) {
-    res.status(400).send(error);
+    res.status(404).send({ id: 'MOVIE_ERROR', status: error.response.status, msg: error.response.statusText });
   }
 });
 

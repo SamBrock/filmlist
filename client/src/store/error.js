@@ -16,7 +16,7 @@ const slice = createSlice({
     errorsDeleted: (error, action) => {
       error.id = null;
       error.status = null;
-      error.msg = {};
+      error.msg = '';
     }
   }
 })
@@ -33,3 +33,4 @@ export const clearErrors = () => dispatch => {
 export const getRegisterError = state => state.entities.error.id === 'REGISTER_ERROR' ? state.entities.error.msg : null;
 export const getLoginError = state => state.entities.error.id === 'LOGIN_ERROR' ? state.entities.error.msg : null;
 export const getMoviesError = state => state.entities.error.id === 'MOVIES_ERROR' ? true : null;
+export const getMovieError = state => state.entities.error.id === 'MOVIE_ERROR' ? state.entities.error : null;

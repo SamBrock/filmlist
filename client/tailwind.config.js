@@ -23,6 +23,7 @@ module.exports = {
       xl: 'var(--fz-xl)',
       xxl: 'var(--fz-xxl)',
       heading: 'var(--fz-heading)',
+      main: 'var(--fz-main)',
     },
     screens: {
       sm: '640px',

@@ -27,6 +27,7 @@ const GlobalStyle = createGlobalStyle`
     --fz-xl: 20px;
     --fz-xxl: 28px;
     --fz-heading: clamp(2.7rem, 4vw, 3.3rem); 
+    --fz-main: clamp(2.7rem, 10vw, 9rem); 
     --easing: cubic-bezier(0.43, 0.13, 0.23, 0.96);
     --transition: all 0.25s cubic-bezier(0.43, 0.13, 0.23, 0.96);
   }

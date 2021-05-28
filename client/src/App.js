@@ -14,13 +14,12 @@ import configureStore from './store/configureStore';
 
 import GlobalStyle from './styles/GlobalStyles';
 import theme from './styles/theme';
+import NotFoundPage from './pages/NotFoundPage';
 
 const store = configureStore();
 
 export default function App() {
-  useEffect(() => {
-    store.dispatch(loadUser());
-  })
+  useEffect(() => store.dispatch(loadUser()));
 
   return (
     <Router>
@@ -40,6 +39,7 @@ export default function App() {
                   <Route path="/:username/watchlist" component={WatchlistPage} />
                   <Route path="/:username/seen" component={SeenPage} />
                   <Route exact path="/" component={MoviesPage} />
+                  <Route component={NotFoundPage} />
                 </Switch>
               </AnimatePresence>
             )} />

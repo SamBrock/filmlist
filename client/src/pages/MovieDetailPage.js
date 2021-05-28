@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 
 import { transitions } from '../config';
 import { loadMovie, getMovieDetails, loading } from '../store/movie';
@@ -11,15 +11,19 @@ import { getIsAuthenticated } from '../store/auth';
 import MovieButtons from '../components/MovieButtons';
 import Head from '../components/Head';
 import CreditItem from '../components/CreditItem';
+import { clearErrors, getMovieError } from '../store/error';
+import Error from '../components/Error';
 
 export default function MovieDetailPage({ match }) {
   const loadedMovie = useSelector(getMovieDetails);
   const [movie, setMovie] = useState(loadedMovie);
+  const [errorRecieved, setErrorRecieved] = useState(false);
 
   const dispatch = useDispatch();
 
   const isLoading = useSelector(loading);
   const isAuthenticated = useSelector(getIsAuthenticated);
+  const movieError = useSelector(getMovieError);
 
   const movieId = parseInt(match.params.id);
 
@@ -33,8 +37,19 @@ export default function MovieDetailPage({ match }) {
     setMovie(loadedMovie);
   }, [loadedMovie]);
 
-  if (isLoading) dispatch(start());
+  useEffect(() => {
+    if (!movieError) return;
+    setErrorRecieved(true);
+    dispatch(clearErrors());
+  }, [movieError]);
 
+  if (isLoading) dispatch(start());  ;
+
+  if (errorRecieved || !movieId) {
+    dispatch(complete());
+    return <motion.div exit={{ opacity: 0 }}> <Error header='404' message="Movie not found" /> </motion.div>
+  };
+  
   if (!movie || movie.id !== movieId) return <div></div>;
   dispatch(complete());
 
