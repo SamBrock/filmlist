@@ -1,9 +1,7 @@
-import React from 'react'
+import React from 'react';
+
+import Error from '../components/Error';
 
 export default function NotFoundPage() {
-  return (
-    <div>
-      <h1>404</h1>
-    </div>
-  )
+  return <Error header="404" message="Page not found"/>
 }

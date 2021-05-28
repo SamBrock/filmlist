@@ -4,7 +4,7 @@ import { Provider } from 'react-redux'
 import { AnimatePresence } from 'framer-motion';
 import { ThemeProvider } from 'styled-components';
 
-import { MoviesPage, MovieDetailPage, RegisterPage, WatchlistPage, SeenPage, SearchPage, FavoriteMovies, LoginPage } from './pages';
+import { MoviesPage, MovieDetailPage, RegisterPage, WatchlistPage, SeenPage, SearchPage, FavoriteMovies, LoginPage, NotFoundPage } from './pages';
 import LoadingBar from './components/layout/LoadingBar';
 import NotificationList from './components/NotificationList';
 import Layout from './components/Layout';
@@ -14,7 +14,6 @@ import configureStore from './store/configureStore';
 
 import GlobalStyle from './styles/GlobalStyles';
 import theme from './styles/theme';
-import NotFoundPage from './pages/NotFoundPage';
 
 const store = configureStore();
 

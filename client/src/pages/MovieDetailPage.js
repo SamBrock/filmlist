@@ -43,13 +43,13 @@ export default function MovieDetailPage({ match }) {
     dispatch(clearErrors());
   }, [movieError]);
 
-  if (isLoading) dispatch(start());  ;
+  if (isLoading) dispatch(start());;
 
   if (errorRecieved || !movieId) {
     dispatch(complete());
-    return <motion.div exit={{ opacity: 0 }}> <Error header='404' message="Movie not found" /> </motion.div>
+    return <Error header='404' message="Movie not found" />
   };
-  
+
   if (!movie || movie.id !== movieId) return <div></div>;
   dispatch(complete());
 
