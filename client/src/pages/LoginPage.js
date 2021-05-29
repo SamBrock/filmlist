@@ -34,10 +34,10 @@ export default function LoginPage() {
             <h1 className="text-heading font-extrabold mb-3 sm:mb-8">Log in</h1>
             <form className="flex flex-col mt-3" onSubmit={(e) => handleSubmit(e)}>
               <label className="flex flex-col leading-10 font-semibold" htmlFor="email">
-                Email <input className="mb-3" type="text" name="email" id="email" placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
+                Email <input className="fc mb-3" type="text" name="email" id="email" placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
               </label>
               <label className="flex flex-col leading-10 font-semibold" htmlFor="password">
-                Password <input className="mb-3" id="password" type="password" name="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
+                Password <input className="fc mb-3" id="password" type="password" name="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
               </label>
               <span className="text-red font-medium">{loginError}</span>
               <input className="bg-primary text-black font-semibold mt-6 cursor-pointer" type="submit" value="Log in" onClick={(e) => handleSubmit(e)} />

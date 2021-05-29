@@ -31,7 +31,7 @@ router.get('/default', async (req, res) => {
 // @access  Public
 router.get('/:id', user, async (req, res) => {
   try {
-    const url = `/movie/${req.params.id}?api_key=${api_key}&append_to_response=credits`;
+    const url = `/movie/${req.params.id}?api_key=${api_key}&append_to_response=credits,releases`;
     const { data } = await axios.get(baseURL + url);
 
     const movie = getMovieDetails(data);

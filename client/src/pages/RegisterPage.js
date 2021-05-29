@@ -38,16 +38,16 @@ export default function RegisterPage() {
           <h1 className="text-heading font-extrabold mb-3 sm:mb-8">Register</h1>
           <form className="flex flex-col mt-3" onSubmit={(e) => handleSubmit(e)}>
             <label className="flex flex-col leading-10 font-semibold" htmlFor="email">
-              Email<input className="mb-3" id="email" type="text" name="email" placeholder="Email" onChange={(e) => setEmail(e.target.value)}></input>
+              Email<input className="fc mb-3" id="email" type="text" name="email" placeholder="Email" onChange={(e) => setEmail(e.target.value)}></input>
             </label>
             <label className="flex flex-col leading-10 font-semibold" htmlFor="username">
-              Username<input className="mb-3" id="username" type="text" name="username" placeholder="Username" onChange={(e) => setUsername(e.target.value)}></input>
+              Username<input className="fc mb-3" id="username" type="text" name="username" placeholder="Username" onChange={(e) => setUsername(e.target.value)}></input>
             </label>
             <label className="flex flex-col leading-10 font-semibold" htmlFor="password">
-              Password<input className="mb-3" id="password" type="password" name="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)}></input>
+              Password<input className="fc mb-3" id="password" type="password" name="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)}></input>
             </label>
             <label className="flex flex-col leading-10 font-semibold" htmlFor="confirmPassword">
-              Confirm Password<input className="mb-3" id="confirmPassword" type="password" name="confirm-password" placeholder="Confirm password" onChange={(e) => setConfirmPassword(e.target.value)}></input>
+              Confirm Password<input className="fc mb-3" id="confirmPassword" type="password" name="confirm-password" placeholder="Confirm password" onChange={(e) => setConfirmPassword(e.target.value)}></input>
             </label>
             <span className="text-red font-medium">{registerError}</span>
             <input className="bg-primary text-black font-semibold mt-6 cursor-pointer" type="submit" value="Register" onClick={(e) => handleSubmit(e)} />

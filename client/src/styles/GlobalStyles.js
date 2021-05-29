@@ -98,19 +98,36 @@ const GlobalStyle = createGlobalStyle`
   }
 
   input {
-    background: var(--opacity-3);
-    border: 1px var(--opacity-3) solid;
-    padding: 14px 12px;
+    background: none;
     font-family: var(--font-sans);
-    transition: var(--transition);
+    border: none;
     outline: none;
-    color: var(--white);
-    font-size: var(--fz-md);
+    padding: 14px 12px;
 
     &:focus {
       outline: none;
-      border: 1px var(--primary) solid;
     }
+
+    &::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+      color: var(--opacity-1);
+      opacity: 1; /* Firefox */
+    }
+
+    &:-ms-input-placeholder { /* Internet Explorer 10-11 */
+      color: var(--opacity-1);
+    }
+
+    &::-ms-input-placeholder { /* Microsoft Edge */
+      color: var(--opacity-1);
+    }
+  }
+
+  .fc {
+    background: var(--opacity-3);
+    padding: 14px 12px;
+    transition: var(--transition);
+    color: var(--white);
+    font-size: var(--fz-md);
   }
 
   button {
@@ -127,6 +144,10 @@ const GlobalStyle = createGlobalStyle`
 
   .border-primary {
     border: 1px var(--primary) solid;
+  }
+
+  .border-grey {
+    border: 1px var(--grey) solid;
   }
 
   .scale-default {

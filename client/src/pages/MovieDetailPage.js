@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { motion } from 'framer-motion';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import { transitions } from '../config';
 import { loadMovie, getMovieDetails, loading } from '../store/movie';
@@ -61,13 +61,14 @@ export default function MovieDetailPage({ match }) {
           <motion.div variants={transitions.movieDetailsChildren}>
             <h1 className="text-heading font-extrabold mb-4 leading-none">{movie.title}</h1>
           </motion.div>
-          <motion.div variants={transitions.movieDetailsChildren} className="flex mb-6">
+          <motion.div variants={transitions.movieDetailsChildren} className="flex mb-6 items-center">
             <span className="text-md font-medium text-opacity-2 mr-3">{movie.year}</span>
             <div className="text-md font-medium text-opacity-2 mr-3">
               {movie.runtime.hours !== 0 && (<span className="mr-1">{movie.runtime.hours}h</span>)}
               <span>{movie.runtime.minutes}m</span>
             </div>
-            <span className="text-md font-medium text-opacity-2 mr-3">R</span>
+            <span className="text-opacity-2 border-opacity text-xs py-0.5 px-1.5 font-medium">{movie.certification ? movie.certification : 'Not Rated'}</span>
+            <div className="font-semibold text-primary border-primary-opacity text-xs py-0.5 px-1.5 ml-6">{movie.vote_average}</div>
           </motion.div>
           <motion.div variants={transitions.movieDetailsChildren} className="mb-6">
             {

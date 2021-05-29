@@ -16,7 +16,7 @@ function getMovieSearchArrDetails(moviesArr) {
 };
 
 function getMovieDetails(movie) {
-  const { id, title, vote_average, release_date, backdrop_path, credits, overview, genres, runtime } = movie;
+  const { id, title, vote_average, release_date, backdrop_path, credits, overview, genres, runtime, releases, vote_count } = movie;
 
   // Get relevant movie details
   movie = {
@@ -25,6 +25,7 @@ function getMovieDetails(movie) {
     backdrop_path,
     overview,
     vote_average: vote_average ? vote_average.toFixed(1) : false,
+    vote_count,
     release_date,
     year: new Date(movie.release_date).getFullYear(),
     runtime: Duration.fromObject({ minutes: runtime }).shiftTo('hours', 'minutes').toObject(),
@@ -32,12 +33,14 @@ function getMovieDetails(movie) {
     credits
   };
 
+  // Get certification
+  const certification = releases.countries.filter(r => r.iso_3166_1 === 'GB');
+  movie.certification = certification.length !== 0 ? certification[0].certification : 'Not Rated';
+
   // Limit cast to 10
-  if (movie.credits.cast) {
-    movie.credits.cast = movie.credits.cast
-      .filter(member => member.order <= 10)
-      .map(member => ({ id: member.id, name: member.name, character: member.character, profile_path: member.profile_path }));
-  }
+  movie.credits.cast = movie.credits.cast
+    .filter(member => member.order <= 10)
+    .map(member => ({ id: member.id, name: member.name, character: member.character, profile_path: member.profile_path }));
 
   // Get Writer & Director
   movie.credits.crew = movie.credits.crew
