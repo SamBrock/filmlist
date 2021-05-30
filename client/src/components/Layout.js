@@ -1,21 +1,26 @@
-import React from 'react';
-import styled from 'styled-components';
+import React, { useState } from 'react';
 
 import Head from './Head';
 import Header from './layout/Header';
-import SideNav from './layout/SideNav';
-
-const StyledLayoutContainer = styled.div`
-  
-`;
+import SearchModal from './SearchModal';
 
 export default function Layout({ children }) {
+  const [search, setSearch] = useState(false);
+
+  window.addEventListener('keydown', (e) => {
+    if (e.key === "k" && e.ctrlKey) {
+      e.preventDefault();
+      setSearch(true);
+    };
+    if (e.key === "escape") setSearch(false);
+  });
+
   return (
-    <StyledLayoutContainer>
+    <div>
       <Head />
-      <Header />
-      {/* <SideNav /> */}
+      <Header openSearchModal={() => setSearch(true)} />
+      <SearchModal isOpen={search} close={() => setSearch(false)} />
       {children}
-    </StyledLayoutContainer>
+    </div>
   )
 }

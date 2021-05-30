@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { motion, motionValue } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 import { search, getSearchResults } from '../store/search';
 
 export default function SearchPage() {
-  const [query, setQuery] = useState('');
-  const [searchTimeout, setSearchTimeout] = useState('');
+  const [query, setQuery] = useState();
+  const [searchTimeout, setSearchTimeout] = useState();
 
   const dispatch = useDispatch()
 
@@ -18,7 +18,7 @@ export default function SearchPage() {
     setSearchTimeout(setTimeout(() => {
       dispatch(search(query))
     }, 300));
-  }, [query, dispatch])
+  }, [query])
 
   return (
     <div className="search-container mt-96">

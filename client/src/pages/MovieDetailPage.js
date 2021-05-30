@@ -57,7 +57,7 @@ export default function MovieDetailPage({ match }) {
     <Fragment>
       <Head title={`${movie.title} (${movie.year})`} />
       <BackdropTemplate backdropPath={movie.backdrop_path}>
-        <motion.div className="px-3 py-6 md:px-12 md:py-20" variants={transitions.movieDetailsVariant} initial="hidden" animate="show" exit={{ opacity: 0 }}>
+        <motion.div className="px-3 py-6 md:px-12 md:py-24" variants={transitions.movieDetailsVariant} initial="hidden" animate="show" exit={{ opacity: 0 }}>
           <motion.div variants={transitions.movieDetailsChildren}>
             <h1 className="text-heading font-extrabold mb-4 leading-none">{movie.title}</h1>
           </motion.div>
@@ -67,7 +67,7 @@ export default function MovieDetailPage({ match }) {
               {movie.runtime.hours !== 0 && (<span className="mr-1">{movie.runtime.hours}h</span>)}
               <span>{movie.runtime.minutes}m</span>
             </div>
-            <span className="text-opacity-2 border-opacity text-xs py-0.5 px-1.5 font-medium">{movie.certification ? movie.certification : 'Not Rated'}</span>
+            <span className="text-opacity-2 border-grey text-xs py-0.5 px-1.5 font-medium">{movie.certification ? movie.certification : 'Not Rated'}</span>
             <div className="font-semibold text-primary border-primary-opacity text-xs py-0.5 px-1.5 ml-6">{movie.vote_average}</div>
           </motion.div>
           <motion.div variants={transitions.movieDetailsChildren} className="mb-6">

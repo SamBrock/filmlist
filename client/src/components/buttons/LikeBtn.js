@@ -19,10 +19,10 @@ export default function LikeBtn({ filmId, like, setLike }) {
   return (
     !like ?
       <button aria-label="like" onClick={() => handleClick(true)}>
-        <StyledSpan className="material-icons text-primary">favorite_border</StyledSpan>
+        <StyledSpan className="material-icons text-primary font-bold">favorite_border</StyledSpan>
       </button> :
       <button aria-label="unlike" onClick={() => handleClick(false)}>
-        <StyledSpan className="material-icons text-primary">favorite</StyledSpan>
+        <StyledSpan className="material-icons text-primary font-bold">favorite</StyledSpan>
       </button>
   )
 }

@@ -142,12 +142,20 @@ const GlobalStyle = createGlobalStyle`
     }
   }
 
+  hr {
+    border-color: var(--grey);
+  }
+
   .border-primary {
     border: 1px var(--primary) solid;
   }
 
   .border-grey {
-    border: 1px var(--grey) solid;
+    border: 1px var(--opacity-4) solid;
+  }
+
+  .border-bottom-default {
+    border-bottom: 1px var(--grey) solid;
   }
 
   .scale-default {

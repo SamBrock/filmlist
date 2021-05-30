@@ -1,7 +1,7 @@
 const express = require('express');
 const axios = require('axios');
 
-const MovieService = require('../../services/TMDbService');
+const { getMovieSearchArrDetails } = require('../../utils');
 
 const baseURL = process.env.BASE_URL;
 const api_key = process.env.API_KEY;
@@ -13,10 +13,10 @@ router.get('/', async (req, res) => {
     const query = req.query.q;
 
     const url = `/search/movie?api_key=${api_key}&query=${query}`;
-    const response = await axios.get(baseURL + url);
+    const { data } = await axios.get(baseURL + url);
 
-    const movies = MovieService.getMovieSearchArrDetails(response.data.results);
-    
+    const movies = getMovieSearchArrDetails(data.results);
+
 
     res.send(movies.slice(0, 6));
   } catch (error) {

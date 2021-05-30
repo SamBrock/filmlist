@@ -19,10 +19,10 @@ export default function WatchlistBtn({ filmId, title, watchlist, setWatchlist })
   return (
     !watchlist ?
       <button aria-label="add to watchlist" onClick={() => handleClick(true)}>
-        <StyledSpan className="material-icons text-primary">add</StyledSpan>
+        <StyledSpan className="material-icons text-primary font-bold">add</StyledSpan>
       </button> :
       <button aria-label="remove from watchlist" onClick={() => handleClick(false)}>
-        <StyledSpan className="material-icons text-primary">remove</StyledSpan>
+        <StyledSpan className="material-icons text-primary font-bold">remove</StyledSpan>
       </button>
   )
 }
