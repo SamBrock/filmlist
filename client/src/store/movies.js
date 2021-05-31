@@ -60,12 +60,15 @@ const slice = createSlice({
         }
       });
     },
+    moviesCleared: (movies, action) => {
+      movies.data = [];
+    }
   }
 })
 
 export default slice.reducer;
 
-const { initialRequested, moviesRequested, moviesReceived, moviesRequestFailed, defaultMoviesRequested, defaultMoviesReceived } = slice.actions;
+const { initialRequested, moviesRequested, moviesReceived, moviesRequestFailed, defaultMoviesRequested, defaultMoviesReceived, moviesCleared } = slice.actions;
 export const { userMoviesActioned, userMoviesActionedCleared } = slice.actions;
 
 // Action Creators
@@ -97,6 +100,11 @@ export const loadDefaultMovies = () => (dispatch, getState) => {
   }))
 }
 
+export const clearMovies = () => dispatch => {
+  dispatch({ type: moviesCleared.type});
+}
+
 // Selectors
 export const getMovies = state => state.entities.movies.data;
+export const defaultLoaded = state => state.entities.movies.default;
 export const loading = state => state.entities.movies.loading;

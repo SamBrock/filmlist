@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { Redirect, useHistory } from 'react-router-dom';
 
 import { transitions } from '../config';
-import { loadMovies, getMovies, loadDefaultMovies, loading } from '../store/movies';
+import { loadMovies, getMovies, loadDefaultMovies, loading, defaultLoaded, clearMovies } from '../store/movies';
 import { getIsAuthenticated } from '../store/auth';
 import { start, complete } from '../store/loadingBar';
 import { getMoviesError } from '../store/error';
@@ -14,9 +14,10 @@ import Head from '../components/Head';
 
 export default function Movies() {
   const { action } = useHistory();
+  const [movies, setMovies] = useState([]);
 
+  const defaultMoviesLoaded = useSelector(defaultLoaded)
   const loadedMovies = useSelector(getMovies);
-  const [movies, setMovies] = useState(loadedMovies);
 
   const dispatch = useDispatch();
 
@@ -30,15 +31,22 @@ export default function Movies() {
     if (movies.length !== 0) return;
 
     dispatch(start());
+    dispatch(clearMovies());
+
     isAuthenticated ? dispatch(loadMovies()) : dispatch(loadDefaultMovies())
   }, [isAuthenticated]);
 
   useEffect(() => {
+    if (isAuthenticated === true && defaultMoviesLoaded) {
+      setMovies([]);
+      return dispatch(loadMovies());
+    };
+
     setMovies(loadedMovies);
-    dispatch(complete());
-  }, [loadedMovies, dispatch]);
+  }, [loadedMovies]);
 
   if (moviesError) { return <motion.div exit={{ opacity: 0 }} transition={transitions.default}><Redirect to={`/favorite-films`} /></motion.div> }
+  dispatch(complete());
 
   return (
     <>

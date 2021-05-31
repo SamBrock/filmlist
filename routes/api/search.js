@@ -17,7 +17,6 @@ router.get('/', async (req, res) => {
 
     const movies = getMovieSearchArrDetails(data.results);
 
-
     res.send(movies.slice(0, 6));
   } catch (error) {
     res.status(400).send(error);

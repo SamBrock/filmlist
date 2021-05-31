@@ -8,11 +8,6 @@ import Logo from '../../images/filmlist-f.svg'
 import { getIsAuthenticated, getUser } from '../../store/auth'
 import ProfileButton from '../ProfileButton'
 
-const StyledHeaderLinksDiv = styled.div`
-  width: 586px;
-  @media (max-width: ${props => props.theme.mixins.breakpoints.md}) { width: auto; }
-`;
-
 const StyledSearchLink = styled.div`
   &:hover {
     color: var(--white);
@@ -26,8 +21,8 @@ export default function Header({ openSearchModal }) {
 
   const authLinks = (
     <Fragment>
-      <Link className="block line-height-full uppercase tracking-wide text-opacity-2 hover:text-white transition p-1 mr-6" to={isAuthenticated ? `/${user.username}/watchlist` : `/login`}><span className="line-height-full material-icons font-bold text-xxl">add</span></Link>
-      <Link className="block line-height-full uppercase tracking-wide text-opacity-2 hover:text-white transition p-1 mr-6" to={isAuthenticated ? `/${user.username}/seen` : `/login`}><span className="line-height-full material-icons font-bold text-xxl">check</span></Link>
+      <Link className="block line-height-full uppercase tracking-wide text-opacity-2 hover:text-white transition p-1 mr-3 sm:mr-6" to={isAuthenticated ? `/${user.username}/watchlist` : `/login`}><span className="line-height-full material-icons font-bold text-xxl">add</span></Link>
+      <Link className="block line-height-full uppercase tracking-wide text-opacity-2 hover:text-white transition p-1 mr-3 sm:mr-6" to={isAuthenticated ? `/${user.username}/seen` : `/login`}><span className="line-height-full material-icons font-bold text-xxl">check</span></Link>
       <ProfileButton username={user ? user.username : ''} />
     </Fragment>
   )
@@ -39,7 +34,7 @@ export default function Header({ openSearchModal }) {
       <nav className="flex items-center xl:items-start w-full select-none">
         <Link to="/"><img src={Logo} className="cursor-pointer h-10 xl:h-16" alt="Logo" /></Link>
         <div className="ml-auto flex items-center">
-          <StyledSearchLink className="ml-10 p-1 pr-6 mr-6 flex items-center text-opacity-1 transition cursor-pointer" onClick={openSearchModal}>
+          <StyledSearchLink className="ml-10 p-1 mr-3 sm:pr-6 sm:mr-1 md:mr-6 flex items-center text-opacity-1 transition cursor-pointer" onClick={openSearchModal}>
             <div className="text-lg flex items-center">
               <span className="material-icons mr-0 md:mr-3 line-height-full text-xxl font-semibold text-opacity-2 mt-1 hover:text-white transition">search</span>
               <span className="hidden md:block">Quick search</span>

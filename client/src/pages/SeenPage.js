@@ -38,8 +38,6 @@ export default function SeenPage({ match }) {
     if (!seenLoading) dispatch(loadSeen(username));
   }
 
-  console.log(isUserAuth);
-
   return (
     <>
       <Head title={`${username}'s Seen`} bodyAttributes={movies.length === 0 ? 'overflow-y-hidden' : ''} />

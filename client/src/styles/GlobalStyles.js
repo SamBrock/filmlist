@@ -153,7 +153,7 @@ const GlobalStyle = createGlobalStyle`
   .border-grey {
     border: 1px var(--opacity-4) solid;
   }
-
+  
   .border-bottom-default {
     border-bottom: 1px var(--grey) solid;
   }

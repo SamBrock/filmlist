@@ -17,8 +17,8 @@ export default function BackdropTemplate({ children, backdropPath }) {
 
   return (
     <StyledMoviePageContainer exit={{ opacity: 1 }} className="grid">
-      <BackdropImg backdropPath={backdropPath} backdropRef={backdropRef} className={hide ? 'hidden md:block' : ''} />
-      <div ref={backdropRef} className={hide ? 'hidden md:block' : ''} />
+      {backdropPath && (<BackdropImg backdropPath={backdropPath} backdropRef={backdropRef} className={hide ? 'hidden md:block' : ''} />)}
+      <div ref={backdropRef} className={`${!backdropPath ? 'bg-grey' : ''} ${hide ? 'hidden md:block' : ''}`} />
       {children}
     </StyledMoviePageContainer >
   )
